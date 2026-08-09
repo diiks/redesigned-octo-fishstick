@@ -307,7 +307,7 @@
 
         <div class="total-sum-block">
             <span class="total-label">💰 Общая сумма</span>
-            <input type="text" id="totalSumInput" class="total-input" value="0" placeholder="0">
+            <input type="text" id="totalSumInput" class="total-input" placeholder="0">
         </div>
 
         <div class="table-container">
@@ -419,7 +419,6 @@
                 return formatDateToDisplay(date);
             }
 
-            // Форматирование числа: убираем .00 если число целое
             function formatNumber(value) {
                 var num = parseFloat(value);
                 if (isNaN(num)) return '0';
@@ -445,7 +444,14 @@
                 var displayDate = storageToDisplay(currentDateStr);
                 currentDateDisplay.textContent = displayDate;
                 searchInput.value = displayDate;
-                totalSumInput.value = dayData.total;
+                
+                // Показываем общую сумму: если 0 — показываем плейсхолдер
+                if (dayData.total === '0' || dayData.total === '' || parseFloat(dayData.total) === 0) {
+                    totalSumInput.value = '';
+                } else {
+                    totalSumInput.value = dayData.total;
+                }
+                
                 tableBody.innerHTML = '';
                 for (var i = 0; i < TOTAL_ROWS; i++) {
                     var rowData = dayData.rows[i] || { text: '', number: '' };
@@ -561,14 +567,25 @@
                 }
                 
                 var newTotal = baseTotal - subtractSum;
-                totalSumInput.value = formatNumber(newTotal);
+                
+                // Показываем результат: если 0 — очищаем поле (показываем placeholder)
+                if (newTotal === 0) {
+                    totalSumInput.value = '';
+                } else {
+                    totalSumInput.value = formatNumber(newTotal);
+                }
             }
 
             function changeDate(newDateStr) {
                 if (!newDateStr || !/^\d{4}-\d{2}-\d{2}$/.test(newDateStr)) return;
                 if (currentDateStr) {
                     var currentDayData = getDayData(currentDateStr);
-                    currentDayData.total = totalSumInput.value;
+                    var val = totalSumInput.value;
+                    if (val === '') {
+                        currentDayData.total = '0';
+                    } else {
+                        currentDayData.total = val;
+                    }
                     saveData();
                 }
                 currentDateStr = newDateStr;
@@ -622,10 +639,21 @@
                     changeDate(getTodayString());
                 });
 
+                // При клике на поле — если там placeholder, ничего не делаем
+                totalSumInput.addEventListener('focus', function() {
+                    // если поле пустое — оставляем пустым для удобства ввода
+                });
+
                 totalSumInput.addEventListener('input', function() {
                     if (!currentDateStr) return;
                     var val = totalSumInput.value.replace(',', '.');
-                    if (val === '') val = '0';
+                    if (val === '') {
+                        var dayData = getDayData(currentDateStr);
+                        dayData.total = '0';
+                        saveData();
+                        recalcTotalFromRows();
+                        return;
+                    }
                     if (val.indexOf('.') !== -1) {
                         var parts = val.split('.');
                         if (parts[1] && parts[1].length > 2) {
@@ -643,20 +671,32 @@
                         var dayData = getDayData(currentDateStr);
                         dayData.total = val;
                         saveData();
+                        recalcTotalFromRows();
                     }
                 });
 
                 totalSumInput.addEventListener('blur', function() {
                     if (!currentDateStr) return;
                     var val = totalSumInput.value.replace(',', '.');
-                    if (val === '') val = '0';
+                    if (val === '') {
+                        var dayData = getDayData(currentDateStr);
+                        dayData.total = '0';
+                        saveData();
+                        recalcTotalFromRows();
+                        return;
+                    }
                     var num = parseFloat(val);
                     if (isNaN(num)) {
-                        totalSumInput.value = getDayData(currentDateStr).total;
-                    } else {
-                        totalSumInput.value = formatNumber(val);
                         var dayData = getDayData(currentDateStr);
-                        dayData.total = formatNumber(val);
+                        totalSumInput.value = '';
+                        dayData.total = '0';
+                        saveData();
+                        recalcTotalFromRows();
+                    } else {
+                        var formatted = formatNumber(val);
+                        totalSumInput.value = formatted;
+                        var dayData = getDayData(currentDateStr);
+                        dayData.total = formatted;
                         saveData();
                         recalcTotalFromRows();
                     }
