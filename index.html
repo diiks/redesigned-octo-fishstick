@@ -202,20 +202,21 @@
 
         .total-input {
             flex: 1;
-            padding: 0.7rem 1rem;
+            padding: 0.65rem 0.9rem;
             border: 2px solid #d0e0bb;
-            border-radius: 2.5rem;
-            font-size: 1.2rem;
+            border-radius: 2rem;
+            font-size: 0.95rem;
             font-weight: 600;
             text-align: center;
-            background: #f4fdef;
+            background: #fefffa;
             outline: none;
             max-width: 200px;
+            transition: 0.2s;
         }
 
         .total-input:focus {
             border-color: #ff8c42;
-            box-shadow: 0 0 0 3px rgba(255, 140, 66, 0.3);
+            box-shadow: 0 0 0 2px rgba(255, 140, 66, 0.3);
         }
 
         .table-container {
@@ -306,7 +307,7 @@
 
         <div class="total-sum-block">
             <span class="total-label">💰 Общая сумма</span>
-            <input type="number" id="totalSumInput" class="total-input" value="0" step="0.01" min="0" max="1000000">
+            <input type="text" id="totalSumInput" class="total-input" value="0" placeholder="0">
         </div>
 
         <div class="table-container">
@@ -418,6 +419,17 @@
                 return formatDateToDisplay(date);
             }
 
+            // Форматирование числа: убираем .00 если число целое
+            function formatNumber(value) {
+                var num = parseFloat(value);
+                if (isNaN(num)) return '0';
+                if (num === Math.floor(num)) {
+                    return num.toString();
+                } else {
+                    return num.toFixed(2);
+                }
+            }
+
             var currentDateDisplay = document.getElementById('currentDateDisplay');
             var prevBtn = document.getElementById('prevDayBtn');
             var nextBtn = document.getElementById('nextDayBtn');
@@ -453,11 +465,11 @@
                     var tdNumber = document.createElement('td');
                     tdNumber.className = 'number-cell';
                     var inputNumber = document.createElement('input');
-                    inputNumber.type = 'number';
+                    inputNumber.type = 'text';
                     inputNumber.placeholder = '0';
                     inputNumber.value = rowData.number;
-                    inputNumber.step = '0.01';
-                    inputNumber.min = '0';
+                    inputNumber.style.textAlign = 'center';
+                    inputNumber.style.fontWeight = '600';
                     inputNumber.addEventListener('input', (function(index) {
                         return function(e) {
                             handleNumberInput(index, e.target);
@@ -471,7 +483,6 @@
                     tr.appendChild(tdNumber);
                     tableBody.appendChild(tr);
                 }
-                // После отрисовки таблицы пересчитываем общую сумму
                 recalcTotalFromRows();
             }
 
@@ -513,11 +524,10 @@
                 val = val.replace(',', '.');
                 var num = parseFloat(val);
                 if (!isNaN(num)) {
-                    inputElement.value = num.toFixed(2);
+                    inputElement.value = formatNumber(val);
                 } else {
                     inputElement.value = '';
                 }
-                // После форматирования обновляем данные
                 var rowIndex = Array.from(inputElement.closest('tr').parentNode.children).indexOf(inputElement.closest('tr'));
                 if (rowIndex >= 0 && rowIndex < TOTAL_ROWS) {
                     updateNumberInRow(rowIndex, inputElement.value);
@@ -537,10 +547,8 @@
             function recalcTotalFromRows() {
                 if (!currentDateStr) return;
                 var dayData = getDayData(currentDateStr);
-                // Базовая сумма — это то, что пользователь ввёл в поле "Общая сумма"
                 var baseTotal = parseFloat(dayData.total) || 0;
                 
-                // Суммируем все числа из таблицы
                 var subtractSum = 0;
                 for (var i = 0; i < TOTAL_ROWS; i++) {
                     var numVal = dayData.rows[i] ? dayData.rows[i].number : '';
@@ -552,15 +560,12 @@
                     }
                 }
                 
-                // Итоговая сумма = базовая сумма - сумма чисел из таблицы
                 var newTotal = baseTotal - subtractSum;
-                // Показываем результат в поле (может быть отрицательным)
-                totalSumInput.value = newTotal.toFixed(2);
+                totalSumInput.value = formatNumber(newTotal);
             }
 
             function changeDate(newDateStr) {
                 if (!newDateStr || !/^\d{4}-\d{2}-\d{2}$/.test(newDateStr)) return;
-                // Сохраняем текущую базовую сумму перед сменой даты
                 if (currentDateStr) {
                     var currentDayData = getDayData(currentDateStr);
                     currentDayData.total = totalSumInput.value;
@@ -617,7 +622,6 @@
                     changeDate(getTodayString());
                 });
 
-                // Когда пользователь меняет общую сумму вручную
                 totalSumInput.addEventListener('input', function() {
                     if (!currentDateStr) return;
                     var val = totalSumInput.value.replace(',', '.');
@@ -630,13 +634,15 @@
                             totalSumInput.value = val;
                         }
                     }
+                    if (!/^-?\d*\.?\d*$/.test(val)) {
+                        totalSumInput.value = val.slice(0, -1);
+                        return;
+                    }
                     var num = parseFloat(val);
                     if (!isNaN(num)) {
                         var dayData = getDayData(currentDateStr);
                         dayData.total = val;
                         saveData();
-                        // НЕ пересчитываем здесь, чтобы пользователь видел введённое число
-                        // Пересчёт будет при вводе чисел в таблицу
                     }
                 });
 
@@ -648,9 +654,9 @@
                     if (isNaN(num)) {
                         totalSumInput.value = getDayData(currentDateStr).total;
                     } else {
-                        totalSumInput.value = num.toFixed(2);
+                        totalSumInput.value = formatNumber(val);
                         var dayData = getDayData(currentDateStr);
-                        dayData.total = num.toFixed(2);
+                        dayData.total = formatNumber(val);
                         saveData();
                         recalcTotalFromRows();
                     }
