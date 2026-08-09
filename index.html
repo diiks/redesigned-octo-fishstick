@@ -87,7 +87,6 @@
             animation: moonGlow 4s ease-in-out infinite;
         }
 
-        /* Кратеры */
         .crater {
             position: absolute;
             background: rgba(160, 120, 70, 0.5);
@@ -106,33 +105,32 @@
             50% { box-shadow: 0 0 55px rgba(255,230,170,0.6), 0 0 100px rgba(255,210,140,0.4); }
         }
 
-        /* Комета — диагональ сверху вниз справа налево */
+        /* Комета — быстрая диагональ */
         .comet {
             position: absolute;
-            top: -60px;
-            right: -60px;
-            font-size: 55px;
+            top: -80px;
+            right: -80px;
+            font-size: 50px;
             pointer-events: none;
             z-index: 1;
             opacity: 0;
             filter: drop-shadow(0 0 12px #ff6600) drop-shadow(0 0 25px #ff4400);
-            animation: cometDiagonal 6s ease-in-out infinite;
-            transform: rotate(45deg);
+            animation: cometDiagonal 3s ease-in-out infinite;
         }
 
         @keyframes cometDiagonal {
-            0% { top: -60px; right: -60px; opacity: 0; }
-            10% { opacity: 0.9; }
-            30% { top: 120px; right: 200px; opacity: 0.9; }
-            60% { top: 300px; right: 500px; opacity: 0.5; }
-            90% { opacity: 0.1; }
-            100% { top: 500px; right: 800px; opacity: 0; }
+            0% { top: -80px; right: -80px; opacity: 0; transform: rotate(-45deg); }
+            5% { opacity: 1; }
+            20% { top: 60px; right: 120px; opacity: 1; transform: rotate(-45deg); }
+            50% { top: 220px; right: 380px; opacity: 0.7; transform: rotate(-45deg); }
+            80% { top: 380px; right: 600px; opacity: 0.2; transform: rotate(-45deg); }
+            100% { top: 550px; right: 850px; opacity: 0; transform: rotate(-45deg); }
         }
 
-        /* Растения — ярче и выше */
+        /* Растения — дикие, без горшков */
         .plants-left {
             position: absolute;
-            left: -3px;
+            left: -5px;
             top: 100px;
             bottom: 0;
             pointer-events: none;
@@ -140,15 +138,16 @@
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
-            font-size: 42px;
-            opacity: 0.55;
-            gap: 8px;
+            font-size: 38px;
+            opacity: 0.6;
+            gap: 4px;
             animation: swayLeft 3s ease-in-out infinite;
+            line-height: 0.9;
         }
 
         .plants-right {
             position: absolute;
-            right: -3px;
+            right: -5px;
             top: 100px;
             bottom: 0;
             pointer-events: none;
@@ -156,10 +155,11 @@
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
-            font-size: 42px;
-            opacity: 0.55;
-            gap: 8px;
+            font-size: 38px;
+            opacity: 0.6;
+            gap: 4px;
             animation: swayRight 3s ease-in-out infinite;
+            line-height: 0.9;
         }
 
         .plants-bottom {
@@ -169,12 +169,12 @@
             width: 100%;
             pointer-events: none;
             z-index: 0;
-            font-size: 35px;
-            opacity: 0.5;
+            font-size: 32px;
+            opacity: 0.55;
             display: flex;
             justify-content: space-around;
             align-items: flex-end;
-            height: 55px;
+            height: 50px;
             animation: swayBottom 3s ease-in-out infinite;
         }
 
@@ -224,18 +224,19 @@
             overflow: hidden;
         }
 
-        /* Динозавры в овале — большие */
+        /* Динозавры — огромные, в рамках шапки */
         .dino-in-oval {
             position: absolute;
             pointer-events: none;
-            font-size: 55px;
-            opacity: 0.45;
+            font-size: 70px;
+            opacity: 0.4;
             animation: dinoFloat 3s ease-in-out infinite;
+            z-index: 0;
         }
 
-        .dino-oval-1 { top: -10px; left: 5px; animation-delay: 0s; }
-        .dino-oval-2 { top: -10px; right: 5px; animation-delay: 0.5s; transform: scaleX(-1); }
-        .dino-oval-3 { bottom: -5px; left: 50%; transform: translateX(-50%); animation-delay: 1s; font-size: 45px; }
+        .dino-oval-1 { top: -20px; left: -10px; animation-delay: 0s; font-size: 75px; }
+        .dino-oval-2 { top: -25px; right: -15px; animation-delay: 0.5s; transform: scaleX(-1); font-size: 80px; }
+        .dino-oval-3 { bottom: -15px; left: 35%; animation-delay: 1s; font-size: 65px; }
 
         @keyframes dinoFloat {
             0%, 100% { transform: translateY(0); }
@@ -263,7 +264,6 @@
             z-index: 1;
         }
 
-        /* Подпись — без рамки, жёлтая, тот же шрифт */
         .brand-sub {
             font-size: 1rem;
             font-weight: 400;
@@ -529,10 +529,8 @@
 </head>
 <body>
     <div class="app">
-        <!-- Звёзды -->
         <div class="stars-container" id="starsContainer"></div>
 
-        <!-- Луна с кратерами -->
         <div class="moon">
             <div class="moon-base">
                 <div class="crater crater-1"></div>
@@ -544,15 +542,13 @@
             </div>
         </div>
 
-        <!-- Комета — диагональ -->
         <div class="comet">☄️</div>
 
-        <!-- Растения -->
-        <div class="plants-left">🌿<br>🪴<br>🌿<br>🌴<br>🪴<br>🌿<br>🌴<br>🪴</div>
-        <div class="plants-right">🌴<br>🌿<br>🪴<br>🌿<br>🌴<br>🪴<br>🌿<br>🌴</div>
-        <div class="plants-bottom">🌿 🌴 🌿 🪴 🌿 🌴 🌿 🪴 🌿 🌴 🌿</div>
+        <!-- Дикие растения юрского периода -->
+        <div class="plants-left">🌿<br>🌱<br>🍃<br>🌾<br>🌿<br>🍃<br>🌱<br>🌾</div>
+        <div class="plants-right">🌾<br>🍃<br>🌿<br>🌱<br>🌾<br>🍃<br>🌿<br>🌱</div>
+        <div class="plants-bottom">🌿 🌱 🍃 🌾 🌿 🌱 🍃 🌾 🌿 🌱 🍃</div>
 
-        <!-- Контент -->
         <div class="content-layer">
             <div class="oval-header">
                 <div class="dino-in-oval dino-oval-1">🦕</div>
@@ -592,7 +588,6 @@
     </div>
 
     <script>
-        // Звёзды
         (function() {
             var c = document.getElementById('starsContainer');
             var h = '';
@@ -603,7 +598,6 @@
             c.innerHTML = h;
         })();
 
-        // Основной скрипт
         (function() {
             var STORAGE_KEY = 'dix_million_data';
             var appData = {};
@@ -630,42 +624,28 @@
             function formatNumber(v){var n=parseFloat(v);if(isNaN(n))return'0';return n===Math.floor(n)?n.toString():n.toFixed(2);}
 
             var currentDateDisplay = document.getElementById('currentDateDisplay');
-            var prevBtn = document.getElementById('prevDayBtn');
-            var nextBtn = document.getElementById('nextDayBtn');
-            var searchInput = document.getElementById('searchDateInput');
-            var searchBtn = document.getElementById('searchDateBtn');
+            var prevBtn = document.getElementById('prevDayBtn'); var nextBtn = document.getElementById('nextDayBtn');
+            var searchInput = document.getElementById('searchDateInput'); var searchBtn = document.getElementById('searchDateBtn');
             var todayBtn = document.getElementById('todayBtn');
-            var totalSumInput = document.getElementById('totalSumInput');
-            var spentSumInput = document.getElementById('spentSumInput');
+            var totalSumInput = document.getElementById('totalSumInput'); var spentSumInput = document.getElementById('spentSumInput');
             var tableBody = document.getElementById('tableBody');
 
             function renderCurrentDay() {
-                if(!currentDateStr)return;
-                var d = getDayData(currentDateStr);
-                currentDateDisplay.textContent=storageToDisplay(currentDateStr);
-                searchInput.value=storageToDisplay(currentDateStr);
+                if(!currentDateStr)return; var d = getDayData(currentDateStr);
+                currentDateDisplay.textContent=storageToDisplay(currentDateStr); searchInput.value=storageToDisplay(currentDateStr);
                 totalSumInput.value=(d.total==='0'||d.total===''||parseFloat(d.total)===0)?'':d.total;
                 tableBody.innerHTML='';
-                for(var i=0;i<TOTAL_ROWS;i++){
-                    var rd=d.rows[i]||{text:'',number:''};
-                    var tr=document.createElement('tr');
+                for(var i=0;i<TOTAL_ROWS;i++){ var rd=d.rows[i]||{text:'',number:''}; var tr=document.createElement('tr');
                     var tn=document.createElement('td');tn.className='row-number';tn.textContent=(i+1)+'.';tr.appendChild(tn);
-                    var te=document.createElement('td');te.className='emoji-cell';
-                    var eb=document.createElement('button');eb.className='emoji-btn';eb.textContent=emojis[i];eb.setAttribute('data-row',i);
+                    var te=document.createElement('td');te.className='emoji-cell'; var eb=document.createElement('button');eb.className='emoji-btn';eb.textContent=emojis[i];eb.setAttribute('data-row',i);
                     eb.addEventListener('click',function(e){var b=e.currentTarget;if(b.classList.contains('active')){b.classList.remove('active');b.style.color='';playDeactivateSound();}else{b.classList.add('active');b.style.color=glowColors[parseInt(b.getAttribute('data-row'))];playActivateSound();}});
                     te.appendChild(eb);tr.appendChild(te);
-                    var tt=document.createElement('td');tt.className='text-cell';
-                    var it=document.createElement('input');it.type='text';it.placeholder='ОПИСАНИЕ';it.value=rd.text;
-                    it.addEventListener('input',(function(idx){return function(e){updateRowText(idx,e.target.value);};})(i));
-                    tt.appendChild(it);tr.appendChild(tt);
-                    var tnum=document.createElement('td');tnum.className='number-cell';
-                    var inum=document.createElement('input');inum.type='text';inum.placeholder='0';inum.value=rd.number;inum.style.textAlign='center';
-                    inum.addEventListener('input',(function(idx){return function(e){handleNumberInput(idx,e.target);};})(i));
-                    inum.addEventListener('blur',function(e){formatNumberField(e.target);});
-                    tnum.appendChild(inum);tr.appendChild(tnum);
-                    tableBody.appendChild(tr);
-                }
-                updateSumsDisplay();
+                    var tt=document.createElement('td');tt.className='text-cell'; var it=document.createElement('input');it.type='text';it.placeholder='ОПИСАНИЕ';it.value=rd.text;
+                    it.addEventListener('input',(function(idx){return function(e){updateRowText(idx,e.target.value);};})(i)); tt.appendChild(it);tr.appendChild(tt);
+                    var tnum=document.createElement('td');tnum.className='number-cell'; var inum=document.createElement('input');inum.type='text';inum.placeholder='0';inum.value=rd.number;inum.style.textAlign='center';
+                    inum.addEventListener('input',(function(idx){return function(e){handleNumberInput(idx,e.target);};})(i)); inum.addEventListener('blur',function(e){formatNumberField(e.target);});
+                    tnum.appendChild(inum);tr.appendChild(tnum); tableBody.appendChild(tr);
+                } updateSumsDisplay();
             }
 
             function updateRowText(i,v){if(!currentDateStr)return;getDayData(currentDateStr).rows[i].text=v;saveData();}
@@ -676,19 +656,15 @@
             function updateSumsDisplay(){if(!currentDateStr)return;var d=getDayData(currentDateStr),base=parseFloat(d.total)||0,spent=getSpentSum(),rem=base-spent;spentSumInput.value=spent===0?'':formatNumber(spent);totalSumInput.value=(rem===0&&base===0)?'':(rem===0&&base>0?'0':formatNumber(rem));}
             function changeDate(ns){if(!ns||!/^\d{4}-\d{2}-\d{2}$/.test(ns))return;if(currentDateStr){var d=getDayData(currentDateStr);d.total=totalSumInput.value===''?'0':totalSumInput.value;saveData();}currentDateStr=ns;renderCurrentDay();}
             function shiftDate(days){if(!currentDateStr)return;var p=currentDateStr.split('-').map(Number),date=new Date(p[0],p[1]-1,p[2]);date.setDate(date.getDate()+days);changeDate(formatDateToStorage(date));}
-
             document.addEventListener('click',function(){if(audioCtx&&audioCtx.state==='suspended')audioCtx.resume();},{once:true});
 
-            function init(){
-                loadData();currentDateStr=getTodayString();if(!appData[currentDateStr]){appData[currentDateStr]=createEmptyDayData();saveData();}renderCurrentDay();
+            function init(){ loadData();currentDateStr=getTodayString();if(!appData[currentDateStr]){appData[currentDateStr]=createEmptyDayData();saveData();}renderCurrentDay();
                 prevBtn.addEventListener('click',function(){shiftDate(-1);}); nextBtn.addEventListener('click',function(){shiftDate(1);});
                 searchBtn.addEventListener('click',function(){var v=searchInput.value.trim();if(v===''){changeDate(getTodayString());return;}var p=parseDateFromInput(v);if(p)changeDate(p);else{alert('ВВЕДИТЕ ДАТУ 09.08.26');searchInput.value=storageToDisplay(currentDateStr);}});
-                searchInput.addEventListener('keypress',function(e){if(e.key==='Enter')searchBtn.click();});
-                todayBtn.addEventListener('click',function(){changeDate(getTodayString());});
+                searchInput.addEventListener('keypress',function(e){if(e.key==='Enter')searchBtn.click();}); todayBtn.addEventListener('click',function(){changeDate(getTodayString());});
                 totalSumInput.addEventListener('input',function(){if(!currentDateStr)return;var v=totalSumInput.value.replace(',','.');if(v===''){getDayData(currentDateStr).total='0';saveData();updateSumsDisplay();return;}if(v.indexOf('.')!==-1){var p=v.split('.');if(p[1]&&p[1].length>2){p[1]=p[1].slice(0,2);v=p.join('.');totalSumInput.value=v;}}if(!/^-?\d*\.?\d*$/.test(v)){totalSumInput.value=v.slice(0,-1);return;}if(!isNaN(parseFloat(v))){getDayData(currentDateStr).total=v;saveData();updateSumsDisplay();}});
                 totalSumInput.addEventListener('blur',function(){if(!currentDateStr)return;var v=totalSumInput.value.replace(',','.');if(v===''){getDayData(currentDateStr).total='0';saveData();updateSumsDisplay();return;}getDayData(currentDateStr).total=isNaN(parseFloat(v))?'0':formatNumber(v);saveData();updateSumsDisplay();});
-            }
-            init();
+            } init();
         })();
     </script>
 </body>
