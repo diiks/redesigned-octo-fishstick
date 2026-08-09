@@ -124,25 +124,29 @@
             position: relative; overflow: hidden;
         }
 
-        /* Динозаврики в ряд */
+        /* Динозаврики — крупнее, прозрачнее, плавная анимация */
         .dino-in-oval {
-            position: absolute; pointer-events: none; opacity: 0.5; z-index: 0;
-            font-size: 4rem; /* УВЕЛИЧЕНЫ В 2 РАЗА */
-            animation: dinoFloat1 3s ease-in-out infinite;
+            position: absolute; pointer-events: none; z-index: 0;
+            font-size: 5.5rem; /* КРУПНЕЕ */
+            opacity: 0.35; /* БОЛЕЕ ПРОЗРАЧНЫЕ */
             top: 50%;
             transform: translateY(-50%);
+            animation: dinoFloatSmooth 4s ease-in-out infinite;
         }
-        .dino-oval-1 { left: 5%; }
-        .dino-oval-2 { left: 50%; transform: translate(-50%, -50%); }
-        .dino-oval-3 { right: 5%; }
+        .dino-oval-1 { left: 2%; animation-delay: 0s; }
+        .dino-oval-2 { left: 50%; transform: translate(-50%, -50%); animation-delay: 0.5s; }
+        .dino-oval-3 { right: 2%; animation-delay: 1s; }
 
-        @keyframes dinoFloat1 { 0%,100%{transform:translateY(-50%);} 50%{transform:translateY(calc(-50% - 8px));} }
+        @keyframes dinoFloatSmooth {
+            0%, 100% { transform: translateY(-50%) translateX(0); }
+            25% { transform: translateY(-52%) translateX(2px); }
+            75% { transform: translateY(-48%) translateX(-2px); }
+        }
 
         .brand-top {
             font-size: 5.5rem; font-weight: 400; letter-spacing: 10px;
             color: #ff8800; text-shadow: 0 0 15px #ff4400, 0 0 30px #ff2200, 3px 3px 0px #331100;
             line-height: 1; font-family: 'Ruslan Display', cursive; position: relative; z-index: 1;
-            /* DIX СДВИНУТО НИЖЕ */
             margin-top: 2.2rem;
         }
 
@@ -150,7 +154,6 @@
             font-size: 1rem; font-weight: 400; color: #ffdd44; letter-spacing: 5px;
             font-family: 'Ruslan Display', cursive;
             text-shadow: 0 0 10px #ffaa00, 2px 2px 0px #331100; position: relative; z-index: 1;
-            /* ПОДСЧЕТ МИЛЛИОНОВ ЧУТЬ ВЫШЕ */
             margin-top: -0.6rem;
             margin-bottom: 2rem;
         }
