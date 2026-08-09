@@ -103,6 +103,7 @@
             50% { box-shadow: 0 0 55px rgba(255,230,170,0.6), 0 0 100px rgba(255,210,140,0.4); }
         }
 
+        /* Комета — 20 градусов */
         .comet {
             position: absolute;
             top: -80px;
@@ -116,12 +117,12 @@
         }
 
         @keyframes cometDiagonal {
-            0% { top: -80px; right: -80px; opacity: 0; transform: rotate(-25deg); }
+            0% { top: -80px; right: -80px; opacity: 0; transform: rotate(-20deg); }
             5% { opacity: 1; }
-            20% { top: 60px; right: 120px; opacity: 1; transform: rotate(-25deg); }
-            50% { top: 220px; right: 380px; opacity: 0.7; transform: rotate(-25deg); }
-            80% { top: 380px; right: 600px; opacity: 0.2; transform: rotate(-25deg); }
-            100% { top: 550px; right: 850px; opacity: 0; transform: rotate(-25deg); }
+            20% { top: 60px; right: 120px; opacity: 1; transform: rotate(-20deg); }
+            50% { top: 220px; right: 380px; opacity: 0.7; transform: rotate(-20deg); }
+            80% { top: 380px; right: 600px; opacity: 0.2; transform: rotate(-20deg); }
+            100% { top: 550px; right: 850px; opacity: 0; transform: rotate(-20deg); }
         }
 
         .plants-left {
@@ -178,12 +179,10 @@
             0%, 100% { transform: rotate(-3deg); }
             50% { transform: rotate(3deg); }
         }
-
         @keyframes swayRight {
             0%, 100% { transform: rotate(3deg); }
             50% { transform: rotate(-3deg); }
         }
-
         @keyframes swayBottom {
             0%, 100% { transform: translateX(0); }
             50% { transform: translateX(6px); }
@@ -199,7 +198,6 @@
             gap: 1.4rem;
         }
 
-        /* Овал с overflow: hidden чтобы динозавры не выходили */
         .oval-header {
             width: 100%;
             max-width: 420px;
@@ -219,7 +217,6 @@
             overflow: hidden;
         }
 
-        /* Динозавры внутри овала — не выходят за края */
         .dino-in-oval {
             position: absolute;
             pointer-events: none;
@@ -228,55 +225,26 @@
             z-index: 0;
         }
 
-        .dino-oval-1 {
-            top: 15%;
-            left: 5%;
-            font-size: 2.5rem;
-            animation-delay: 0s;
-        }
+        .dino-oval-1 { top: 15%; left: 5%; font-size: 2.5rem; animation-delay: 0s; }
+        .dino-oval-2 { top: 10%; right: 5%; font-size: 2.8rem; animation-delay: 0.5s; transform: scaleX(-1); }
+        .dino-oval-3 { bottom: 15%; left: 50%; transform: translateX(-50%); font-size: 2rem; animation-delay: 1s; }
 
-        .dino-oval-2 {
-            top: 10%;
-            right: 5%;
-            font-size: 2.8rem;
-            animation-delay: 0.5s;
-            transform: scaleX(-1);
-        }
-
-        .dino-oval-3 {
-            bottom: 15%;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 2rem;
-            animation-delay: 1s;
-        }
-
-        @keyframes dinoFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-6px); }
-        }
-
-        .dino-oval-1 { animation: dinoFloat1 3s ease-in-out infinite; }
         @keyframes dinoFloat1 {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-6px); }
-        }
-
-        .dino-oval-2 {
-            animation: dinoFloat2 3s ease-in-out infinite;
         }
         @keyframes dinoFloat2 {
             0%, 100% { transform: scaleX(-1) translateY(0); }
             50% { transform: scaleX(-1) translateY(-6px); }
         }
-
-        .dino-oval-3 {
-            animation: dinoFloat3 3s ease-in-out infinite;
-        }
         @keyframes dinoFloat3 {
             0%, 100% { transform: translateX(-50%) translateY(0); }
             50% { transform: translateX(-50%) translateY(-6px); }
         }
+
+        .dino-oval-1 { animation: dinoFloat1 3s ease-in-out infinite; }
+        .dino-oval-2 { animation: dinoFloat2 3s ease-in-out infinite; }
+        .dino-oval-3 { animation: dinoFloat3 3s ease-in-out infinite; }
 
         .brand-top {
             font-size: 4rem;
@@ -556,20 +524,8 @@
 <body>
     <div class="app">
         <div class="stars-container" id="starsContainer"></div>
-
-        <div class="moon">
-            <div class="moon-base">
-                <div class="crater crater-1"></div>
-                <div class="crater crater-2"></div>
-                <div class="crater crater-3"></div>
-                <div class="crater crater-4"></div>
-                <div class="crater crater-5"></div>
-                <div class="crater crater-6"></div>
-            </div>
-        </div>
-
+        <div class="moon"><div class="moon-base"><div class="crater crater-1"></div><div class="crater crater-2"></div><div class="crater crater-3"></div><div class="crater crater-4"></div><div class="crater crater-5"></div><div class="crater crater-6"></div></div></div>
         <div class="comet">☄️</div>
-
         <div class="plants-left">🌿<br>🌱<br>🌴<br>🌵<br>🌿<br>🌱<br>🌴<br>🌵</div>
         <div class="plants-right">🌵<br>🌴<br>🌿<br>🌱<br>🌵<br>🌴<br>🌿<br>🌱</div>
         <div class="plants-bottom">🌿 🌱 🌴 🌵 🌿 🌱 🌴 🌵 🌿 🌱 🌴</div>
@@ -582,40 +538,27 @@
                 <div class="brand-top">DIX</div>
                 <div class="brand-sub">ПОДСЧЕТ МИЛЛИОНОВ</div>
             </div>
-
             <div class="date-navigation">
                 <button class="arrow-btn" id="prevDayBtn">◄</button>
                 <div class="date-window" id="currentDateDisplay"></div>
                 <button class="arrow-btn" id="nextDayBtn">►</button>
             </div>
-
             <div class="search-row">
                 <input type="text" id="searchDateInput" class="date-search-input" placeholder="09.08.26">
                 <button class="search-btn" id="searchDateBtn">🔍 ПОИСК</button>
                 <button class="today-btn" id="todayBtn">📅 СЕГОДНЯ</button>
             </div>
-
             <div class="sums-container">
-                <div class="sum-block">
-                    <div class="sum-label">💰 ОБЩАЯ СУММА</div>
-                    <input type="text" id="totalSumInput" class="sum-input" placeholder="0">
-                </div>
-                <div class="sum-block">
-                    <div class="sum-label">💸 ПОТРАЧЕНО</div>
-                    <input type="text" id="spentSumInput" class="sum-input" placeholder="0" readonly>
-                </div>
+                <div class="sum-block"><div class="sum-label">💰 ОБЩАЯ СУММА</div><input type="text" id="totalSumInput" class="sum-input" placeholder="0"></div>
+                <div class="sum-block"><div class="sum-label">💸 ПОТРАЧЕНО</div><input type="text" id="spentSumInput" class="sum-input" placeholder="0" readonly></div>
             </div>
-
-            <div class="table-container">
-                <table class="data-table"><tbody id="tableBody"></tbody></table>
-            </div>
+            <div class="table-container"><table class="data-table"><tbody id="tableBody"></tbody></table></div>
         </div>
     </div>
 
     <script>
         (function() {
-            var c = document.getElementById('starsContainer');
-            var h = '';
+            var c = document.getElementById('starsContainer'), h = '';
             for (var i = 0; i < 80; i++) {
                 var t = Math.random() * 90, l = Math.random() * 95, s = Math.random() * 3 + 1, d = Math.random() * 2 + 1.5, dl = Math.random() * 3;
                 h += '<div class="star" style="top:' + t + '%;left:' + l + '%;width:' + s + 'px;height:' + s + 'px;--dur:' + d + 's;--delay:' + dl + 's;"></div>';
@@ -624,22 +567,16 @@
         })();
 
         (function() {
-            var STORAGE_KEY = 'dix_million_data';
-            var appData = {};
-            var currentDateStr = '';
-            var TOTAL_ROWS = 50;
-
+            var STORAGE_KEY = 'dix_million_data', appData = {}, currentDateStr = '', TOTAL_ROWS = 50;
             var emojis = ['🐍','🦭','🦔','🐑','🐥','🐘','🐪','🦜','🐬','🦕','🐝','🪰','🐡','🐦‍🔥','🦢','🦘','🦦','🐦','🐖','🐈','🐕','🦧','🐅','🦓','🐿️','🐇','🐼','🐧','🐊','🐳','🦋','🪲','🐌','🪼','🐙','🦂','🐞','🦗','🐠','🦉','🦎','🐻','🦏','🦇','🦚','🐓','🐮','🐯','🐷','🦄'];
             var glowColors = ['#ff4444','#ff8800','#ffdd00','#44ff44','#00ddff','#4488ff','#aa44ff','#ff44aa','#ff6699','#66ff99','#ff9966','#99ff66','#ff66cc','#66ccff','#ccff66','#ff6666','#66ffcc','#cc66ff','#ffcc66','#66cc99','#ff8888','#88ff88','#8888ff','#ff88cc','#88ccff','#cc88ff','#ffcc88','#88ffcc','#ccff88','#ff88aa','#aaff66','#66aaff','#ff66aa','#aaffaa','#ffaa66','#66ffaa','#aa66ff','#ffaa88','#88aaff','#aaffcc','#ccffaa','#ffccaa','#aaccff','#ccffcc','#ffaacc','#ccaaff','#ffccdd','#ddffcc','#ccddff','#ddccff'];
-
             var audioCtx = null;
             function getAudioContext() { if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)(); if (audioCtx.state === 'suspended') audioCtx.resume(); return audioCtx; }
-            function playActivateSound() { try { var ctx = getAudioContext(); var now = ctx.currentTime; var osc = ctx.createOscillator(); var gain = ctx.createGain(); osc.type = 'sawtooth'; osc.frequency.setValueAtTime(150, now); osc.frequency.setValueAtTime(200, now+0.04); osc.frequency.exponentialRampToValueAtTime(60, now+0.2); gain.gain.setValueAtTime(0.2, now); gain.gain.exponentialRampToValueAtTime(0.001, now+0.2); osc.connect(gain); gain.connect(ctx.destination); osc.start(now); osc.stop(now+0.2); } catch(e) {} }
-            function playDeactivateSound() { try { var ctx = getAudioContext(); var now = ctx.currentTime; var b = ctx.createBuffer(1, ctx.sampleRate*0.06, ctx.sampleRate); var d = b.getChannelData(0); for (var i=0; i<d.length; i++) d[i]=(Math.random()*2-1)*Math.exp(-i/(ctx.sampleRate*0.006)); var n = ctx.createBufferSource(); var g = ctx.createGain(); var f = ctx.createBiquadFilter(); f.type='bandpass'; f.frequency.value=800; n.buffer=b; g.gain.setValueAtTime(0.3, now); g.gain.exponentialRampToValueAtTime(0.001, now+0.06); n.connect(f); f.connect(g); g.connect(ctx.destination); n.start(now); n.stop(now+0.06); } catch(e) {} }
-
+            function playActivateSound() { try { var ctx = getAudioContext(), now = ctx.currentTime, osc = ctx.createOscillator(), gain = ctx.createGain(); osc.type = 'sawtooth'; osc.frequency.setValueAtTime(150, now); osc.frequency.setValueAtTime(200, now+0.04); osc.frequency.exponentialRampToValueAtTime(60, now+0.2); gain.gain.setValueAtTime(0.2, now); gain.gain.exponentialRampToValueAtTime(0.001, now+0.2); osc.connect(gain); gain.connect(ctx.destination); osc.start(now); osc.stop(now+0.2); } catch(e) {} }
+            function playDeactivateSound() { try { var ctx = getAudioContext(), now = ctx.currentTime, b = ctx.createBuffer(1, ctx.sampleRate*0.06, ctx.sampleRate), d = b.getChannelData(0); for (var i=0; i<d.length; i++) d[i]=(Math.random()*2-1)*Math.exp(-i/(ctx.sampleRate*0.006)); var n = ctx.createBufferSource(), g = ctx.createGain(), f = ctx.createBiquadFilter(); f.type='bandpass'; f.frequency.value=800; n.buffer=b; g.gain.setValueAtTime(0.3, now); g.gain.exponentialRampToValueAtTime(0.001, now+0.06); n.connect(f); f.connect(g); g.connect(ctx.destination); n.start(now); n.stop(now+0.06); } catch(e) {} }
             function formatDateToDisplay(d) { return String(d.getDate()).padStart(2,'0')+'.'+String(d.getMonth()+1).padStart(2,'0')+'.'+String(d.getFullYear()).slice(-2); }
             function formatDateToStorage(d) { return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
-            function parseDateFromInput(s) { s=s.trim(); if(!s) return null; if(s.indexOf('.')!==-1){var p=s.split('.');if(p.length===3){var d=parseInt(p[0]),m=parseInt(p[1]),y=parseInt(p[2]);if(!isNaN(d)&&!isNaN(m)&&!isNaN(y)&&m>=1&&m<=12){if(y<100)y+=2000;var dt=new Date(y,m-1,d);if(dt.getFullYear()===y&&dt.getMonth()===m-1&&dt.getDate()===d)return formatDateToStorage(dt);}}} if(/^\d{4}-\d{2}-\d{2}$/.test(s)){var ip=s.split('-').map(Number);var d2=new Date(ip[0],ip[1]-1,ip[2]);if(d2.getFullYear()===ip[0]&&d2.getMonth()===ip[1]-1&&d2.getDate()===ip[2])return s;} return null; }
+            function parseDateFromInput(s) { s=s.trim(); if(!s) return null; if(s.indexOf('.')!==-1){var p=s.split('.');if(p.length===3){var d=parseInt(p[0]),m=parseInt(p[1]),y=parseInt(p[2]);if(!isNaN(d)&&!isNaN(m)&&!isNaN(y)&&m>=1&&m<=12){if(y<100)y+=2000;var dt=new Date(y,m-1,d);if(dt.getFullYear()===y&&dt.getMonth()===m-1&&dt.getDate()===d)return formatDateToStorage(dt);}}} if(/^\d{4}-\d{2}-\d{2}$/.test(s)){var ip=s.split('-').map(Number),d2=new Date(ip[0],ip[1]-1,ip[2]);if(d2.getFullYear()===ip[0]&&d2.getMonth()===ip[1]-1&&d2.getDate()===ip[2])return s;} return null; }
             function getTodayString(){return formatDateToStorage(new Date());}
             function loadData(){try{appData=JSON.parse(localStorage.getItem(STORAGE_KEY))||{};}catch(e){appData={};}if(!appData[getTodayString()])appData[getTodayString()]=createEmptyDayData();}
             function createEmptyDayData(){var r=[];for(var i=0;i<TOTAL_ROWS;i++)r.push({text:'',number:''});return{total:'0',rows:r};}
@@ -648,19 +585,16 @@
             function storageToDisplay(s){var p=s.split('-').map(Number);return formatDateToDisplay(new Date(p[0],p[1]-1,p[2]));}
             function formatNumber(v){var n=parseFloat(v);if(isNaN(n))return'0';return n===Math.floor(n)?n.toString():n.toFixed(2);}
 
-            var currentDateDisplay = document.getElementById('currentDateDisplay');
-            var prevBtn = document.getElementById('prevDayBtn'); var nextBtn = document.getElementById('nextDayBtn');
-            var searchInput = document.getElementById('searchDateInput'); var searchBtn = document.getElementById('searchDateBtn');
-            var todayBtn = document.getElementById('todayBtn');
-            var totalSumInput = document.getElementById('totalSumInput'); var spentSumInput = document.getElementById('spentSumInput');
-            var tableBody = document.getElementById('tableBody');
+            var cd = document.getElementById('currentDateDisplay'), pb = document.getElementById('prevDayBtn'), nb = document.getElementById('nextDayBtn');
+            var si = document.getElementById('searchDateInput'), sb = document.getElementById('searchDateBtn'), tb = document.getElementById('todayBtn');
+            var ti = document.getElementById('totalSumInput'), spi = document.getElementById('spentSumInput'), tbody = document.getElementById('tableBody');
 
             function renderCurrentDay() {
                 if(!currentDateStr)return; var d = getDayData(currentDateStr);
-                currentDateDisplay.textContent=storageToDisplay(currentDateStr); searchInput.value=storageToDisplay(currentDateStr);
-                totalSumInput.value=(d.total==='0'||d.total===''||parseFloat(d.total)===0)?'':d.total;
-                tableBody.innerHTML='';
-                for(var i=0;i<TOTAL_ROWS;i++){ var rd=d.rows[i]||{text:'',number:''}; var tr=document.createElement('tr');
+                cd.textContent=storageToDisplay(currentDateStr); si.value=storageToDisplay(currentDateStr);
+                ti.value=(d.total==='0'||d.total===''||parseFloat(d.total)===0)?'':d.total;
+                tbody.innerHTML='';
+                for(var i=0;i<TOTAL_ROWS;i++){ var rd=d.rows[i]||{text:'',number:''}, tr=document.createElement('tr');
                     var tn=document.createElement('td');tn.className='row-number';tn.textContent=(i+1)+'.';tr.appendChild(tn);
                     var te=document.createElement('td');te.className='emoji-cell'; var eb=document.createElement('button');eb.className='emoji-btn';eb.textContent=emojis[i];eb.setAttribute('data-row',i);
                     eb.addEventListener('click',function(e){var b=e.currentTarget;if(b.classList.contains('active')){b.classList.remove('active');b.style.color='';playDeactivateSound();}else{b.classList.add('active');b.style.color=glowColors[parseInt(b.getAttribute('data-row'))];playActivateSound();}});
@@ -669,26 +603,25 @@
                     it.addEventListener('input',(function(idx){return function(e){updateRowText(idx,e.target.value);};})(i)); tt.appendChild(it);tr.appendChild(tt);
                     var tnum=document.createElement('td');tnum.className='number-cell'; var inum=document.createElement('input');inum.type='text';inum.placeholder='0';inum.value=rd.number;inum.style.textAlign='center';
                     inum.addEventListener('input',(function(idx){return function(e){handleNumberInput(idx,e.target);};})(i)); inum.addEventListener('blur',function(e){formatNumberField(e.target);});
-                    tnum.appendChild(inum);tr.appendChild(tnum); tableBody.appendChild(tr);
+                    tnum.appendChild(inum);tr.appendChild(tnum); tbody.appendChild(tr);
                 } updateSumsDisplay();
             }
-
             function updateRowText(i,v){if(!currentDateStr)return;getDayData(currentDateStr).rows[i].text=v;saveData();}
             function handleNumberInput(i,el){if(!currentDateStr)return;var v=el.value;if(v===''){updateNumberInRow(i,'');return;}v=v.replace(',','.');if(!/^-?\d*\.?\d*$/.test(v)){el.value=v.slice(0,-1);return;}if(v.indexOf('.')!==-1){var p=v.split('.');if(p[1]&&p[1].length>2){p[1]=p[1].slice(0,2);v=p.join('.');el.value=v;}}updateNumberInRow(i,v);}
             function formatNumberField(el){var v=el.value;if(v==='')return;v=v.replace(',','.');var n=parseFloat(v);el.value=!isNaN(n)?formatNumber(v):'';var tr=el.closest('tr');if(tr){var i=Array.from(tr.parentNode.children).indexOf(tr);if(i>=0&&i<TOTAL_ROWS)updateNumberInRow(i,el.value);}}
             function updateNumberInRow(i,v){if(!currentDateStr)return;getDayData(currentDateStr).rows[i].number=v;saveData();updateSumsDisplay();}
             function getSpentSum(){if(!currentDateStr)return 0;var r=getDayData(currentDateStr).rows,s=0;for(var i=0;i<TOTAL_ROWS;i++){var nv=r[i]?r[i].number:'';if(nv!==''&&nv!==null){var n=parseFloat(nv);if(!isNaN(n))s+=n;}}return s;}
-            function updateSumsDisplay(){if(!currentDateStr)return;var d=getDayData(currentDateStr),base=parseFloat(d.total)||0,spent=getSpentSum(),rem=base-spent;spentSumInput.value=spent===0?'':formatNumber(spent);totalSumInput.value=(rem===0&&base===0)?'':(rem===0&&base>0?'0':formatNumber(rem));}
-            function changeDate(ns){if(!ns||!/^\d{4}-\d{2}-\d{2}$/.test(ns))return;if(currentDateStr){var d=getDayData(currentDateStr);d.total=totalSumInput.value===''?'0':totalSumInput.value;saveData();}currentDateStr=ns;renderCurrentDay();}
+            function updateSumsDisplay(){if(!currentDateStr)return;var d=getDayData(currentDateStr),base=parseFloat(d.total)||0,spent=getSpentSum(),rem=base-spent;spi.value=spent===0?'':formatNumber(spent);ti.value=(rem===0&&base===0)?'':(rem===0&&base>0?'0':formatNumber(rem));}
+            function changeDate(ns){if(!ns||!/^\d{4}-\d{2}-\d{2}$/.test(ns))return;if(currentDateStr){var d=getDayData(currentDateStr);d.total=ti.value===''?'0':ti.value;saveData();}currentDateStr=ns;renderCurrentDay();}
             function shiftDate(days){if(!currentDateStr)return;var p=currentDateStr.split('-').map(Number),date=new Date(p[0],p[1]-1,p[2]);date.setDate(date.getDate()+days);changeDate(formatDateToStorage(date));}
             document.addEventListener('click',function(){if(audioCtx&&audioCtx.state==='suspended')audioCtx.resume();},{once:true});
 
             function init(){ loadData();currentDateStr=getTodayString();if(!appData[currentDateStr]){appData[currentDateStr]=createEmptyDayData();saveData();}renderCurrentDay();
-                prevBtn.addEventListener('click',function(){shiftDate(-1);}); nextBtn.addEventListener('click',function(){shiftDate(1);});
-                searchBtn.addEventListener('click',function(){var v=searchInput.value.trim();if(v===''){changeDate(getTodayString());return;}var p=parseDateFromInput(v);if(p)changeDate(p);else{alert('ВВЕДИТЕ ДАТУ 09.08.26');searchInput.value=storageToDisplay(currentDateStr);}});
-                searchInput.addEventListener('keypress',function(e){if(e.key==='Enter')searchBtn.click();}); todayBtn.addEventListener('click',function(){changeDate(getTodayString());});
-                totalSumInput.addEventListener('input',function(){if(!currentDateStr)return;var v=totalSumInput.value.replace(',','.');if(v===''){getDayData(currentDateStr).total='0';saveData();updateSumsDisplay();return;}if(v.indexOf('.')!==-1){var p=v.split('.');if(p[1]&&p[1].length>2){p[1]=p[1].slice(0,2);v=p.join('.');totalSumInput.value=v;}}if(!/^-?\d*\.?\d*$/.test(v)){totalSumInput.value=v.slice(0,-1);return;}if(!isNaN(parseFloat(v))){getDayData(currentDateStr).total=v;saveData();updateSumsDisplay();}});
-                totalSumInput.addEventListener('blur',function(){if(!currentDateStr)return;var v=totalSumInput.value.replace(',','.');if(v===''){getDayData(currentDateStr).total='0';saveData();updateSumsDisplay();return;}getDayData(currentDateStr).total=isNaN(parseFloat(v))?'0':formatNumber(v);saveData();updateSumsDisplay();});
+                pb.addEventListener('click',function(){shiftDate(-1);}); nb.addEventListener('click',function(){shiftDate(1);});
+                sb.addEventListener('click',function(){var v=si.value.trim();if(v===''){changeDate(getTodayString());return;}var p=parseDateFromInput(v);if(p)changeDate(p);else{alert('ВВЕДИТЕ ДАТУ 09.08.26');si.value=storageToDisplay(currentDateStr);}});
+                si.addEventListener('keypress',function(e){if(e.key==='Enter')sb.click();}); tb.addEventListener('click',function(){changeDate(getTodayString());});
+                ti.addEventListener('input',function(){if(!currentDateStr)return;var v=ti.value.replace(',','.');if(v===''){getDayData(currentDateStr).total='0';saveData();updateSumsDisplay();return;}if(v.indexOf('.')!==-1){var p=v.split('.');if(p[1]&&p[1].length>2){p[1]=p[1].slice(0,2);v=p.join('.');ti.value=v;}}if(!/^-?\d*\.?\d*$/.test(v)){ti.value=v.slice(0,-1);return;}if(!isNaN(parseFloat(v))){getDayData(currentDateStr).total=v;saveData();updateSumsDisplay();}});
+                ti.addEventListener('blur',function(){if(!currentDateStr)return;var v=ti.value.replace(',','.');if(v===''){getDayData(currentDateStr).total='0';saveData();updateSumsDisplay();return;}getDayData(currentDateStr).total=isNaN(parseFloat(v))?'0':formatNumber(v);saveData();updateSumsDisplay();});
             } init();
         })();
     </script>
