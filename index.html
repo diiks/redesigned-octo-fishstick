@@ -103,26 +103,26 @@
             50% { box-shadow: 0 0 55px rgba(255,230,170,0.6), 0 0 100px rgba(255,210,140,0.4); }
         }
 
-        /* Комета — 20 градусов */
+        /* Комета — 15 градусов, летит над шапкой */
         .comet {
             position: absolute;
-            top: -80px;
-            right: -80px;
-            font-size: 50px;
+            top: -60px;
+            right: -60px;
+            font-size: 45px;
             pointer-events: none;
-            z-index: 1;
+            z-index: 3;
             opacity: 0;
             filter: drop-shadow(0 0 12px #ff6600) drop-shadow(0 0 25px #ff4400);
-            animation: cometDiagonal 3s ease-in-out infinite;
+            animation: cometFly 3.5s ease-in-out infinite;
         }
 
-        @keyframes cometDiagonal {
-            0% { top: -80px; right: -80px; opacity: 0; transform: rotate(-20deg); }
+        @keyframes cometFly {
+            0% { top: -60px; right: -60px; opacity: 0; transform: rotate(-15deg); }
             5% { opacity: 1; }
-            20% { top: 60px; right: 120px; opacity: 1; transform: rotate(-20deg); }
-            50% { top: 220px; right: 380px; opacity: 0.7; transform: rotate(-20deg); }
-            80% { top: 380px; right: 600px; opacity: 0.2; transform: rotate(-20deg); }
-            100% { top: 550px; right: 850px; opacity: 0; transform: rotate(-20deg); }
+            25% { top: -20px; right: 180px; opacity: 1; transform: rotate(-15deg); }
+            55% { top: -10px; right: 450px; opacity: 0.6; transform: rotate(-15deg); }
+            80% { top: 5px; right: 650px; opacity: 0.2; transform: rotate(-15deg); }
+            100% { top: 20px; right: 900px; opacity: 0; transform: rotate(-15deg); }
         }
 
         .plants-left {
@@ -175,18 +175,9 @@
             animation: swayBottom 3s ease-in-out infinite;
         }
 
-        @keyframes swayLeft {
-            0%, 100% { transform: rotate(-3deg); }
-            50% { transform: rotate(3deg); }
-        }
-        @keyframes swayRight {
-            0%, 100% { transform: rotate(3deg); }
-            50% { transform: rotate(-3deg); }
-        }
-        @keyframes swayBottom {
-            0%, 100% { transform: translateX(0); }
-            50% { transform: translateX(6px); }
-        }
+        @keyframes swayLeft { 0%,100%{transform:rotate(-3deg);} 50%{transform:rotate(3deg);} }
+        @keyframes swayRight { 0%,100%{transform:rotate(3deg);} 50%{transform:rotate(-3deg);} }
+        @keyframes swayBottom { 0%,100%{transform:translateX(0);} 50%{transform:translateX(6px);} }
 
         .content-layer {
             position: relative;
@@ -221,30 +212,16 @@
             position: absolute;
             pointer-events: none;
             opacity: 0.4;
-            animation: dinoFloat 3s ease-in-out infinite;
             z-index: 0;
         }
 
-        .dino-oval-1 { top: 15%; left: 5%; font-size: 2.5rem; animation-delay: 0s; }
-        .dino-oval-2 { top: 10%; right: 5%; font-size: 2.8rem; animation-delay: 0.5s; transform: scaleX(-1); }
-        .dino-oval-3 { bottom: 15%; left: 50%; transform: translateX(-50%); font-size: 2rem; animation-delay: 1s; }
+        .dino-oval-1 { top: 15%; left: 5%; font-size: 2.5rem; animation: dinoFloat1 3s ease-in-out infinite; }
+        .dino-oval-2 { top: 10%; right: 5%; font-size: 2.8rem; animation: dinoFloat2 3s ease-in-out infinite; }
+        .dino-oval-3 { bottom: 15%; left: 50%; font-size: 2rem; animation: dinoFloat3 3s ease-in-out infinite; }
 
-        @keyframes dinoFloat1 {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-6px); }
-        }
-        @keyframes dinoFloat2 {
-            0%, 100% { transform: scaleX(-1) translateY(0); }
-            50% { transform: scaleX(-1) translateY(-6px); }
-        }
-        @keyframes dinoFloat3 {
-            0%, 100% { transform: translateX(-50%) translateY(0); }
-            50% { transform: translateX(-50%) translateY(-6px); }
-        }
-
-        .dino-oval-1 { animation: dinoFloat1 3s ease-in-out infinite; }
-        .dino-oval-2 { animation: dinoFloat2 3s ease-in-out infinite; }
-        .dino-oval-3 { animation: dinoFloat3 3s ease-in-out infinite; }
+        @keyframes dinoFloat1 { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-6px);} }
+        @keyframes dinoFloat2 { 0%,100%{transform:scaleX(-1) translateY(0);} 50%{transform:scaleX(-1) translateY(-6px);} }
+        @keyframes dinoFloat3 { 0%,100%{transform:translateX(-50%) translateY(0);} 50%{transform:translateX(-50%) translateY(-6px);} }
 
         .brand-top {
             font-size: 4rem;
@@ -280,244 +257,141 @@
         }
 
         .arrow-btn {
-            width: 52px;
-            height: 52px;
-            border-radius: 50%;
+            width: 52px; height: 52px; border-radius: 50%;
             background: linear-gradient(180deg, #8b6b3a 0%, #5a3a1a 100%);
             border: 3px solid #aa8b4a;
-            box-shadow: inset 0 2px 0 rgba(255, 200, 100, 0.4), 0 4px 8px rgba(0,0,0,0.5), 0 0 10px rgba(255, 100, 0, 0.2);
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #ffcc66;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.1s ease;
-            text-shadow: 0 0 5px #ff8800;
+            box-shadow: inset 0 2px 0 rgba(255,200,100,0.4), 0 4px 8px rgba(0,0,0,0.5), 0 0 10px rgba(255,100,0,0.2);
+            font-size: 1.5rem; font-weight: bold; color: #ffcc66; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.1s ease; text-shadow: 0 0 5px #ff8800;
         }
-
         .arrow-btn:hover {
             background: linear-gradient(180deg, #aa8b4a 0%, #7a5a2a 100%);
-            box-shadow: inset 0 2px 0 rgba(255, 220, 140, 0.5), 0 4px 12px rgba(0,0,0,0.5), 0 0 20px rgba(255, 150, 0, 0.4);
+            box-shadow: inset 0 2px 0 rgba(255,220,140,0.5), 0 4px 12px rgba(0,0,0,0.5), 0 0 20px rgba(255,150,0,0.4);
         }
-
         .arrow-btn:active { transform: scale(0.9); }
 
         .date-window {
-            background: rgba(15, 8, 0, 0.8);
-            border: 3px solid #8b5a2b;
-            box-shadow: inset 0 0 15px rgba(0,0,0,0.6), 0 0 10px rgba(255, 100, 0, 0.2);
-            padding: 0.7rem 1.8rem;
-            font-size: 0.8rem;
-            font-weight: 400;
-            color: #ffaa44;
-            min-width: 180px;
-            text-align: center;
-            letter-spacing: 2px;
-            font-family: 'Press Start 2P', monospace;
-            text-shadow: 0 0 8px #ff6600;
-            border-radius: 4px;
+            background: rgba(15,8,0,0.8); border: 3px solid #8b5a2b;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.6), 0 0 10px rgba(255,100,0,0.2);
+            padding: 0.7rem 1.8rem; font-size: 0.8rem; font-weight: 400;
+            color: #ffaa44; min-width: 180px; text-align: center;
+            letter-spacing: 2px; font-family: 'Press Start 2P', monospace;
+            text-shadow: 0 0 8px #ff6600; border-radius: 4px;
         }
 
         .search-row {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.7rem;
-            width: 100%;
-            flex-wrap: wrap;
-            position: relative;
+            display: flex; align-items: center; justify-content: center;
+            gap: 0.7rem; width: 100%; flex-wrap: wrap; position: relative;
         }
 
         .date-search-input {
-            flex: 2;
-            min-width: 180px;
-            padding: 0.6rem 1rem;
-            border: 3px solid #5a3a1a;
-            background: rgba(15, 8, 0, 0.8);
-            font-size: 0.6rem;
-            outline: none;
-            text-align: center;
-            color: #ffaa44;
-            font-family: 'Press Start 2P', monospace;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
-            border-radius: 4px;
+            flex: 2; min-width: 180px; padding: 0.6rem 1rem;
+            border: 3px solid #5a3a1a; background: rgba(15,8,0,0.8);
+            font-size: 0.6rem; outline: none; text-align: center;
+            color: #ffaa44; font-family: 'Press Start 2P', monospace;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5); border-radius: 4px;
         }
-
         .date-search-input:focus {
             border-color: #ff8800;
-            box-shadow: 0 0 10px rgba(255, 100, 0, 0.4), inset 0 0 10px rgba(0,0,0,0.5);
+            box-shadow: 0 0 10px rgba(255,100,0,0.4), inset 0 0 10px rgba(0,0,0,0.5);
         }
-
         .date-search-input::placeholder { color: #5a3a1a; }
 
         .search-btn, .today-btn {
-            padding: 0.6rem 1.2rem;
-            border-radius: 20px;
+            padding: 0.6rem 1.2rem; border-radius: 20px;
             background: linear-gradient(180deg, #7a4a1a 0%, #4a2008 100%);
             border: 3px solid #aa6a2a;
-            box-shadow: inset 0 2px 0 rgba(255, 180, 80, 0.4), 0 3px 6px rgba(0,0,0,0.5);
-            font-weight: 400;
-            color: #ffcc66;
-            cursor: pointer;
-            transition: all 0.1s ease;
-            white-space: nowrap;
-            font-size: 0.55rem;
-            font-family: 'Press Start 2P', monospace;
+            box-shadow: inset 0 2px 0 rgba(255,180,80,0.4), 0 3px 6px rgba(0,0,0,0.5);
+            font-weight: 400; color: #ffcc66; cursor: pointer;
+            transition: all 0.1s ease; white-space: nowrap;
+            font-size: 0.55rem; font-family: 'Press Start 2P', monospace;
             text-shadow: 1px 1px 0px #331100;
         }
-
         .search-btn:hover, .today-btn:hover {
             background: linear-gradient(180deg, #9a5a2a 0%, #5a2a08 100%);
-            box-shadow: inset 0 2px 0 rgba(255, 200, 100, 0.5), 0 3px 8px rgba(0,0,0,0.5), 0 0 15px rgba(255, 150, 0, 0.3);
+            box-shadow: inset 0 2px 0 rgba(255,200,100,0.5), 0 3px 8px rgba(0,0,0,0.5), 0 0 15px rgba(255,150,0,0.3);
         }
-
         .search-btn:active, .today-btn:active { transform: scale(0.93); }
+        .today-btn { background: linear-gradient(180deg, #aa4a0a 0%, #6a2000 100%); border-color: #cc6600; }
 
-        .today-btn {
-            background: linear-gradient(180deg, #aa4a0a 0%, #6a2000 100%);
-            border-color: #cc6600;
-        }
-
-        .sums-container {
-            width: 100%;
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
+        .sums-container { width: 100%; display: flex; gap: 1rem; flex-wrap: wrap; }
 
         .sum-block {
-            flex: 1;
-            min-width: 200px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.4rem;
-            background: rgba(20, 10, 0, 0.7);
-            padding: 0.8rem 1rem;
-            border: 3px solid #5a3a1a;
-            box-shadow: inset 0 0 15px rgba(0,0,0,0.4);
-            border-radius: 6px;
+            flex: 1; min-width: 200px; display: flex; flex-direction: column;
+            align-items: center; gap: 0.4rem; background: rgba(20,10,0,0.7);
+            padding: 0.8rem 1rem; border: 3px solid #5a3a1a;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.4); border-radius: 6px;
             backdrop-filter: blur(2px);
         }
-
         .sum-label {
-            font-weight: 400;
-            color: #ffaa44;
-            font-size: 0.55rem;
-            text-align: center;
-            font-family: 'Press Start 2P', monospace;
+            font-weight: 400; color: #ffaa44; font-size: 0.55rem;
+            text-align: center; font-family: 'Press Start 2P', monospace;
             text-shadow: 1px 1px 0px #000;
         }
-
         .sum-input {
-            width: 100%;
-            padding: 0.5rem 0.7rem;
-            border: 3px solid #4a2a0a;
-            background: rgba(10, 5, 0, 0.9);
-            font-size: 0.65rem;
-            text-align: center;
-            outline: none;
-            color: #ffcc44;
-            font-family: 'Press Start 2P', monospace;
-            box-shadow: inset 0 0 8px rgba(0,0,0,0.6);
-            border-radius: 4px;
+            width: 100%; padding: 0.5rem 0.7rem; border: 3px solid #4a2a0a;
+            background: rgba(10,5,0,0.9); font-size: 0.65rem; text-align: center;
+            outline: none; color: #ffcc44; font-family: 'Press Start 2P', monospace;
+            box-shadow: inset 0 0 8px rgba(0,0,0,0.6); border-radius: 4px;
         }
-
         .sum-input:focus {
             border-color: #ff8800;
-            box-shadow: 0 0 10px rgba(255, 100, 0, 0.4), inset 0 0 8px rgba(0,0,0,0.6);
+            box-shadow: 0 0 10px rgba(255,100,0,0.4), inset 0 0 8px rgba(0,0,0,0.6);
         }
-
-        .sum-input[readonly] {
-            background: rgba(5, 2, 0, 0.95);
-            cursor: default;
-            color: #ff8800;
-        }
+        .sum-input[readonly] { background: rgba(5,2,0,0.95); cursor: default; color: #ff8800; }
 
         .table-container {
-            width: 100%;
-            max-height: 400px;
-            overflow-y: auto;
-            background: rgba(15, 8, 0, 0.8);
-            border: 3px solid #5a3a1a;
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
-            padding: 0.3rem;
-            border-radius: 6px;
-            backdrop-filter: blur(2px);
+            width: 100%; max-height: 400px; overflow-y: auto;
+            background: rgba(15,8,0,0.8); border: 3px solid #5a3a1a;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.5); padding: 0.3rem;
+            border-radius: 6px; backdrop-filter: blur(2px);
         }
 
         .data-table { width: 100%; border-collapse: collapse; }
-        .data-table tr { border-bottom: 2px solid rgba(139, 90, 43, 0.3); }
+        .data-table tr { border-bottom: 2px solid rgba(139,90,43,0.3); }
         .data-table tr:last-child { border-bottom: none; }
         .data-table td { padding: 0.2rem 0.15rem; vertical-align: middle; }
 
         .row-number {
-            font-weight: 400;
-            color: #ff8800;
-            font-size: 0.55rem;
-            text-align: center;
-            width: 32px;
-            font-family: 'Press Start 2P', monospace;
+            font-weight: 400; color: #ff8800; font-size: 0.55rem;
+            text-align: center; width: 32px; font-family: 'Press Start 2P', monospace;
             text-shadow: 0 0 6px #ff4400;
         }
-
         .emoji-cell { text-align: center; width: 48px; }
 
         .emoji-btn {
-            background: rgba(30, 10, 0, 0.7);
-            border: 2px solid #5a3a1a;
-            font-size: 1.8rem;
-            cursor: pointer;
-            padding: 0;
-            opacity: 0.35;
-            transition: all 0.1s ease;
-            filter: grayscale(70%) brightness(0.5);
-            line-height: 1;
-            width: 44px;
-            height: 44px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            box-shadow: inset 0 0 6px rgba(0,0,0,0.4);
+            background: rgba(30,10,0,0.7); border: 2px solid #5a3a1a;
+            font-size: 1.8rem; cursor: pointer; padding: 0; opacity: 0.35;
+            transition: all 0.1s ease; filter: grayscale(70%) brightness(0.5);
+            line-height: 1; width: 44px; height: 44px;
+            display: inline-flex; align-items: center; justify-content: center;
+            border-radius: 50%; box-shadow: inset 0 0 6px rgba(0,0,0,0.4);
         }
-
         .emoji-btn.active {
-            opacity: 1;
-            filter: grayscale(0%) brightness(1.5);
+            opacity: 1; filter: grayscale(0%) brightness(1.5);
             border-color: #ff8800;
             box-shadow: 0 0 15px currentColor, inset 0 0 10px currentColor;
             text-shadow: 0 0 10px currentColor;
         }
-
         .emoji-btn:hover { opacity: 0.7; filter: grayscale(30%) brightness(0.8); border-color: #8b5a2b; }
         .emoji-btn.active:hover { opacity: 1; filter: grayscale(0%) brightness(1.6); }
 
         .text-cell input, .number-cell input {
-            width: 100%;
-            padding: 0.45rem 0.5rem;
-            border: 2px solid #5a3a1a;
-            background: rgba(10, 5, 0, 0.9);
-            font-size: 0.55rem;
-            outline: none;
-            color: #ffcc88;
-            font-family: 'Press Start 2P', monospace;
-            box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
-            border-radius: 4px;
+            width: 100%; padding: 0.45rem 0.5rem; border: 2px solid #5a3a1a;
+            background: rgba(10,5,0,0.9); font-size: 0.55rem; outline: none;
+            color: #ffcc88; font-family: 'Press Start 2P', monospace;
+            box-shadow: inset 0 0 6px rgba(0,0,0,0.5); border-radius: 4px;
         }
-
         .text-cell input { text-align: left; }
         .number-cell input { text-align: center; max-width: 90px; color: #ffaa44; }
-
         .text-cell input:focus, .number-cell input:focus {
             border-color: #ff8800;
-            box-shadow: 0 0 8px rgba(255, 100, 0, 0.4), inset 0 0 6px rgba(0,0,0,0.5);
+            box-shadow: 0 0 8px rgba(255,100,0,0.4), inset 0 0 6px rgba(0,0,0,0.5);
         }
 
         .table-container::-webkit-scrollbar { width: 14px; }
-        .table-container::-webkit-scrollbar-track { background: rgba(15, 8, 0, 0.8); border: 2px solid #3d2008; }
+        .table-container::-webkit-scrollbar-track { background: rgba(15,8,0,0.8); border: 2px solid #3d2008; }
         .table-container::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #7a4a1a, #4a2008); border: 2px solid #5a3a1a; border-radius: 4px; }
     </style>
 </head>
@@ -557,73 +431,48 @@
     </div>
 
     <script>
-        (function() {
-            var c = document.getElementById('starsContainer'), h = '';
-            for (var i = 0; i < 80; i++) {
-                var t = Math.random() * 90, l = Math.random() * 95, s = Math.random() * 3 + 1, d = Math.random() * 2 + 1.5, dl = Math.random() * 3;
-                h += '<div class="star" style="top:' + t + '%;left:' + l + '%;width:' + s + 'px;height:' + s + 'px;--dur:' + d + 's;--delay:' + dl + 's;"></div>';
-            }
-            c.innerHTML = h;
-        })();
+        (function(){var c=document.getElementById('starsContainer'),h='';for(var i=0;i<80;i++){var t=Math.random()*90,l=Math.random()*95,s=Math.random()*3+1,d=Math.random()*2+1.5,dl=Math.random()*3;h+='<div class="star" style="top:'+t+'%;left:'+l+'%;width:'+s+'px;height:'+s+'px;--dur:'+d+'s;--delay:'+dl+'s;"></div>';}c.innerHTML=h;})();
 
-        (function() {
-            var STORAGE_KEY = 'dix_million_data', appData = {}, currentDateStr = '', TOTAL_ROWS = 50;
-            var emojis = ['🐍','🦭','🦔','🐑','🐥','🐘','🐪','🦜','🐬','🦕','🐝','🪰','🐡','🐦‍🔥','🦢','🦘','🦦','🐦','🐖','🐈','🐕','🦧','🐅','🦓','🐿️','🐇','🐼','🐧','🐊','🐳','🦋','🪲','🐌','🪼','🐙','🦂','🐞','🦗','🐠','🦉','🦎','🐻','🦏','🦇','🦚','🐓','🐮','🐯','🐷','🦄'];
-            var glowColors = ['#ff4444','#ff8800','#ffdd00','#44ff44','#00ddff','#4488ff','#aa44ff','#ff44aa','#ff6699','#66ff99','#ff9966','#99ff66','#ff66cc','#66ccff','#ccff66','#ff6666','#66ffcc','#cc66ff','#ffcc66','#66cc99','#ff8888','#88ff88','#8888ff','#ff88cc','#88ccff','#cc88ff','#ffcc88','#88ffcc','#ccff88','#ff88aa','#aaff66','#66aaff','#ff66aa','#aaffaa','#ffaa66','#66ffaa','#aa66ff','#ffaa88','#88aaff','#aaffcc','#ccffaa','#ffccaa','#aaccff','#ccffcc','#ffaacc','#ccaaff','#ffccdd','#ddffcc','#ccddff','#ddccff'];
-            var audioCtx = null;
-            function getAudioContext() { if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)(); if (audioCtx.state === 'suspended') audioCtx.resume(); return audioCtx; }
-            function playActivateSound() { try { var ctx = getAudioContext(), now = ctx.currentTime, osc = ctx.createOscillator(), gain = ctx.createGain(); osc.type = 'sawtooth'; osc.frequency.setValueAtTime(150, now); osc.frequency.setValueAtTime(200, now+0.04); osc.frequency.exponentialRampToValueAtTime(60, now+0.2); gain.gain.setValueAtTime(0.2, now); gain.gain.exponentialRampToValueAtTime(0.001, now+0.2); osc.connect(gain); gain.connect(ctx.destination); osc.start(now); osc.stop(now+0.2); } catch(e) {} }
-            function playDeactivateSound() { try { var ctx = getAudioContext(), now = ctx.currentTime, b = ctx.createBuffer(1, ctx.sampleRate*0.06, ctx.sampleRate), d = b.getChannelData(0); for (var i=0; i<d.length; i++) d[i]=(Math.random()*2-1)*Math.exp(-i/(ctx.sampleRate*0.006)); var n = ctx.createBufferSource(), g = ctx.createGain(), f = ctx.createBiquadFilter(); f.type='bandpass'; f.frequency.value=800; n.buffer=b; g.gain.setValueAtTime(0.3, now); g.gain.exponentialRampToValueAtTime(0.001, now+0.06); n.connect(f); f.connect(g); g.connect(ctx.destination); n.start(now); n.stop(now+0.06); } catch(e) {} }
-            function formatDateToDisplay(d) { return String(d.getDate()).padStart(2,'0')+'.'+String(d.getMonth()+1).padStart(2,'0')+'.'+String(d.getFullYear()).slice(-2); }
-            function formatDateToStorage(d) { return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
-            function parseDateFromInput(s) { s=s.trim(); if(!s) return null; if(s.indexOf('.')!==-1){var p=s.split('.');if(p.length===3){var d=parseInt(p[0]),m=parseInt(p[1]),y=parseInt(p[2]);if(!isNaN(d)&&!isNaN(m)&&!isNaN(y)&&m>=1&&m<=12){if(y<100)y+=2000;var dt=new Date(y,m-1,d);if(dt.getFullYear()===y&&dt.getMonth()===m-1&&dt.getDate()===d)return formatDateToStorage(dt);}}} if(/^\d{4}-\d{2}-\d{2}$/.test(s)){var ip=s.split('-').map(Number),d2=new Date(ip[0],ip[1]-1,ip[2]);if(d2.getFullYear()===ip[0]&&d2.getMonth()===ip[1]-1&&d2.getDate()===ip[2])return s;} return null; }
-            function getTodayString(){return formatDateToStorage(new Date());}
-            function loadData(){try{appData=JSON.parse(localStorage.getItem(STORAGE_KEY))||{};}catch(e){appData={};}if(!appData[getTodayString()])appData[getTodayString()]=createEmptyDayData();}
-            function createEmptyDayData(){var r=[];for(var i=0;i<TOTAL_ROWS;i++)r.push({text:'',number:''});return{total:'0',rows:r};}
-            function saveData(){localStorage.setItem(STORAGE_KEY,JSON.stringify(appData));}
-            function getDayData(d){if(!appData[d]){appData[d]=createEmptyDayData();saveData();}return appData[d];}
-            function storageToDisplay(s){var p=s.split('-').map(Number);return formatDateToDisplay(new Date(p[0],p[1]-1,p[2]));}
-            function formatNumber(v){var n=parseFloat(v);if(isNaN(n))return'0';return n===Math.floor(n)?n.toString():n.toFixed(2);}
+        (function(){var STORAGE_KEY='dix_million_data',appData={},currentDateStr='',TOTAL_ROWS=50;
+        var emojis=['🐍','🦭','🦔','🐑','🐥','🐘','🐪','🦜','🐬','🦕','🐝','🪰','🐡','🐦‍🔥','🦢','🦘','🦦','🐦','🐖','🐈','🐕','🦧','🐅','🦓','🐿️','🐇','🐼','🐧','🐊','🐳','🦋','🪲','🐌','🪼','🐙','🦂','🐞','🦗','🐠','🦉','🦎','🐻','🦏','🦇','🦚','🐓','🐮','🐯','🐷','🦄'];
+        var glowColors=['#ff4444','#ff8800','#ffdd00','#44ff44','#00ddff','#4488ff','#aa44ff','#ff44aa','#ff6699','#66ff99','#ff9966','#99ff66','#ff66cc','#66ccff','#ccff66','#ff6666','#66ffcc','#cc66ff','#ffcc66','#66cc99','#ff8888','#88ff88','#8888ff','#ff88cc','#88ccff','#cc88ff','#ffcc88','#88ffcc','#ccff88','#ff88aa','#aaff66','#66aaff','#ff66aa','#aaffaa','#ffaa66','#66ffaa','#aa66ff','#ffaa88','#88aaff','#aaffcc','#ccffaa','#ffccaa','#aaccff','#ccffcc','#ffaacc','#ccaaff','#ffccdd','#ddffcc','#ccddff','#ddccff'];
+        var audioCtx=null;
+        function getAudioContext(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==='suspended')audioCtx.resume();return audioCtx;}
+        function playActivateSound(){try{var ctx=getAudioContext(),now=ctx.currentTime,osc=ctx.createOscillator(),gain=ctx.createGain();osc.type='sawtooth';osc.frequency.setValueAtTime(150,now);osc.frequency.setValueAtTime(200,now+0.04);osc.frequency.exponentialRampToValueAtTime(60,now+0.2);gain.gain.setValueAtTime(0.2,now);gain.gain.exponentialRampToValueAtTime(0.001,now+0.2);osc.connect(gain);gain.connect(ctx.destination);osc.start(now);osc.stop(now+0.2);}catch(e){}}
+        function playDeactivateSound(){try{var ctx=getAudioContext(),now=ctx.currentTime,b=ctx.createBuffer(1,ctx.sampleRate*0.06,ctx.sampleRate),d=b.getChannelData(0);for(var i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*Math.exp(-i/(ctx.sampleRate*0.006));var n=ctx.createBufferSource(),g=ctx.createGain(),f=ctx.createBiquadFilter();f.type='bandpass';f.frequency.value=800;n.buffer=b;g.gain.setValueAtTime(0.3,now);g.gain.exponentialRampToValueAtTime(0.001,now+0.06);n.connect(f);f.connect(g);g.connect(ctx.destination);n.start(now);n.stop(now+0.06);}catch(e){}}
+        function formatDateToDisplay(d){return String(d.getDate()).padStart(2,'0')+'.'+String(d.getMonth()+1).padStart(2,'0')+'.'+String(d.getFullYear()).slice(-2);}
+        function formatDateToStorage(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+        function parseDateFromInput(s){s=s.trim();if(!s)return null;if(s.indexOf('.')!==-1){var p=s.split('.');if(p.length===3){var d=parseInt(p[0]),m=parseInt(p[1]),y=parseInt(p[2]);if(!isNaN(d)&&!isNaN(m)&&!isNaN(y)&&m>=1&&m<=12){if(y<100)y+=2000;var dt=new Date(y,m-1,d);if(dt.getFullYear()===y&&dt.getMonth()===m-1&&dt.getDate()===d)return formatDateToStorage(dt);}}}if(/^\d{4}-\d{2}-\d{2}$/.test(s)){var ip=s.split('-').map(Number),d2=new Date(ip[0],ip[1]-1,ip[2]);if(d2.getFullYear()===ip[0]&&d2.getMonth()===ip[1]-1&&d2.getDate()===ip[2])return s;}return null;}
+        function getTodayString(){return formatDateToStorage(new Date());}
+        function loadData(){try{appData=JSON.parse(localStorage.getItem(STORAGE_KEY))||{};}catch(e){appData={};}if(!appData[getTodayString()])appData[getTodayString()]=createEmptyDayData();}
+        function createEmptyDayData(){var r=[];for(var i=0;i<TOTAL_ROWS;i++)r.push({text:'',number:''});return{total:'0',rows:r};}
+        function saveData(){localStorage.setItem(STORAGE_KEY,JSON.stringify(appData));}
+        function getDayData(d){if(!appData[d]){appData[d]=createEmptyDayData();saveData();}return appData[d];}
+        function storageToDisplay(s){var p=s.split('-').map(Number);return formatDateToDisplay(new Date(p[0],p[1]-1,p[2]));}
+        function formatNumber(v){var n=parseFloat(v);if(isNaN(n))return'0';return n===Math.floor(n)?n.toString():n.toFixed(2);}
 
-            var cd = document.getElementById('currentDateDisplay'), pb = document.getElementById('prevDayBtn'), nb = document.getElementById('nextDayBtn');
-            var si = document.getElementById('searchDateInput'), sb = document.getElementById('searchDateBtn'), tb = document.getElementById('todayBtn');
-            var ti = document.getElementById('totalSumInput'), spi = document.getElementById('spentSumInput'), tbody = document.getElementById('tableBody');
+        var cd=document.getElementById('currentDateDisplay'),pb=document.getElementById('prevDayBtn'),nb=document.getElementById('nextDayBtn');
+        var si=document.getElementById('searchDateInput'),sb=document.getElementById('searchDateBtn'),tb=document.getElementById('todayBtn');
+        var ti=document.getElementById('totalSumInput'),spi=document.getElementById('spentSumInput'),tbody=document.getElementById('tableBody');
 
-            function renderCurrentDay() {
-                if(!currentDateStr)return; var d = getDayData(currentDateStr);
-                cd.textContent=storageToDisplay(currentDateStr); si.value=storageToDisplay(currentDateStr);
-                ti.value=(d.total==='0'||d.total===''||parseFloat(d.total)===0)?'':d.total;
-                tbody.innerHTML='';
-                for(var i=0;i<TOTAL_ROWS;i++){ var rd=d.rows[i]||{text:'',number:''}, tr=document.createElement('tr');
-                    var tn=document.createElement('td');tn.className='row-number';tn.textContent=(i+1)+'.';tr.appendChild(tn);
-                    var te=document.createElement('td');te.className='emoji-cell'; var eb=document.createElement('button');eb.className='emoji-btn';eb.textContent=emojis[i];eb.setAttribute('data-row',i);
-                    eb.addEventListener('click',function(e){var b=e.currentTarget;if(b.classList.contains('active')){b.classList.remove('active');b.style.color='';playDeactivateSound();}else{b.classList.add('active');b.style.color=glowColors[parseInt(b.getAttribute('data-row'))];playActivateSound();}});
-                    te.appendChild(eb);tr.appendChild(te);
-                    var tt=document.createElement('td');tt.className='text-cell'; var it=document.createElement('input');it.type='text';it.placeholder='ОПИСАНИЕ';it.value=rd.text;
-                    it.addEventListener('input',(function(idx){return function(e){updateRowText(idx,e.target.value);};})(i)); tt.appendChild(it);tr.appendChild(tt);
-                    var tnum=document.createElement('td');tnum.className='number-cell'; var inum=document.createElement('input');inum.type='text';inum.placeholder='0';inum.value=rd.number;inum.style.textAlign='center';
-                    inum.addEventListener('input',(function(idx){return function(e){handleNumberInput(idx,e.target);};})(i)); inum.addEventListener('blur',function(e){formatNumberField(e.target);});
-                    tnum.appendChild(inum);tr.appendChild(tnum); tbody.appendChild(tr);
-                } updateSumsDisplay();
-            }
-            function updateRowText(i,v){if(!currentDateStr)return;getDayData(currentDateStr).rows[i].text=v;saveData();}
-            function handleNumberInput(i,el){if(!currentDateStr)return;var v=el.value;if(v===''){updateNumberInRow(i,'');return;}v=v.replace(',','.');if(!/^-?\d*\.?\d*$/.test(v)){el.value=v.slice(0,-1);return;}if(v.indexOf('.')!==-1){var p=v.split('.');if(p[1]&&p[1].length>2){p[1]=p[1].slice(0,2);v=p.join('.');el.value=v;}}updateNumberInRow(i,v);}
-            function formatNumberField(el){var v=el.value;if(v==='')return;v=v.replace(',','.');var n=parseFloat(v);el.value=!isNaN(n)?formatNumber(v):'';var tr=el.closest('tr');if(tr){var i=Array.from(tr.parentNode.children).indexOf(tr);if(i>=0&&i<TOTAL_ROWS)updateNumberInRow(i,el.value);}}
-            function updateNumberInRow(i,v){if(!currentDateStr)return;getDayData(currentDateStr).rows[i].number=v;saveData();updateSumsDisplay();}
-            function getSpentSum(){if(!currentDateStr)return 0;var r=getDayData(currentDateStr).rows,s=0;for(var i=0;i<TOTAL_ROWS;i++){var nv=r[i]?r[i].number:'';if(nv!==''&&nv!==null){var n=parseFloat(nv);if(!isNaN(n))s+=n;}}return s;}
-            function updateSumsDisplay(){if(!currentDateStr)return;var d=getDayData(currentDateStr),base=parseFloat(d.total)||0,spent=getSpentSum(),rem=base-spent;spi.value=spent===0?'':formatNumber(spent);ti.value=(rem===0&&base===0)?'':(rem===0&&base>0?'0':formatNumber(rem));}
-            function changeDate(ns){if(!ns||!/^\d{4}-\d{2}-\d{2}$/.test(ns))return;if(currentDateStr){var d=getDayData(currentDateStr);d.total=ti.value===''?'0':ti.value;saveData();}currentDateStr=ns;renderCurrentDay();}
-            function shiftDate(days){if(!currentDateStr)return;var p=currentDateStr.split('-').map(Number),date=new Date(p[0],p[1]-1,p[2]);date.setDate(date.getDate()+days);changeDate(formatDateToStorage(date));}
-            document.addEventListener('click',function(){if(audioCtx&&audioCtx.state==='suspended')audioCtx.resume();},{once:true});
+        function renderCurrentDay(){if(!currentDateStr)return;var d=getDayData(currentDateStr);cd.textContent=storageToDisplay(currentDateStr);si.value=storageToDisplay(currentDateStr);ti.value=(d.total==='0'||d.total===''||parseFloat(d.total)===0)?'':d.total;tbody.innerHTML='';for(var i=0;i<TOTAL_ROWS;i++){var rd=d.rows[i]||{text:'',number:''},tr=document.createElement('tr');var tn=document.createElement('td');tn.className='row-number';tn.textContent=(i+1)+'.';tr.appendChild(tn);var te=document.createElement('td');te.className='emoji-cell';var eb=document.createElement('button');eb.className='emoji-btn';eb.textContent=emojis[i];eb.setAttribute('data-row',i);eb.addEventListener('click',function(e){var b=e.currentTarget;if(b.classList.contains('active')){b.classList.remove('active');b.style.color='';playDeactivateSound();}else{b.classList.add('active');b.style.color=glowColors[parseInt(b.getAttribute('data-row'))];playActivateSound();}});te.appendChild(eb);tr.appendChild(te);var tt=document.createElement('td');tt.className='text-cell';var it=document.createElement('input');it.type='text';it.placeholder='ОПИСАНИЕ';it.value=rd.text;it.addEventListener('input',(function(idx){return function(e){updateRowText(idx,e.target.value);};})(i));tt.appendChild(it);tr.appendChild(tt);var tnum=document.createElement('td');tnum.className='number-cell';var inum=document.createElement('input');inum.type='text';inum.placeholder='0';inum.value=rd.number;inum.style.textAlign='center';inum.addEventListener('input',(function(idx){return function(e){handleNumberInput(idx,e.target);};})(i));inum.addEventListener('blur',function(e){formatNumberField(e.target);});tnum.appendChild(inum);tr.appendChild(tnum);tbody.appendChild(tr);}updateSumsDisplay();}
+        function updateRowText(i,v){if(!currentDateStr)return;getDayData(currentDateStr).rows[i].text=v;saveData();}
+        function handleNumberInput(i,el){if(!currentDateStr)return;var v=el.value;if(v===''){updateNumberInRow(i,'');return;}v=v.replace(',','.');if(!/^-?\d*\.?\d*$/.test(v)){el.value=v.slice(0,-1);return;}if(v.indexOf('.')!==-1){var p=v.split('.');if(p[1]&&p[1].length>2){p[1]=p[1].slice(0,2);v=p.join('.');el.value=v;}}updateNumberInRow(i,v);}
+        function formatNumberField(el){var v=el.value;if(v==='')return;v=v.replace(',','.');var n=parseFloat(v);el.value=!isNaN(n)?formatNumber(v):'';var tr=el.closest('tr');if(tr){var i=Array.from(tr.parentNode.children).indexOf(tr);if(i>=0&&i<TOTAL_ROWS)updateNumberInRow(i,el.value);}}
+        function updateNumberInRow(i,v){if(!currentDateStr)return;getDayData(currentDateStr).rows[i].number=v;saveData();updateSumsDisplay();}
+        function getSpentSum(){if(!currentDateStr)return 0;var r=getDayData(currentDateStr).rows,s=0;for(var i=0;i<TOTAL_ROWS;i++){var nv=r[i]?r[i].number:'';if(nv!==''&&nv!==null){var n=parseFloat(nv);if(!isNaN(n))s+=n;}}return s;}
+        function updateSumsDisplay(){if(!currentDateStr)return;var d=getDayData(currentDateStr),base=parseFloat(d.total)||0,spent=getSpentSum(),rem=base-spent;spi.value=spent===0?'':formatNumber(spent);ti.value=(rem===0&&base===0)?'':(rem===0&&base>0?'0':formatNumber(rem));}
+        function changeDate(ns){if(!ns||!/^\d{4}-\d{2}-\d{2}$/.test(ns))return;if(currentDateStr){var d=getDayData(currentDateStr);d.total=ti.value===''?'0':ti.value;saveData();}currentDateStr=ns;renderCurrentDay();}
+        function shiftDate(days){if(!currentDateStr)return;var p=currentDateStr.split('-').map(Number),date=new Date(p[0],p[1]-1,p[2]);date.setDate(date.getDate()+days);changeDate(formatDateToStorage(date));}
+        document.addEventListener('click',function(){if(audioCtx&&audioCtx.state==='suspended')audioCtx.resume();},{once:true});
 
-            function init(){ loadData();currentDateStr=getTodayString();if(!appData[currentDateStr]){appData[currentDateStr]=createEmptyDayData();saveData();}renderCurrentDay();
-                pb.addEventListener('click',function(){shiftDate(-1);}); nb.addEventListener('click',function(){shiftDate(1);});
-                sb.addEventListener('click',function(){var v=si.value.trim();if(v===''){changeDate(getTodayString());return;}var p=parseDateFromInput(v);if(p)changeDate(p);else{alert('ВВЕДИТЕ ДАТУ 09.08.26');si.value=storageToDisplay(currentDateStr);}});
-                si.addEventListener('keypress',function(e){if(e.key==='Enter')sb.click();}); tb.addEventListener('click',function(){changeDate(getTodayString());});
-                ti.addEventListener('input',function(){if(!currentDateStr)return;var v=ti.value.replace(',','.');if(v===''){getDayData(currentDateStr).total='0';saveData();updateSumsDisplay();return;}if(v.indexOf('.')!==-1){var p=v.split('.');if(p[1]&&p[1].length>2){p[1]=p[1].slice(0,2);v=p.join('.');ti.value=v;}}if(!/^-?\d*\.?\d*$/.test(v)){ti.value=v.slice(0,-1);return;}if(!isNaN(parseFloat(v))){getDayData(currentDateStr).total=v;saveData();updateSumsDisplay();}});
-                ti.addEventListener('blur',function(){if(!currentDateStr)return;var v=ti.value.replace(',','.');if(v===''){getDayData(currentDateStr).total='0';saveData();updateSumsDisplay();return;}getDayData(currentDateStr).total=isNaN(parseFloat(v))?'0':formatNumber(v);saveData();updateSumsDisplay();});
-            } init();
-        })();
+        function init(){loadData();currentDateStr=getTodayString();if(!appData[currentDateStr]){appData[currentDateStr]=createEmptyDayData();saveData();}renderCurrentDay();
+            pb.addEventListener('click',function(){shiftDate(-1);});nb.addEventListener('click',function(){shiftDate(1);});
+            sb.addEventListener('click',function(){var v=si.value.trim();if(v===''){changeDate(getTodayString());return;}var p=parseDateFromInput(v);if(p)changeDate(p);else{alert('ВВЕДИТЕ ДАТУ 09.08.26');si.value=storageToDisplay(currentDateStr);}});
+            si.addEventListener('keypress',function(e){if(e.key==='Enter')sb.click();});tb.addEventListener('click',function(){changeDate(getTodayString());});
+            ti.addEventListener('input',function(){if(!currentDateStr)return;var v=ti.value.replace(',','.');if(v===''){getDayData(currentDateStr).total='0';saveData();updateSumsDisplay();return;}if(v.indexOf('.')!==-1){var p=v.split('.');if(p[1]&&p[1].length>2){p[1]=p[1].slice(0,2);v=p.join('.');ti.value=v;}}if(!/^-?\d*\.?\d*$/.test(v)){ti.value=v.slice(0,-1);return;}if(!isNaN(parseFloat(v))){getDayData(currentDateStr).total=v;saveData();updateSumsDisplay();}});
+            ti.addEventListener('blur',function(){if(!currentDateStr)return;var v=ti.value.replace(',','.');if(v===''){getDayData(currentDateStr).total='0';saveData();updateSumsDisplay();return;}getDayData(currentDateStr).total=isNaN(parseFloat(v))?'0':formatNumber(v);saveData();updateSumsDisplay();});
+        }init();})();
     </script>
 </body>
 </html>
