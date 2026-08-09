@@ -124,16 +124,19 @@
             position: relative; overflow: hidden;
         }
 
+        /* Динозаврики в ряд */
         .dino-in-oval {
-            position: absolute; pointer-events: none; opacity: 0.4; z-index: 0;
+            position: absolute; pointer-events: none; opacity: 0.5; z-index: 0;
+            font-size: 4rem; /* УВЕЛИЧЕНЫ В 2 РАЗА */
+            animation: dinoFloat1 3s ease-in-out infinite;
+            top: 50%;
+            transform: translateY(-50%);
         }
-        .dino-oval-1 { top: 15%; left: 5%; font-size: 2.5rem; animation: dinoFloat1 3s ease-in-out infinite; }
-        .dino-oval-2 { top: 10%; right: 5%; font-size: 2.8rem; animation: dinoFloat2 3s ease-in-out infinite; }
-        .dino-oval-3 { bottom: 15%; left: 50%; font-size: 2rem; animation: dinoFloat3 3s ease-in-out infinite; }
+        .dino-oval-1 { left: 5%; }
+        .dino-oval-2 { left: 50%; transform: translate(-50%, -50%); }
+        .dino-oval-3 { right: 5%; }
 
-        @keyframes dinoFloat1 { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-6px);} }
-        @keyframes dinoFloat2 { 0%,100%{transform:scaleX(-1) translateY(0);} 50%{transform:scaleX(-1) translateY(-6px);} }
-        @keyframes dinoFloat3 { 0%,100%{transform:translateX(-50%) translateY(0);} 50%{transform:translateX(-50%) translateY(-6px);} }
+        @keyframes dinoFloat1 { 0%,100%{transform:translateY(-50%);} 50%{transform:translateY(calc(-50% - 8px));} }
 
         .brand-top {
             font-size: 5.5rem; font-weight: 400; letter-spacing: 10px;
@@ -147,9 +150,9 @@
             font-size: 1rem; font-weight: 400; color: #ffdd44; letter-spacing: 5px;
             font-family: 'Ruslan Display', cursive;
             text-shadow: 0 0 10px #ffaa00, 2px 2px 0px #331100; position: relative; z-index: 1;
-            /* ПОДСЧЕТ МИЛЛИОНОВ НЕМНОГО ВНИЗ */
-            margin-top: -0.4rem;
-            margin-bottom: 1.8rem;
+            /* ПОДСЧЕТ МИЛЛИОНОВ ЧУТЬ ВЫШЕ */
+            margin-top: -0.6rem;
+            margin-bottom: 2rem;
         }
 
         /* Строка с "Потрачено за месяц" (над датой) */
