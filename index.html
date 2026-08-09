@@ -24,7 +24,7 @@
 
         .app {
             width: 100%;
-            max-width: 700px;
+            max-width: 780px;
             background: #f9fff5;
             border-radius: 3.5rem;
             padding: 2rem 1.8rem 2.2rem;
@@ -246,22 +246,67 @@
         .data-table {
             width: 100%;
             border-collapse: separate;
-            border-spacing: 0 6px;
+            border-spacing: 0 4px;
             padding: 0.3rem;
         }
 
         .data-table td {
-            padding: 0.25rem 0.5rem;
+            padding: 0.2rem 0.3rem;
+            vertical-align: middle;
+        }
+
+        .row-number {
+            font-weight: 700;
+            color: #3a6b35;
+            font-size: 0.85rem;
+            text-align: center;
+            min-width: 28px;
+            white-space: nowrap;
+        }
+
+        .emoji-cell {
+            text-align: center;
+            width: 40px;
+        }
+
+        .emoji-btn {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0.1rem 0.2rem;
+            opacity: 0.3;
+            transition: all 0.2s ease;
+            filter: grayscale(100%);
+            line-height: 1;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .emoji-btn.active {
+            opacity: 1;
+            filter: grayscale(0%);
+            transform: scale(1.25);
+            text-shadow: 0 0 10px currentColor;
+        }
+
+        .emoji-btn:hover {
+            opacity: 0.7;
+            filter: grayscale(30%);
         }
 
         .text-cell input,
         .number-cell input {
             width: 100%;
-            padding: 0.65rem 0.9rem;
+            padding: 0.5rem 0.7rem;
             border-radius: 2rem;
             border: 2px solid #d0e0bb;
             background: #fefffa;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             outline: none;
             transition: 0.2s;
         }
@@ -273,21 +318,13 @@
         .number-cell input {
             text-align: center;
             font-weight: 600;
-            max-width: 100px;
+            max-width: 85px;
         }
 
         .text-cell input:focus,
         .number-cell input:focus {
             border-color: #ff8c42;
             box-shadow: 0 0 0 2px rgba(255, 140, 66, 0.3);
-        }
-
-        .text-cell {
-            width: 70%;
-        }
-
-        .number-cell {
-            width: 30%;
         }
 
         .table-container::-webkit-scrollbar {
@@ -342,7 +379,30 @@
             var STORAGE_KEY = 'dix_million_data';
             var appData = {};
             var currentDateStr = '';
-            var TOTAL_ROWS = 100;
+            var TOTAL_ROWS = 50;
+
+            // Список эмодзи для строк 1-50
+            var emojis = [
+                '🐍', '🦭', '🦔', '🐑', '🐥', '🐘', '🐪', '🦜', '🐬', '🦕',
+                '🐝', '🪰', '🐡', '🐦‍🔥', '🦢', '🦘', '🦦', '🐦', '🐖', '🐈',
+                '🐕', '🦧', '🐅', '🦓', '🐿️', '🐇', '🐼', '🐧', '🐊', '🐳',
+                '🦋', '🪲', '🐌', '🪼', '🐙', '🦂', '🐞', '🦗', '🐠', '🦉',
+                '🦎', '🐻', '🦏', '🦇', '🦚', '🐓', '🐮', '🐯', '🐷', '🦄'
+            ];
+
+            // Цвета для свечения эмодзи
+            var glowColors = [
+                '#ff4444', '#ff8800', '#ffdd00', '#44ff44', '#00ddff',
+                '#4488ff', '#aa44ff', '#ff44aa', '#ff6699', '#66ff99',
+                '#ff9966', '#99ff66', '#ff66cc', '#66ccff', '#ccff66',
+                '#ff6666', '#66ffcc', '#cc66ff', '#ffcc66', '#66cc99',
+                '#ff8888', '#88ff88', '#8888ff', '#ff88cc', '#88ccff',
+                '#cc88ff', '#ffcc88', '#88ffcc', '#ccff88', '#ff88aa',
+                '#aaff66', '#66aaff', '#ff66aa', '#aaffaa', '#ffaa66',
+                '#66ffaa', '#aa66ff', '#ffaa88', '#88aaff', '#aaffcc',
+                '#ccffaa', '#ffccaa', '#aaccff', '#ccffcc', '#ffaacc',
+                '#ccaaff', '#ffccdd', '#ddffcc', '#ccddff', '#ddccff'
+            ];
 
             function formatDateToDisplay(date) {
                 var d = String(date.getDate()).padStart(2, '0');
@@ -361,7 +421,6 @@
             function parseDateFromInput(str) {
                 str = str.trim();
                 if (!str) return null;
-
                 if (str.indexOf('.') !== -1) {
                     var dotParts = str.split('.');
                     if (dotParts.length === 3) {
@@ -370,9 +429,7 @@
                         var yearPart = parseInt(dotParts[2], 10);
                         if (!isNaN(day) && !isNaN(month) && !isNaN(yearPart) && month >= 1 && month <= 12) {
                             var year = yearPart;
-                            if (yearPart < 100) {
-                                year = 2000 + yearPart;
-                            }
+                            if (yearPart < 100) year = 2000 + yearPart;
                             var date = new Date(year, month - 1, day);
                             if (date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day) {
                                 return formatDateToStorage(date);
@@ -380,7 +437,6 @@
                         }
                     }
                 }
-
                 var regex = /^\d{4}-\d{2}-\d{2}$/;
                 if (regex.test(str)) {
                     var isoParts = str.split('-').map(Number);
@@ -449,6 +505,30 @@
                 }
             }
 
+            // Генерация звука загрузки Windows 7
+            function playWin7Sound() {
+                try {
+                    var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                    var notes = [523.25, 659.25, 783.99, 1046.50];
+                    var startTime = audioCtx.currentTime;
+                    
+                    notes.forEach(function(freq, i) {
+                        var osc = audioCtx.createOscillator();
+                        var gain = audioCtx.createGain();
+                        osc.type = 'sine';
+                        osc.frequency.value = freq;
+                        gain.gain.setValueAtTime(0.15, startTime + i * 0.12);
+                        gain.gain.exponentialRampToValueAtTime(0.001, startTime + i * 0.12 + 0.3);
+                        osc.connect(gain);
+                        gain.connect(audioCtx.destination);
+                        osc.start(startTime + i * 0.12);
+                        osc.stop(startTime + i * 0.12 + 0.3);
+                    });
+                } catch (e) {
+                    console.log('Звук не поддерживается');
+                }
+            }
+
             var currentDateDisplay = document.getElementById('currentDateDisplay');
             var prevBtn = document.getElementById('prevDayBtn');
             var nextBtn = document.getElementById('nextDayBtn');
@@ -466,7 +546,6 @@
                 currentDateDisplay.textContent = displayDate;
                 searchInput.value = displayDate;
 
-                // Общая сумма
                 if (dayData.total === '0' || dayData.total === '' || parseFloat(dayData.total) === 0) {
                     totalSumInput.value = '';
                 } else {
@@ -477,6 +556,34 @@
                 for (var i = 0; i < TOTAL_ROWS; i++) {
                     var rowData = dayData.rows[i] || { text: '', number: '' };
                     var tr = document.createElement('tr');
+
+                    // Номер строки
+                    var tdNum = document.createElement('td');
+                    tdNum.className = 'row-number';
+                    tdNum.textContent = (i + 1) + '.';
+                    tr.appendChild(tdNum);
+
+                    // Кнопка-эмодзи
+                    var tdEmoji = document.createElement('td');
+                    tdEmoji.className = 'emoji-cell';
+                    var emojiBtn = document.createElement('button');
+                    emojiBtn.className = 'emoji-btn';
+                    emojiBtn.textContent = emojis[i];
+                    emojiBtn.setAttribute('data-row', i);
+                    emojiBtn.addEventListener('click', function(e) {
+                        var btn = e.currentTarget;
+                        btn.classList.toggle('active');
+                        if (btn.classList.contains('active')) {
+                            btn.style.color = glowColors[parseInt(btn.getAttribute('data-row'))];
+                        } else {
+                            btn.style.color = '';
+                        }
+                        playWin7Sound();
+                    });
+                    tdEmoji.appendChild(emojiBtn);
+                    tr.appendChild(tdEmoji);
+
+                    // Текстовая ячейка
                     var tdText = document.createElement('td');
                     tdText.className = 'text-cell';
                     var inputText = document.createElement('input');
@@ -489,6 +596,9 @@
                         };
                     })(i));
                     tdText.appendChild(inputText);
+                    tr.appendChild(tdText);
+
+                    // Числовая ячейка
                     var tdNumber = document.createElement('td');
                     tdNumber.className = 'number-cell';
                     var inputNumber = document.createElement('input');
@@ -506,8 +616,8 @@
                         formatNumberField(e.target);
                     });
                     tdNumber.appendChild(inputNumber);
-                    tr.appendChild(tdText);
                     tr.appendChild(tdNumber);
+
                     tableBody.appendChild(tr);
                 }
                 updateSumsDisplay();
@@ -571,7 +681,6 @@
                 updateSumsDisplay();
             }
 
-            // Функция подсчёта сумм
             function getSpentSum() {
                 if (!currentDateStr) return 0;
                 var dayData = getDayData(currentDateStr);
@@ -580,9 +689,7 @@
                     var numVal = dayData.rows[i] ? dayData.rows[i].number : '';
                     if (numVal !== '' && numVal !== null && numVal !== undefined) {
                         var n = parseFloat(numVal);
-                        if (!isNaN(n)) {
-                            sum += n;
-                        }
+                        if (!isNaN(n)) sum += n;
                     }
                 }
                 return sum;
@@ -595,14 +702,12 @@
                 var spentSum = getSpentSum();
                 var remaining = baseTotal - spentSum;
 
-                // Окно "Потрачено"
                 if (spentSum === 0) {
                     spentSumInput.value = '';
                 } else {
                     spentSumInput.value = formatNumber(spentSum);
                 }
 
-                // Окно "Общая сумма" (остаток)
                 if (remaining === 0 && baseTotal === 0) {
                     totalSumInput.value = '';
                 } else if (remaining === 0 && baseTotal > 0) {
@@ -617,11 +722,7 @@
                 if (currentDateStr) {
                     var currentDayData = getDayData(currentDateStr);
                     var val = totalSumInput.value;
-                    if (val === '') {
-                        currentDayData.total = '0';
-                    } else {
-                        currentDayData.total = val;
-                    }
+                    currentDayData.total = val === '' ? '0' : val;
                     saveData();
                 }
                 currentDateStr = newDateStr;
@@ -633,8 +734,7 @@
                 var parts = currentDateStr.split('-').map(Number);
                 var date = new Date(parts[0], parts[1] - 1, parts[2]);
                 date.setDate(date.getDate() + days);
-                var newStr = formatDateToStorage(date);
-                changeDate(newStr);
+                changeDate(formatDateToStorage(date));
             }
 
             function init() {
@@ -666,9 +766,7 @@
                 });
 
                 searchInput.addEventListener('keypress', function(e) {
-                    if (e.key === 'Enter') {
-                        searchBtn.click();
-                    }
+                    if (e.key === 'Enter') searchBtn.click();
                 });
 
                 todayBtn.addEventListener('click', function() {
@@ -679,8 +777,7 @@
                     if (!currentDateStr) return;
                     var val = totalSumInput.value.replace(',', '.');
                     if (val === '') {
-                        var dayData = getDayData(currentDateStr);
-                        dayData.total = '0';
+                        getDayData(currentDateStr).total = '0';
                         saveData();
                         updateSumsDisplay();
                         return;
@@ -699,8 +796,7 @@
                     }
                     var num = parseFloat(val);
                     if (!isNaN(num)) {
-                        var dayData = getDayData(currentDateStr);
-                        dayData.total = val;
+                        getDayData(currentDateStr).total = val;
                         saveData();
                         updateSumsDisplay();
                     }
@@ -710,26 +806,19 @@
                     if (!currentDateStr) return;
                     var val = totalSumInput.value.replace(',', '.');
                     if (val === '') {
-                        var dayData = getDayData(currentDateStr);
-                        dayData.total = '0';
+                        getDayData(currentDateStr).total = '0';
                         saveData();
                         updateSumsDisplay();
                         return;
                     }
                     var num = parseFloat(val);
                     if (isNaN(num)) {
-                        var dayData = getDayData(currentDateStr);
-                        dayData.total = '0';
-                        saveData();
-                        updateSumsDisplay();
+                        getDayData(currentDateStr).total = '0';
                     } else {
-                        var formatted = formatNumber(val);
-                        totalSumInput.value = formatted;
-                        var dayData = getDayData(currentDateStr);
-                        dayData.total = formatted;
-                        saveData();
-                        updateSumsDisplay();
+                        getDayData(currentDateStr).total = formatNumber(val);
                     }
+                    saveData();
+                    updateSumsDisplay();
                 });
             }
 
