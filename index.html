@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+й<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -105,7 +105,7 @@
             50% { box-shadow: 0 0 55px rgba(255,230,170,0.6), 0 0 100px rgba(255,210,140,0.4); }
         }
 
-        /* Комета — быстрая диагональ */
+        /* Комета — 25 градусов */
         .comet {
             position: absolute;
             top: -80px;
@@ -119,15 +119,15 @@
         }
 
         @keyframes cometDiagonal {
-            0% { top: -80px; right: -80px; opacity: 0; transform: rotate(-45deg); }
+            0% { top: -80px; right: -80px; opacity: 0; transform: rotate(-25deg); }
             5% { opacity: 1; }
-            20% { top: 60px; right: 120px; opacity: 1; transform: rotate(-45deg); }
-            50% { top: 220px; right: 380px; opacity: 0.7; transform: rotate(-45deg); }
-            80% { top: 380px; right: 600px; opacity: 0.2; transform: rotate(-45deg); }
-            100% { top: 550px; right: 850px; opacity: 0; transform: rotate(-45deg); }
+            20% { top: 60px; right: 120px; opacity: 1; transform: rotate(-25deg); }
+            50% { top: 220px; right: 380px; opacity: 0.7; transform: rotate(-25deg); }
+            80% { top: 380px; right: 600px; opacity: 0.2; transform: rotate(-25deg); }
+            100% { top: 550px; right: 850px; opacity: 0; transform: rotate(-25deg); }
         }
 
-        /* Растения — дикие, без горшков */
+        /* Растения — без пшеницы */
         .plants-left {
             position: absolute;
             left: -5px;
@@ -221,26 +221,26 @@
             margin-bottom: 0.3rem;
             padding: 0.2rem;
             position: relative;
-            overflow: hidden;
+            overflow: visible;
         }
 
-        /* Динозавры — огромные, в рамках шапки */
+        /* Динозавры — полностью видны */
         .dino-in-oval {
             position: absolute;
             pointer-events: none;
-            font-size: 70px;
-            opacity: 0.4;
+            font-size: 45px;
+            opacity: 0.45;
             animation: dinoFloat 3s ease-in-out infinite;
             z-index: 0;
         }
 
-        .dino-oval-1 { top: -20px; left: -10px; animation-delay: 0s; font-size: 75px; }
-        .dino-oval-2 { top: -25px; right: -15px; animation-delay: 0.5s; transform: scaleX(-1); font-size: 80px; }
-        .dino-oval-3 { bottom: -15px; left: 35%; animation-delay: 1s; font-size: 65px; }
+        .dino-oval-1 { top: 5px; left: 10px; animation-delay: 0s; font-size: 50px; }
+        .dino-oval-2 { top: 0px; right: 10px; animation-delay: 0.5s; transform: scaleX(-1); font-size: 55px; }
+        .dino-oval-3 { bottom: 5px; left: 38%; animation-delay: 1s; font-size: 40px; }
 
         @keyframes dinoFloat {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
+            50% { transform: translateY(-6px); }
         }
 
         .dino-oval-2 {
@@ -249,7 +249,7 @@
 
         @keyframes dinoFloat2 {
             0%, 100% { transform: scaleX(-1) translateY(0); }
-            50% { transform: scaleX(-1) translateY(-8px); }
+            50% { transform: scaleX(-1) translateY(-6px); }
         }
 
         .brand-top {
@@ -544,10 +544,10 @@
 
         <div class="comet">☄️</div>
 
-        <!-- Дикие растения юрского периода -->
-        <div class="plants-left">🌿<br>🌱<br>🍃<br>🌾<br>🌿<br>🍃<br>🌱<br>🌾</div>
-        <div class="plants-right">🌾<br>🍃<br>🌿<br>🌱<br>🌾<br>🍃<br>🌿<br>🌱</div>
-        <div class="plants-bottom">🌿 🌱 🍃 🌾 🌿 🌱 🍃 🌾 🌿 🌱 🍃</div>
+        <!-- Растения: только 🌿🌱🌴🌵 -->
+        <div class="plants-left">🌿<br>🌱<br>🌴<br>🌵<br>🌿<br>🌱<br>🌴<br>🌵</div>
+        <div class="plants-right">🌵<br>🌴<br>🌿<br>🌱<br>🌵<br>🌴<br>🌿<br>🌱</div>
+        <div class="plants-bottom">🌿 🌱 🌴 🌵 🌿 🌱 🌴 🌵 🌿 🌱 🌴</div>
 
         <div class="content-layer">
             <div class="oval-header">
