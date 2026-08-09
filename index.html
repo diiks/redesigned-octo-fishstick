@@ -246,57 +246,64 @@
         .data-table {
             width: 100%;
             border-collapse: separate;
-            border-spacing: 0 4px;
+            border-spacing: 0 5px;
             padding: 0.3rem;
         }
 
         .data-table td {
-            padding: 0.2rem 0.3rem;
+            padding: 0.3rem 0.4rem;
             vertical-align: middle;
         }
 
         .row-number {
             font-weight: 700;
             color: #3a6b35;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             text-align: center;
-            min-width: 28px;
+            min-width: 32px;
             white-space: nowrap;
         }
 
         .emoji-cell {
             text-align: center;
-            width: 40px;
+            width: 50px;
         }
 
         .emoji-btn {
             background: none;
             border: none;
-            font-size: 1.2rem;
+            font-size: 1.6rem;
             cursor: pointer;
-            padding: 0.1rem 0.2rem;
+            padding: 0.2rem;
             opacity: 0.3;
             transition: all 0.2s ease;
             filter: grayscale(100%);
             line-height: 1;
             border-radius: 50%;
-            width: 32px;
-            height: 32px;
+            width: 40px;
+            height: 40px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
+            vertical-align: middle;
         }
 
         .emoji-btn.active {
             opacity: 1;
             filter: grayscale(0%);
-            transform: scale(1.25);
-            text-shadow: 0 0 10px currentColor;
+            transform: scale(1.3);
+            text-shadow: 0 0 12px currentColor, 0 0 24px currentColor;
         }
 
         .emoji-btn:hover {
             opacity: 0.7;
             filter: grayscale(30%);
+            transform: scale(1.1);
+        }
+
+        .emoji-btn.active:hover {
+            opacity: 1;
+            filter: grayscale(0%);
         }
 
         .text-cell input,
@@ -381,7 +388,6 @@
             var currentDateStr = '';
             var TOTAL_ROWS = 50;
 
-            // Список эмодзи для строк 1-50
             var emojis = [
                 '🐍', '🦭', '🦔', '🐑', '🐥', '🐘', '🐪', '🦜', '🐬', '🦕',
                 '🐝', '🪰', '🐡', '🐦‍🔥', '🦢', '🦘', '🦦', '🐦', '🐖', '🐈',
@@ -390,7 +396,6 @@
                 '🦎', '🐻', '🦏', '🦇', '🦚', '🐓', '🐮', '🐯', '🐷', '🦄'
             ];
 
-            // Цвета для свечения эмодзи
             var glowColors = [
                 '#ff4444', '#ff8800', '#ffdd00', '#44ff44', '#00ddff',
                 '#4488ff', '#aa44ff', '#ff44aa', '#ff6699', '#66ff99',
@@ -403,6 +408,55 @@
                 '#ccffaa', '#ffccaa', '#aaccff', '#ccffcc', '#ffaacc',
                 '#ccaaff', '#ffccdd', '#ddffcc', '#ccddff', '#ddccff'
             ];
+
+            var audioCtx = null;
+
+            function getAudioContext() {
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                return audioCtx;
+            }
+
+            // Звук активации — высокий приятный "дзинь" (восходящий)
+            function playActivateSound() {
+                try {
+                    var ctx = getAudioContext();
+                    var now = ctx.currentTime;
+                    
+                    var osc = ctx.createOscillator();
+                    var gain = ctx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(880, now);
+                    osc.frequency.exponentialRampToValueAtTime(1760, now + 0.08);
+                    gain.gain.setValueAtTime(0.3, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.2);
+                } catch (e) {}
+            }
+
+            // Звук деактивации — низкий "тук" (нисходящий)
+            function playDeactivateSound() {
+                try {
+                    var ctx = getAudioContext();
+                    var now = ctx.currentTime;
+                    
+                    var osc = ctx.createOscillator();
+                    var gain = ctx.createGain();
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(440, now);
+                    osc.frequency.exponentialRampToValueAtTime(220, now + 0.1);
+                    gain.gain.setValueAtTime(0.3, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.15);
+                } catch (e) {}
+            }
 
             function formatDateToDisplay(date) {
                 var d = String(date.getDate()).padStart(2, '0');
@@ -505,30 +559,6 @@
                 }
             }
 
-            // Генерация звука загрузки Windows 7
-            function playWin7Sound() {
-                try {
-                    var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                    var notes = [523.25, 659.25, 783.99, 1046.50];
-                    var startTime = audioCtx.currentTime;
-                    
-                    notes.forEach(function(freq, i) {
-                        var osc = audioCtx.createOscillator();
-                        var gain = audioCtx.createGain();
-                        osc.type = 'sine';
-                        osc.frequency.value = freq;
-                        gain.gain.setValueAtTime(0.15, startTime + i * 0.12);
-                        gain.gain.exponentialRampToValueAtTime(0.001, startTime + i * 0.12 + 0.3);
-                        osc.connect(gain);
-                        gain.connect(audioCtx.destination);
-                        osc.start(startTime + i * 0.12);
-                        osc.stop(startTime + i * 0.12 + 0.3);
-                    });
-                } catch (e) {
-                    console.log('Звук не поддерживается');
-                }
-            }
-
             var currentDateDisplay = document.getElementById('currentDateDisplay');
             var prevBtn = document.getElementById('prevDayBtn');
             var nextBtn = document.getElementById('nextDayBtn');
@@ -557,13 +587,11 @@
                     var rowData = dayData.rows[i] || { text: '', number: '' };
                     var tr = document.createElement('tr');
 
-                    // Номер строки
                     var tdNum = document.createElement('td');
                     tdNum.className = 'row-number';
                     tdNum.textContent = (i + 1) + '.';
                     tr.appendChild(tdNum);
 
-                    // Кнопка-эмодзи
                     var tdEmoji = document.createElement('td');
                     tdEmoji.className = 'emoji-cell';
                     var emojiBtn = document.createElement('button');
@@ -572,18 +600,21 @@
                     emojiBtn.setAttribute('data-row', i);
                     emojiBtn.addEventListener('click', function(e) {
                         var btn = e.currentTarget;
-                        btn.classList.toggle('active');
-                        if (btn.classList.contains('active')) {
-                            btn.style.color = glowColors[parseInt(btn.getAttribute('data-row'))];
-                        } else {
+                        var isActive = btn.classList.contains('active');
+                        if (isActive) {
+                            btn.classList.remove('active');
                             btn.style.color = '';
+                            playDeactivateSound();
+                        } else {
+                            btn.classList.add('active');
+                            var colorIndex = parseInt(btn.getAttribute('data-row'));
+                            btn.style.color = glowColors[colorIndex];
+                            playActivateSound();
                         }
-                        playWin7Sound();
                     });
                     tdEmoji.appendChild(emojiBtn);
                     tr.appendChild(tdEmoji);
 
-                    // Текстовая ячейка
                     var tdText = document.createElement('td');
                     tdText.className = 'text-cell';
                     var inputText = document.createElement('input');
@@ -598,7 +629,6 @@
                     tdText.appendChild(inputText);
                     tr.appendChild(tdText);
 
-                    // Числовая ячейка
                     var tdNumber = document.createElement('td');
                     tdNumber.className = 'number-cell';
                     var inputNumber = document.createElement('input');
@@ -665,9 +695,12 @@
                 } else {
                     inputElement.value = '';
                 }
-                var rowIndex = Array.from(inputElement.closest('tr').parentNode.children).indexOf(inputElement.closest('tr'));
-                if (rowIndex >= 0 && rowIndex < TOTAL_ROWS) {
-                    updateNumberInRow(rowIndex, inputElement.value);
+                var tr = inputElement.closest('tr');
+                if (tr) {
+                    var rowIndex = Array.from(tr.parentNode.children).indexOf(tr);
+                    if (rowIndex >= 0 && rowIndex < TOTAL_ROWS) {
+                        updateNumberInRow(rowIndex, inputElement.value);
+                    }
                 }
             }
 
