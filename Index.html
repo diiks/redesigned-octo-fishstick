@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=2.0">
+  <title>DIX | Подсчёт миллионов</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(145deg, #f5fff0 0%, #e6ffd6 100%);
+      font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1.5rem;
+      margin: 0;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 700px;
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      background: #f9fff5;
+      border-radius: 3.5rem;
+      padding: 2rem 1.8rem 2.2rem;
+      box-shadow: 0 25px 45px rgba(80, 120, 60, 0.15);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.6rem;
+      border: 1px solid rgba(180, 210, 140, 0.5);
+    }
+
+    /* Овальная шапка */
+    .oval-header {
+      width: 100%;
+      max-width: 380px;
+      background: #ccffcc; /* салатовый фон */
+      border: 3.5px solid #ff8c42; /* оранжевая граница */
+      border-radius: 50%;
+      aspect-ratio: 1 / 0.55;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      box-shadow: 0 12px 18px rgba(255, 140, 0, 0.25);
+      margin-bottom: 0.3rem;
+      padding: 0.2rem;
+    }
+
+    .brand-top {
+      font-size: clamp(2.4rem, 8vw, 3.8rem);
+      font-weight: 800;
+      letter-spacing: 3px;
+      color: #1f7a1f; /* зелёный */
+      text-shadow: 2px 2px 0 rgba(255, 255, 200, 0.8);
+      line-height: 1;
+    }
+
+    .brand-sub {
+      font-size: clamp(1rem, 3.5vw, 1.5rem);
+      font-weight: 700;
+      color: #228b22; /* тёмно-зелёный */
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      background: rgba(255,255,240,0.7);
+      padding: 0.1rem 1.2rem;
+      border-radius: 2rem;
+      margin-top: 0.1rem;
+    }
+
+    /* Блок с датой и стрелками */
+    .date-navigation {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      width: 100%;
+      flex-wrap: wrap;
+    }
+
+    .arrow-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #f0f7e6;
+      border: 2px solid #b6d7a8;
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #2d5a27;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      background: #e2f0d9;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+      line-height: 1;
+      user-select: none;
+    }
+
+    .arrow-btn:hover {
+      background: #c8e6b5;
+      border-color: #ff8c42;
+      color: #1e3b1a;
+      transform: scale(1.05);
+    }
+
+    .arrow-btn:active {
+      transform: scale(0.94);
+      background: #b1d89b;
+    }
+
+    .date-window {
+      background: white;
+      border: 2px solid #c5d5b0;
+      border-radius: 2.5rem;
+      padding: 0.7rem 1.8rem;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #1e4620;
+      background: #fafff5;
+      box-shadow: inset 0 2px 6px rgba(0,0,0,0.02);
+      min-width: 170px;
+      text-align: center;
+      letter-spacing: 0.5px;
+    }
+
+    /* Поисковая строка и кнопка сегодня */
+    .search-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.7rem;
+      width: 100%;
+      flex-wrap: wrap;
+    }
+
+    .date-search-input {
+      flex: 2;
+      min-width: 180px;
+      padding: 0.7rem 1.2rem;
+      border: 2px solid #c0cfaa;
+      border-radius: 2.5rem;
+      font-size: 1rem;
+      background: white;
+      outline: none;
+      text-align: center;
+      font-weight: 500;
+      transition: 0.2s;
+    }
+
+    .date-search-input:focus {
+      border-color: #ff8c42;
+      box-shadow: 0 0 0 3px rgba(255,140,66,0.25);
+    }
+
+    .search-btn, .today-btn {
+      padding: 0.7rem 1.3rem;
+      border-radius: 2.5rem;
+      background: #eaf4e1;
+      border: 2px solid #aacf8e;
+      font-weight: 600;
+      color: #2d5423;
+      cursor: pointer;
+      background: #dcedc8;
+      transition: all 0.2s;
+      white-space: nowrap;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 0.2rem;
+    }
+
+    .search-btn:hover, .today-btn:hover {
+      background: #c2e0a4;
+      border-color: #ff8c42;
+    }
+
+    .today-btn {
+      background: #ffe6d5;
+      border-color: #ffb482;
+      color: #5c3b1f;
+    }
+
+    /* Окно общей суммы */
+    .total-sum-block {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      background: #ffffffdb;
+      padding: 0.5rem 1.5rem;
+      border-radius: 3rem;
+      border: 2px solid #bcd0a2;
+    }
+
+    .total-label {
+      font-weight: 700;
+      color: #2b532b;
+      white-space: nowrap;
+      font-size: 1.1rem;
+    }
+
+    .total-input {
+      flex: 1;
+      padding: 0.7rem 1rem;
+      border: 2px solid #d0e0bb;
+      border-radius: 2.5rem;
+      font-size: 1.2rem;
+      font-weight: 600;
+      text-align: center;
+      background: #f4fdef;
+      outline: none;
+      max-width: 200px;
+    }
+
+    .total-input:focus {
+      border-color: #ff8c42;
+      box-shadow: 0 0 0 3px rgba(255,140,66,0.3);
+    }
+
+    /* Таблица */
+    .table-container {
+      width: 100%;
+      max-height: 400px;
+      overflow-y: auto;
+      border-radius: 1.8rem;
+      background: #ffffffb3;
+      backdrop-filter: blur(8px);
+      border: 2px solid #c8ddb0;
+      padding: 0.2rem;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0 6px;
+      padding: 0.3rem;
+    }
+
+    .data-table td {
+      padding: 0.25rem 0.5rem;
+    }
+
+    .text-cell input,
+    .number-cell input {
+      width: 100%;
+      padding: 0.65rem 0.9rem;
+      border-radius: 2rem;
+      border: 2px solid #d0e0bb;
+      background: #ffffff;
+      font-size: 0.95rem;
+      outline: none;
+      transition: 0.2s;
+      background: #fefffa;
+      text-align: left;
+    }
+
+    .number-cell input {
+      text-align: center;
+      font-weight: 600;
+      max-width: 100px;
+    }
+
+    .text-cell input:focus,
+    .number-cell input:focus {
+      border-color: #ff8c42;
+      box-shadow: 0 0 0 2px rgba(255,140,66,0.3);
+    }
+
+    .text-cell {
+      width: 70%;
+    }
+
+    .number-cell {
+      width: 30%;
+    }
+
+    /* Для скролла */
+    .table-container::-webkit-scrollbar {
+      width: 8px;
+    }
+    .table-container::-webkit-scrollbar-thumb {
+      background: #b8cf9c;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+  <!-- Овальная шапка -->
+  <div class="oval-header">
+    <div class="brand-top">DIX</div>
+    <div class="brand-sub">ПОДСЧЕТ МИЛЛИОНОВ</div>
+  </div>
+
+  <!-- Дата и стрелки -->
+  <div class="date-navigation">
+    <button class="arrow-btn" id="prevDayBtn" title="Предыдущий день">←</button>
+    <div class="date-window" id="currentDateDisplay">2026-08-09</div>
+    <button class="arrow-btn" id="nextDayBtn" title="Следующий день">→</button>
+  </div>
+
+  <!-- Поиск даты + возврат сегодня -->
+  <div class="search-row">
+    <input type="text" id="searchDateInput" class="date-search-input" placeholder="дд.мм.гггг или гггг-мм-дд" value="">
+    <button class="search-btn" id="searchDateBtn">🔍 Поиск</button>
+    <button class="today-btn" id="todayBtn">📅 Сегодня</button>
+  </div>
+
+  <!-- Общая сумма -->
+  <div class="total-sum-block">
+    <span class="total-label">💰 Общая сумма</span>
+    <input type="number" id="totalSumInput" class="total-input" value="1000000" step="0.01" min="0" max="1000000" placeholder="0.00">
+  </div>
+
+  <!-- Таблица 100 строк -->
+  <div class="table-container" id="tableContainer">
+    <table class="data-table" id="dataTable">
+      <tbody id="tableBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+  (function() {
+    // ---------- Хранилище данных по датам ----------
+    const STORAGE_KEY = 'dix_million_data';
+
+    // Структура: { "2026-08-09": { total: "1000000", rows: [ {text:"", number:""}, ... ] }, ... }
+    let appData = {};
+
+    // Текущая выбранная дата (строка YYYY-MM-DD)
+    let currentDateStr = '';
+
+    // Всего строк в таблице
+    const TOTAL_ROWS = 100;
+
+    // ---------- Вспомогательные функции ----------
+    function formatDateToDisplay(date) {
+      const y = date.getFullYear();
+      const m = String(date.getMonth() + 1).padStart(2,'0');
+      const d = String(date.getDate()).padStart(2,'0');
+      return `${y}-${m}-${d}`;
+    }
+
+    function parseDateFromInput(str) {
+      // поддерживаем форматы дд.мм.гггг и гггг-мм-дд
+      str = str.trim();
+      if (!str) return null;
+      // если содержит точки
+      if (str.includes('.')) {
+        const parts = str.split('.');
+        if (parts.length === 3) {
+          const day = parseInt(parts[0], 10);
+          const month = parseInt(parts[1], 10);
+          const year = parseInt(parts[2], 10);
+          if (!isNaN(day) && !isNaN(month) && !isNaN(year) && year > 0 && month >=1 && month <=12) {
+            const date = new Date(year, month-1, day);
+            if (date && date.getFullYear() === year && date.getMonth() === month-1 && date.getDate() === day) {
+              return formatDateToDisplay(date);
+            }
+          }
+        }
+      }
+      // пробуем yyyy-mm-dd
+      const date = new Date(str + 'T00:00:00');
+      if (!isNaN(date.getTime()) && str.match(/^\d{4}-\d{2}-\d{2}$/)) {
+        const [y,m,d] = str.split('-').map(Number);
+        if (date.getFullYear() === y && date.getMonth() === m-1 && date.getDate() === d) {
+          return str;
+        }
+      }
+      return null;
+    }
+
+    function getTodayString() {
+      return formatDateToDisplay(new Date());
+    }
+
+    // Загрузка данных из localStorage
+    function loadData() {
+      try {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        if (stored) {
+          appData = JSON.parse(stored);
+        } else {
+          appData = {};
+        }
+      } catch (e) {
+        appData = {};
+      }
+      // гарантируем, что есть запись для сегодня
+      const today = getTodayString();
+      if (!appData[today]) {
+        appData[today] = createEmptyDayData();
+      }
+    }
+
+    function createEmptyDayData() {
+      const rows = [];
+      for (let i = 0; i < TOTAL_ROWS; i++) {
+        rows.push({ text: '', number: '' });
+      }
+      return {
+        total: '1000000',
+        rows: rows
+      };
+    }
+
+    function saveData() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(appData));
+    }
+
+    // Получить данные для даты (если нет – создать пустые)
+    function getDayData(dateStr) {
+      if (!appData[dateStr]) {
+        appData[dateStr] = createEmptyDayData();
+        saveData();
+      }
+      return appData[dateStr];
+    }
+
+    // ---------- DOM элементы ----------
+    const currentDateDisplay = document.getElementById('currentDateDisplay');
+    const prevBtn = document.getElementById('prevDayBtn');
+    const nextBtn = document.getElementById('nextDayBtn');
+    const searchInput = document.getElementById('searchDateInput');
+    const searchBtn = document.getElementById('searchDateBtn');
+    const todayBtn = document.getElementById('todayBtn');
+    const totalSumInput = document.getElementById('totalSumInput');
+    const tableBody = document.getElementById('tableBody');
+
+    // ---------- Рендер таблицы и общей суммы для currentDateStr ----------
+    function renderCurrentDay() {
+      if (!currentDateStr) return;
+      const dayData = getDayData(currentDateStr);
+      
+      // Обновить отображение даты
+      currentDateDisplay.textContent = currentDateStr;
+      
+      // Обновить поле общей суммы
+      totalSumInput.value = dayData.total;
+      
+      // Построить таблицу
+      tableBody.innerHTML = '';
+      for (let i = 0; i < TOTAL_ROWS; i++) {
+        const rowData = dayData.rows[i] || { text: '', number: '' };
+        const tr = document.createElement('tr');
+        
+        // Ячейка текста
+        const tdText = document.createElement('td');
+        tdText.className = 'text-cell';
+        const inputText = document.createElement('input');
+        inputText.type = 'text';
+        inputText.placeholder = 'Описание';
+        inputText.value = rowData.text;
+        inputText.addEventListener('input', (e) => {
+          updateRowText(i, e.target.value);
+        });
+        tdText.appendChild(inputText);
+        
+        // Ячейка числа
+        const tdNumber = document.createElement('td');
+        tdNumber.className = 'number-cell';
+        const inputNumber = document.createElement('input');
+        inputNumber.type = 'number';
+        inputNumber.placeholder = '0';
+        inputNumber.value = rowData.number;
+        inputNumber.step = '0.01';
+        inputNumber.min = '0';
+        // ограничение после запятой не более 2 знаков через обработчик
+        inputNumber.addEventListener('input', (e) => {
+          handleNumberInput(i, e.target);
+        });
+        inputNumber.addEventListener('blur', (e) => {
+          formatNumberField(e.target);
+        });
+        tdNumber.appendChild(inputNumber);
+        
+        tr.appendChild(tdText);
+        tr.appendChild(tdNumber);
+        tableBody.appendChild(tr);
+      }
+    }
+
+    // Обновление текста строки
+    function updateRowText(rowIndex, value) {
+      if (!currentDateStr) return;
+      const dayData = getDayData(currentDateStr);
+      if (dayData.rows[rowIndex]) {
+        dayData.rows[rowIndex].text = value;
+      }
+      saveData();
+    }
+
+    // Обработка ввода числа: ограничение двух знаков после запятой и обновление общей суммы
+    function handleNumberInput(rowIndex, inputElement) {
+      if (!currentDateStr) return;
+      let val = inputElement.value;
+      
+      // разрешаем только числа с точкой/запятой, ограничиваем 2 знака после запятой
+      if (val === '') {
+        updateNumberInRow(rowIndex, '');
+        return;
+      }
+      
+      // заменяем запятую на точку
+      val = val.replace(',', '.');
+      
+      // проверка на число
+      if (!/^-?\d*\.?\d*$/.test(val)) {
+        inputElement.value = inputElement.value.slice(0, -1);
+        return;
+      }
+      
+      // ограничение двух знаков после точки
+      if (val.includes('.')) {
+        const parts = val.split('.');
+        if (parts[1] && parts[1].length > 2) {
+          parts[1] = parts[1].slice(0, 2);
+          val = parts.join('.');
+          inputElement.value = val;
+        }
+      }
+      
+      // Обновляем данные и пересчитываем общую сумму
+      updateNumberInRow(rowIndex, val);
+    }
+
+    function formatNumberField(inputElement) {
+      let val = inputElement.value;
+      if (val === '') return;
+      val = val.replace(',', '.');
+      const num = parseFloat(val);
+      if (!isNaN(num)) {
+        // округляем до 2 знаков
+        inputElement.value = num.toFixed(2);
+      } else {
+        inputElement.value = '';
+      }
+      // триггерим обновление
+      const rowIndex = Array.from(inputElement.closest('tr').parentNode.children).indexOf(inputElement.closest('tr'));
+      if (rowIndex >= 0 && rowIndex < TOTAL_ROWS) {
+        updateNumberInRow(rowIndex, inputElement.value);
+      }
+    }
+
+    function updateNumberInRow(rowIndex, valueStr) {
+      if (!currentDateStr) return;
+      const dayData = getDayData(currentDateStr);
+      if (dayData.rows[rowIndex]) {
+        dayData.rows[rowIndex].number = valueStr;
+      }
+      saveData();
+      recalcTotalFromRows();
+    }
+
+    // Пересчет общей суммы: total = базовая общая сумма - сумма всех чисел в строках
+    function recalcTotalFromRows() {
+      if (!currentDateStr) return;
+      const dayData = getDayData(currentDateStr);
+      const baseTotal = parseFloat(dayData.total) || 0;
+      
+      let subtractSum = 0;
+      for (let i = 0; i < TOTAL_ROWS; i++) {
+        const numVal = dayData.rows[i]?.number;
+        if (numVal !== '' && numVal !== null && numVal !== undefined) {
+          const n = parseFloat(numVal);
+          if (!isNaN(n)) {
+            subtractSum += n;
+          }
+        }
+      }
+      
+      const newTotal = baseTotal - subtractSum;
+      totalSumInput.value = newTotal.toFixed(2);
+    }
+
+    // Когда пользователь вручную меняет общую сумму
+    function onTotalSumChange() {
+      if (!currentDateStr) return;
+      let val = totalSumInput.value.replace(',', '.');
+      if (val === '') val = '0';
+      const num = parseFloat(val);
+      if (isNaN(num)) {
+        totalSumInput.value = getDayData(currentDateStr).total;
+        return;
+      }
+      // ограничение 2 знака
+      const fixed = num.toFixed(2);
+      totalSumInput.value = fixed;
+      
+      const dayData = getDayData(currentDateStr);
+      dayData.total = fixed;
+      saveData();
+      // после изменения базы пересчитаем отображение (totalSumInput уже содержит базу, пересчет вызовет обновление)
+      recalcTotalFromRows();
+    }
+
+    // Смена даты
+    function changeDate(newDateStr) {
+      if (!newDateStr || !/^\d{4}-\d{2}-\d{2}$/.test(newDateStr)) return;
+      // сохраняем текущее состояние (уже сохранено через события)
+      currentDateStr = newDateStr;
+      renderCurrentDay();
+      // Очищаем поле поиска
+      searchInput.value = '';
+    }
+
+    function shiftDate(days) {
+      if (!currentDateStr) return;
+      const parts = currentDateStr.split('-').map(Number);
+      const date = new Date(parts[0], parts[1]-1, parts[2]);
+      date.setDate(date.getDate() + days);
+      const newStr = formatDateToDisplay(date);
+      changeDate(newStr);
+    }
+
+    // Инициализация и привязка событий
+    function init() {
+      loadData();
+      // Установить сегодняшнюю дату по умолчанию
+      const today = getTodayString();
+      if (!appData[today]) {
+        appData[today] = createEmptyDayData();
+        saveData();
+      }
+      currentDateStr = today;
+      renderCurrentDay();
+
+      // Стрелки
+      prevBtn.addEventListener('click', () => shiftDate(-1));
+      nextBtn.addEventListener('click', () => shiftDate(1));
+
+      // Поиск даты
+      searchBtn.addEventListener('click', () => {
+        const inputVal = searchInput.value.trim();
+        const parsed = parseDateFromInput(inputVal);
+        if (parsed) {
+          changeDate(parsed);
+        } else {
+          alert('Введите корректную дату (дд.мм.гггг или гггг-мм-дд)');
+        }
+      });
+
+      // Enter в поле поиска
+      searchInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          searchBtn.click();
+        }
+      });
+
+      // Кнопка сегодня
+      todayBtn.addEventListener('click', () => {
+        changeDate(getTodayString());
+      });
+
+      // Изменение общей суммы
+      totalSumInput.addEventListener('input', () => {
+        // при вводе сразу обновляем хранилище и пересчет
+        if (!currentDateStr) return;
+        let val = totalSumInput.value.replace(',', '.');
+        if (val === '') {
+          // не даем опустошить полностью, ставим 0
+          val = '0';
+        }
+        // ограничение 2 знака динамически
+        if (val.includes('.')) {
+          const parts = val.split('.');
+          if (parts[1] && parts[1].length > 2) {
+            parts[1] = parts[1].slice(0,2);
+            val = parts.join('.');
+            totalSumInput.value = val;
+          }
+        }
+        const num = parseFloat(val);
+        if (!isNaN(num)) {
+          const dayData = getDayData(currentDateStr);
+          dayData.total = val;
+          saveData();
+          recalcTotalFromRows();
+        }
+      });
+
+      totalSumInput.addEventListener('blur', () => {
+        if (!currentDateStr) return;
+        let val = totalSumInput.value.replace(',', '.');
+        if (val === '') val = '0';
+        const num = parseFloat(val);
+        if (isNaN(num)) {
+          totalSumInput.value = getDayData(currentDateStr).total;
+        } else {
+          totalSumInput.value = num.toFixed(2);
+          const dayData = getDayData(currentDateStr);
+          dayData.total = num.toFixed(2);
+          saveData();
+          recalcTotalFromRows();
+        }
+      });
+    }
+
+    // Запуск
+    init();
+  })();
+</script>
+</body>
+  </html>
