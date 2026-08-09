@@ -22,102 +22,20 @@
             align-items: center;
             padding: 1.5rem;
             margin: 0;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        /* Фон с динозаврами и кометой */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                /* Небо */
-                linear-gradient(180deg, 
-                    #0d1b2a 0%, 
-                    #1b2838 15%, 
-                    #2d1a0a 40%, 
-                    #4a2a10 60%, 
-                    #3d2008 80%, 
-                    #1a0a00 100%
-                ),
-                /* Звёзды */
-                radial-gradient(1px 1px at 10% 10%, #ffffff, transparent),
-                radial-gradient(1px 1px at 25% 5%, #ffffff, transparent),
-                radial-gradient(2px 2px at 40% 8%, #ffffff, transparent),
-                radial-gradient(1px 1px at 55% 3%, #ffffff, transparent),
-                radial-gradient(1px 1px at 70% 12%, #ffffff, transparent),
-                radial-gradient(2px 2px at 85% 6%, #ffffff, transparent),
-                radial-gradient(1px 1px at 15% 18%, #ffdd88, transparent),
-                radial-gradient(1px 1px at 60% 15%, #ffdd88, transparent),
-                radial-gradient(1px 1px at 80% 20%, #ffffff, transparent),
-                radial-gradient(2px 2px at 33% 7%, #ffaa44, transparent),
-                /* Луна */
-                radial-gradient(60px 60px at 85% 12%, rgba(255,220,150,0.6) 0%, rgba(255,220,150,0.1) 40%, transparent 70%),
-                /* Сияние луны */
-                radial-gradient(120px 120px at 85% 12%, rgba(255,200,100,0.15) 0%, transparent 70%);
-            z-index: 0;
-        }
-
-        /* Динозавры на фоне */
-        .dino-bg {
-            position: fixed;
-            pointer-events: none;
-            z-index: 0;
-            font-size: 80px;
-            opacity: 0.2;
-            filter: brightness(0.3) sepia(0.6);
-        }
-
-        .dino1 { bottom: 5%; left: 3%; font-size: 100px; transform: scaleX(-1); }
-        .dino2 { bottom: 8%; right: 5%; font-size: 70px; }
-        .dino3 { bottom: 3%; left: 40%; font-size: 55px; opacity: 0.15; }
-        .dino4 { top: 5%; left: 8%; font-size: 45px; opacity: 0.12; transform: scaleX(-1); }
-        .dino5 { top: 10%; right: 12%; font-size: 50px; opacity: 0.13; }
-
-        /* Комета */
-        .comet {
-            position: fixed;
-            top: -5%;
-            right: 15%;
-            font-size: 100px;
-            pointer-events: none;
-            z-index: 0;
-            opacity: 0.7;
-            filter: drop-shadow(0 0 20px #ff6600) drop-shadow(0 0 40px #ff4400);
-            animation: cometMove 8s ease-in-out infinite;
-        }
-
-        @keyframes cometMove {
-            0%, 100% { transform: translate(0, 0) rotate(-35deg); }
-            50% { transform: translate(-30px, 20px) rotate(-33deg); }
-        }
-
-        /* Растения */
-        .plants {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 120px;
-            pointer-events: none;
-            z-index: 0;
-            font-size: 40px;
-            opacity: 0.25;
-            letter-spacing: 10px;
-            color: #1a3a0a;
-            display: flex;
-            justify-content: space-around;
-            align-items: flex-end;
         }
 
         .app {
             width: 100%;
             max-width: 800px;
-            background: rgba(30, 15, 5, 0.85);
+            background: 
+                /* Ночное небо */
+                linear-gradient(180deg, 
+                    #0d1b2a 0%, 
+                    #1b2838 20%, 
+                    #2d1a0a 45%, 
+                    #4a2a10 65%, 
+                    #3d2008 100%
+                );
             border: 6px solid #5a3a1a;
             box-shadow: 
                 inset 0 0 0 3px rgba(139, 90, 43, 0.4),
@@ -131,30 +49,104 @@
             position: relative;
             z-index: 1;
             border-radius: 8px;
-            backdrop-filter: blur(4px);
-            background-image: 
-                repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(139, 90, 43, 0.05) 20px, rgba(139, 90, 43, 0.05) 21px);
+            overflow: hidden;
         }
 
-        /* Следы лап */
-        .app::before {
-            content: '🐾';
+        /* Звёзды внутри приложения */
+        .stars-container {
             position: absolute;
-            top: -25px;
-            left: 20px;
-            font-size: 30px;
-            opacity: 0.4;
-            transform: rotate(-15deg);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60%;
+            pointer-events: none;
+            z-index: 0;
         }
 
-        .app::after {
-            content: '🐾';
+        .star {
             position: absolute;
-            top: -25px;
-            right: 25px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 2s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        /* Луна внутри */
+        .moon {
+            position: absolute;
+            top: 8%;
+            right: 15%;
+            width: 70px;
+            height: 70px;
+            background: radial-gradient(circle at 40% 40%, #ffe8c0 0%, #ffcc66 40%, rgba(255,200,100,0.3) 70%, transparent 100%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            box-shadow: 0 0 40px rgba(255,200,100,0.4), 0 0 80px rgba(255,180,80,0.2);
+        }
+
+        /* Комета внутри */
+        .comet {
+            position: absolute;
+            top: 5%;
+            right: 20%;
+            font-size: 80px;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.8;
+            filter: drop-shadow(0 0 15px #ff6600) drop-shadow(0 0 30px #ff4400);
+            animation: cometMove 6s ease-in-out infinite;
+        }
+
+        @keyframes cometMove {
+            0%, 100% { transform: translate(0, 0) rotate(-35deg); }
+            50% { transform: translate(-20px, 15px) rotate(-33deg); }
+        }
+
+        /* Динозавры внутри */
+        .dino-inside {
+            position: absolute;
+            pointer-events: none;
+            z-index: 0;
+            font-size: 60px;
+            opacity: 0.5;
+            filter: brightness(0.4) sepia(0.6);
+        }
+
+        .dino-left { bottom: 8%; left: 2%; font-size: 70px; transform: scaleX(-1); }
+        .dino-right { bottom: 10%; right: 3%; font-size: 55px; }
+        .dino-center { bottom: 5%; left: 50%; font-size: 40px; transform: translateX(-50%); opacity: 0.35; }
+
+        /* Растения внутри */
+        .plants-inside {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            pointer-events: none;
+            z-index: 0;
             font-size: 30px;
-            opacity: 0.4;
-            transform: rotate(10deg);
+            opacity: 0.3;
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            height: 60px;
+            color: #1a3a0a;
+        }
+
+        /* Контент поверх фона */
+        .content-layer {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.4rem;
         }
 
         .oval-header {
@@ -244,7 +236,6 @@
 
         .arrow-btn:active {
             transform: scale(0.9);
-            box-shadow: inset 0 3px 6px rgba(0,0,0,0.5);
         }
 
         .date-window {
@@ -350,11 +341,12 @@
             flex-direction: column;
             align-items: center;
             gap: 0.4rem;
-            background: rgba(20, 10, 0, 0.5);
+            background: rgba(20, 10, 0, 0.7);
             padding: 0.8rem 1rem;
             border: 3px solid #5a3a1a;
             box-shadow: inset 0 0 15px rgba(0,0,0,0.4);
             border-radius: 6px;
+            backdrop-filter: blur(2px);
         }
 
         .sum-label {
@@ -370,7 +362,7 @@
             width: 100%;
             padding: 0.5rem 0.7rem;
             border: 3px solid #4a2a0a;
-            background: rgba(10, 5, 0, 0.8);
+            background: rgba(10, 5, 0, 0.9);
             font-size: 0.65rem;
             text-align: center;
             outline: none;
@@ -386,7 +378,7 @@
         }
 
         .sum-input[readonly] {
-            background: rgba(5, 2, 0, 0.9);
+            background: rgba(5, 2, 0, 0.95);
             cursor: default;
             color: #ff8800;
         }
@@ -395,11 +387,12 @@
             width: 100%;
             max-height: 400px;
             overflow-y: auto;
-            background: rgba(15, 8, 0, 0.6);
+            background: rgba(15, 8, 0, 0.8);
             border: 3px solid #5a3a1a;
             box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
             padding: 0.3rem;
             border-radius: 6px;
+            backdrop-filter: blur(2px);
         }
 
         .data-table {
@@ -442,7 +435,7 @@
         }
 
         .emoji-btn {
-            background: rgba(30, 10, 0, 0.6);
+            background: rgba(30, 10, 0, 0.7);
             border: 2px solid #5a3a1a;
             font-size: 1.8rem;
             cursor: pointer;
@@ -490,7 +483,7 @@
             width: 100%;
             padding: 0.45rem 0.5rem;
             border: 2px solid #5a3a1a;
-            background: rgba(10, 5, 0, 0.8);
+            background: rgba(10, 5, 0, 0.9);
             font-size: 0.55rem;
             outline: none;
             color: #ffcc88;
@@ -532,52 +525,72 @@
     </style>
 </head>
 <body>
-    <!-- Динозавры на фоне -->
-    <div class="dino-bg dino1">🦕</div>
-    <div class="dino-bg dino2">🦖</div>
-    <div class="dino-bg dino3">🦕</div>
-    <div class="dino-bg dino4">🦖</div>
-    <div class="dino-bg dino5">🦕</div>
-    
-    <!-- Комета -->
-    <div class="comet">☄️</div>
-    
-    <!-- Растения -->
-    <div class="plants">🌿 🌴 🌿 🪴 🌿 🌴 🌿 🪴 🌿 🌴 🌿 🪴 🌿 🌴 🌿</div>
-
     <div class="app">
-        <div class="oval-header">
-            <div class="brand-top">DIX</div>
-            <div class="brand-sub">ПОДСЧЕТ МИЛЛИОНОВ</div>
+        <!-- Звёзды -->
+        <div class="stars-container">
+            <div class="star" style="top:5%;left:8%;width:3px;height:3px;animation-delay:0s;"></div>
+            <div class="star" style="top:12%;left:22%;width:2px;height:2px;animation-delay:0.3s;"></div>
+            <div class="star" style="top:8%;left:38%;width:3px;height:3px;animation-delay:0.7s;"></div>
+            <div class="star" style="top:3%;left:52%;width:2px;height:2px;animation-delay:1s;"></div>
+            <div class="star" style="top:15%;left:65%;width:3px;height:3px;animation-delay:0.5s;"></div>
+            <div class="star" style="top:6%;left:78%;width:2px;height:2px;animation-delay:1.2s;"></div>
+            <div class="star" style="top:18%;left:15%;width:2px;height:2px;animation-delay:0.8s;"></div>
+            <div class="star" style="top:10%;left:45%;width:3px;height:3px;animation-delay:0.4s;"></div>
+            <div class="star" style="top:20%;left:58%;width:2px;height:2px;animation-delay:1.5s;"></div>
+            <div class="star" style="top:7%;left:70%;width:3px;height:3px;animation-delay:0.2s;"></div>
+            <div class="star" style="top:14%;left:32%;width:2px;height:2px;animation-delay:0.9s;"></div>
+            <div class="star" style="top:22%;left:82%;width:3px;height:3px;animation-delay:0.6s;"></div>
         </div>
 
-        <div class="date-navigation">
-            <button class="arrow-btn" id="prevDayBtn" title="Предыдущий день">◄</button>
-            <div class="date-window" id="currentDateDisplay"></div>
-            <button class="arrow-btn" id="nextDayBtn" title="Следующий день">►</button>
-        </div>
+        <!-- Луна -->
+        <div class="moon"></div>
 
-        <div class="search-row">
-            <input type="text" id="searchDateInput" class="date-search-input" placeholder="09.08.26">
-            <button class="search-btn" id="searchDateBtn">🔍 ПОИСК</button>
-            <button class="today-btn" id="todayBtn">📅 СЕГОДНЯ</button>
-        </div>
+        <!-- Комета -->
+        <div class="comet">☄️</div>
 
-        <div class="sums-container">
-            <div class="sum-block">
-                <div class="sum-label">💰 ОБЩАЯ СУММА</div>
-                <input type="text" id="totalSumInput" class="sum-input" placeholder="0">
+        <!-- Динозавры -->
+        <div class="dino-inside dino-left">🦕</div>
+        <div class="dino-inside dino-right">🦖</div>
+        <div class="dino-inside dino-center">🦕</div>
+
+        <!-- Растения -->
+        <div class="plants-inside">🌿 🌴 🌿 🪴 🌿 🌴 🌿 🪴 🌿</div>
+
+        <!-- Контент -->
+        <div class="content-layer">
+            <div class="oval-header">
+                <div class="brand-top">DIX</div>
+                <div class="brand-sub">ПОДСЧЕТ МИЛЛИОНОВ</div>
             </div>
-            <div class="sum-block">
-                <div class="sum-label">💸 ПОТРАЧЕНО</div>
-                <input type="text" id="spentSumInput" class="sum-input" placeholder="0" readonly>
-            </div>
-        </div>
 
-        <div class="table-container">
-            <table class="data-table">
-                <tbody id="tableBody"></tbody>
-            </table>
+            <div class="date-navigation">
+                <button class="arrow-btn" id="prevDayBtn" title="Предыдущий день">◄</button>
+                <div class="date-window" id="currentDateDisplay"></div>
+                <button class="arrow-btn" id="nextDayBtn" title="Следующий день">►</button>
+            </div>
+
+            <div class="search-row">
+                <input type="text" id="searchDateInput" class="date-search-input" placeholder="09.08.26">
+                <button class="search-btn" id="searchDateBtn">🔍 ПОИСК</button>
+                <button class="today-btn" id="todayBtn">📅 СЕГОДНЯ</button>
+            </div>
+
+            <div class="sums-container">
+                <div class="sum-block">
+                    <div class="sum-label">💰 ОБЩАЯ СУММА</div>
+                    <input type="text" id="totalSumInput" class="sum-input" placeholder="0">
+                </div>
+                <div class="sum-block">
+                    <div class="sum-label">💸 ПОТРАЧЕНО</div>
+                    <input type="text" id="spentSumInput" class="sum-input" placeholder="0" readonly>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table class="data-table">
+                    <tbody id="tableBody"></tbody>
+                </table>
+            </div>
         </div>
     </div>
 
@@ -612,16 +625,11 @@
             var audioCtx = null;
 
             function getAudioContext() {
-                if (!audioCtx) {
-                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                }
-                if (audioCtx.state === 'suspended') {
-                    audioCtx.resume();
-                }
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                if (audioCtx.state === 'suspended') audioCtx.resume();
                 return audioCtx;
             }
 
-            // Звук — рёв динозавра (низкий рык)
             function playActivateSound() {
                 try {
                     var ctx = getAudioContext();
@@ -641,7 +649,6 @@
                 } catch (e) {}
             }
 
-            // Звук — треск ветки
             function playDeactivateSound() {
                 try {
                     var ctx = getAudioContext();
@@ -649,9 +656,7 @@
                     var bufferSize = ctx.sampleRate * 0.06;
                     var buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
                     var data = buffer.getChannelData(0);
-                    for (var i = 0; i < bufferSize; i++) {
-                        data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (ctx.sampleRate * 0.006));
-                    }
+                    for (var i = 0; i < bufferSize; i++) data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (ctx.sampleRate * 0.006));
                     var noise = ctx.createBufferSource();
                     var gain = ctx.createGain();
                     var filter = ctx.createBiquadFilter();
@@ -669,105 +674,49 @@
             }
 
             function formatDateToDisplay(date) {
-                var d = String(date.getDate()).padStart(2, '0');
-                var m = String(date.getMonth() + 1).padStart(2, '0');
-                var y = String(date.getFullYear()).slice(-2);
-                return d + '.' + m + '.' + y;
+                return String(date.getDate()).padStart(2,'0') + '.' + String(date.getMonth()+1).padStart(2,'0') + '.' + String(date.getFullYear()).slice(-2);
             }
 
             function formatDateToStorage(date) {
-                var y = date.getFullYear();
-                var m = String(date.getMonth() + 1).padStart(2, '0');
-                var d = String(date.getDate()).padStart(2, '0');
-                return y + '-' + m + '-' + d;
+                return date.getFullYear() + '-' + String(date.getMonth()+1).padStart(2,'0') + '-' + String(date.getDate()).padStart(2,'0');
             }
 
             function parseDateFromInput(str) {
                 str = str.trim();
                 if (!str) return null;
                 if (str.indexOf('.') !== -1) {
-                    var dotParts = str.split('.');
-                    if (dotParts.length === 3) {
-                        var day = parseInt(dotParts[0], 10);
-                        var month = parseInt(dotParts[1], 10);
-                        var yearPart = parseInt(dotParts[2], 10);
-                        if (!isNaN(day) && !isNaN(month) && !isNaN(yearPart) && month >= 1 && month <= 12) {
-                            var year = yearPart;
-                            if (yearPart < 100) year = 2000 + yearPart;
-                            var date = new Date(year, month - 1, day);
-                            if (date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day) {
-                                return formatDateToStorage(date);
-                            }
+                    var p = str.split('.');
+                    if (p.length === 3) {
+                        var d = parseInt(p[0]), m = parseInt(p[1]), y = parseInt(p[2]);
+                        if (!isNaN(d) && !isNaN(m) && !isNaN(y) && m >= 1 && m <= 12) {
+                            if (y < 100) y += 2000;
+                            var date = new Date(y, m-1, d);
+                            if (date.getFullYear() === y && date.getMonth() === m-1 && date.getDate() === d) return formatDateToStorage(date);
                         }
                     }
                 }
-                var regex = /^\d{4}-\d{2}-\d{2}$/;
-                if (regex.test(str)) {
-                    var isoParts = str.split('-').map(Number);
-                    var date2 = new Date(isoParts[0], isoParts[1] - 1, isoParts[2]);
-                    if (date2.getFullYear() === isoParts[0] && date2.getMonth() === isoParts[1] - 1 && date2.getDate() === isoParts[2]) {
-                        return str;
-                    }
+                if (/^\d{4}-\d{2}-\d{2}$/.test(str)) {
+                    var ip = str.split('-').map(Number);
+                    var d2 = new Date(ip[0], ip[1]-1, ip[2]);
+                    if (d2.getFullYear() === ip[0] && d2.getMonth() === ip[1]-1 && d2.getDate() === ip[2]) return str;
                 }
                 return null;
             }
 
-            function getTodayString() {
-                return formatDateToStorage(new Date());
-            }
-
+            function getTodayString() { return formatDateToStorage(new Date()); }
             function loadData() {
-                try {
-                    var stored = localStorage.getItem(STORAGE_KEY);
-                    if (stored) {
-                        appData = JSON.parse(stored);
-                    } else {
-                        appData = {};
-                    }
-                } catch (e) {
-                    appData = {};
-                }
-                var today = getTodayString();
-                if (!appData[today]) {
-                    appData[today] = createEmptyDayData();
-                }
+                try { appData = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch(e) { appData = {}; }
+                if (!appData[getTodayString()]) appData[getTodayString()] = createEmptyDayData();
             }
-
             function createEmptyDayData() {
                 var rows = [];
-                for (var i = 0; i < TOTAL_ROWS; i++) {
-                    rows.push({ text: '', number: '' });
-                }
-                return { total: '0', rows: rows };
+                for (var i = 0; i < TOTAL_ROWS; i++) rows.push({text:'', number:''});
+                return {total:'0', rows:rows};
             }
-
-            function saveData() {
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(appData));
-            }
-
-            function getDayData(dateStr) {
-                if (!appData[dateStr]) {
-                    appData[dateStr] = createEmptyDayData();
-                    saveData();
-                }
-                return appData[dateStr];
-            }
-
-            function storageToDisplay(dateStr) {
-                var parts = dateStr.split('-').map(Number);
-                var date = new Date(parts[0], parts[1] - 1, parts[2]);
-                return formatDateToDisplay(date);
-            }
-
-            function formatNumber(value) {
-                var num = parseFloat(value);
-                if (isNaN(num)) return '0';
-                if (num === Math.floor(num)) {
-                    return num.toString();
-                } else {
-                    return num.toFixed(2);
-                }
-            }
+            function saveData() { localStorage.setItem(STORAGE_KEY, JSON.stringify(appData)); }
+            function getDayData(d) { if (!appData[d]) { appData[d] = createEmptyDayData(); saveData(); } return appData[d]; }
+            function storageToDisplay(s) { var p = s.split('-').map(Number); return formatDateToDisplay(new Date(p[0], p[1]-1, p[2])); }
+            function formatNumber(v) { var n = parseFloat(v); if (isNaN(n)) return '0'; return n === Math.floor(n) ? n.toString() : n.toFixed(2); }
 
             var currentDateDisplay = document.getElementById('currentDateDisplay');
             var prevBtn = document.getElementById('prevDayBtn');
@@ -782,215 +731,100 @@
             function renderCurrentDay() {
                 if (!currentDateStr) return;
                 var dayData = getDayData(currentDateStr);
-                var displayDate = storageToDisplay(currentDateStr);
-                currentDateDisplay.textContent = displayDate;
-                searchInput.value = displayDate;
-
-                if (dayData.total === '0' || dayData.total === '' || parseFloat(dayData.total) === 0) {
-                    totalSumInput.value = '';
-                } else {
-                    totalSumInput.value = dayData.total;
-                }
-
+                currentDateDisplay.textContent = storageToDisplay(currentDateStr);
+                searchInput.value = storageToDisplay(currentDateStr);
+                totalSumInput.value = (dayData.total === '0' || dayData.total === '' || parseFloat(dayData.total) === 0) ? '' : dayData.total;
                 tableBody.innerHTML = '';
                 for (var i = 0; i < TOTAL_ROWS; i++) {
-                    var rowData = dayData.rows[i] || { text: '', number: '' };
+                    var rowData = dayData.rows[i] || {text:'', number:''};
                     var tr = document.createElement('tr');
-
-                    var tdNum = document.createElement('td');
-                    tdNum.className = 'row-number';
-                    tdNum.textContent = (i + 1) + '.';
-                    tr.appendChild(tdNum);
-
-                    var tdEmoji = document.createElement('td');
-                    tdEmoji.className = 'emoji-cell';
-                    var emojiBtn = document.createElement('button');
-                    emojiBtn.className = 'emoji-btn';
-                    emojiBtn.textContent = emojis[i];
-                    emojiBtn.setAttribute('data-row', i);
+                    var tdNum = document.createElement('td'); tdNum.className = 'row-number'; tdNum.textContent = (i+1)+'.'; tr.appendChild(tdNum);
+                    var tdEmoji = document.createElement('td'); tdEmoji.className = 'emoji-cell';
+                    var emojiBtn = document.createElement('button'); emojiBtn.className = 'emoji-btn'; emojiBtn.textContent = emojis[i]; emojiBtn.setAttribute('data-row', i);
                     emojiBtn.addEventListener('click', function(e) {
                         var btn = e.currentTarget;
-                        var isActive = btn.classList.contains('active');
-                        if (isActive) {
-                            btn.classList.remove('active');
-                            btn.style.color = '';
-                            playDeactivateSound();
-                        } else {
-                            btn.classList.add('active');
-                            var colorIndex = parseInt(btn.getAttribute('data-row'));
-                            btn.style.color = glowColors[colorIndex];
-                            playActivateSound();
-                        }
+                        if (btn.classList.contains('active')) { btn.classList.remove('active'); btn.style.color = ''; playDeactivateSound(); }
+                        else { btn.classList.add('active'); btn.style.color = glowColors[parseInt(btn.getAttribute('data-row'))]; playActivateSound(); }
                     });
-                    tdEmoji.appendChild(emojiBtn);
-                    tr.appendChild(tdEmoji);
-
-                    var tdText = document.createElement('td');
-                    tdText.className = 'text-cell';
-                    var inputText = document.createElement('input');
-                    inputText.type = 'text';
-                    inputText.placeholder = 'ОПИСАНИЕ';
-                    inputText.value = rowData.text;
-                    inputText.addEventListener('input', (function(index) {
-                        return function(e) {
-                            updateRowText(index, e.target.value);
-                        };
-                    })(i));
-                    tdText.appendChild(inputText);
-                    tr.appendChild(tdText);
-
-                    var tdNumber = document.createElement('td');
-                    tdNumber.className = 'number-cell';
-                    var inputNumber = document.createElement('input');
-                    inputNumber.type = 'text';
-                    inputNumber.placeholder = '0';
-                    inputNumber.value = rowData.number;
-                    inputNumber.style.textAlign = 'center';
-                    inputNumber.addEventListener('input', (function(index) {
-                        return function(e) {
-                            handleNumberInput(index, e.target);
-                        };
-                    })(i));
-                    inputNumber.addEventListener('blur', function(e) {
-                        formatNumberField(e.target);
-                    });
-                    tdNumber.appendChild(inputNumber);
-                    tr.appendChild(tdNumber);
-
+                    tdEmoji.appendChild(emojiBtn); tr.appendChild(tdEmoji);
+                    var tdText = document.createElement('td'); tdText.className = 'text-cell';
+                    var inputText = document.createElement('input'); inputText.type = 'text'; inputText.placeholder = 'ОПИСАНИЕ'; inputText.value = rowData.text;
+                    inputText.addEventListener('input', (function(idx){ return function(e){ updateRowText(idx, e.target.value); }; })(i));
+                    tdText.appendChild(inputText); tr.appendChild(tdText);
+                    var tdNumber = document.createElement('td'); tdNumber.className = 'number-cell';
+                    var inputNumber = document.createElement('input'); inputNumber.type = 'text'; inputNumber.placeholder = '0'; inputNumber.value = rowData.number; inputNumber.style.textAlign = 'center';
+                    inputNumber.addEventListener('input', (function(idx){ return function(e){ handleNumberInput(idx, e.target); }; })(i));
+                    inputNumber.addEventListener('blur', function(e){ formatNumberField(e.target); });
+                    tdNumber.appendChild(inputNumber); tr.appendChild(tdNumber);
                     tableBody.appendChild(tr);
                 }
                 updateSumsDisplay();
             }
 
-            function updateRowText(rowIndex, value) {
+            function updateRowText(i, v) { if (!currentDateStr) return; getDayData(currentDateStr).rows[i].text = v; saveData(); }
+            function handleNumberInput(i, el) {
                 if (!currentDateStr) return;
-                var dayData = getDayData(currentDateStr);
-                if (dayData.rows[rowIndex]) dayData.rows[rowIndex].text = value;
-                saveData();
+                var v = el.value; if (v === '') { updateNumberInRow(i, ''); return; }
+                v = v.replace(',', '.'); if (!/^-?\d*\.?\d*$/.test(v)) { el.value = v.slice(0,-1); return; }
+                if (v.indexOf('.') !== -1) { var p = v.split('.'); if (p[1] && p[1].length > 2) { p[1] = p[1].slice(0,2); v = p.join('.'); el.value = v; } }
+                updateNumberInRow(i, v);
             }
-
-            function handleNumberInput(rowIndex, inputElement) {
-                if (!currentDateStr) return;
-                var val = inputElement.value;
-                if (val === '') { updateNumberInRow(rowIndex, ''); return; }
-                val = val.replace(',', '.');
-                if (!/^-?\d*\.?\d*$/.test(val)) { inputElement.value = val.slice(0, -1); return; }
-                if (val.indexOf('.') !== -1) {
-                    var parts = val.split('.');
-                    if (parts[1] && parts[1].length > 2) { parts[1] = parts[1].slice(0, 2); val = parts.join('.'); inputElement.value = val; }
-                }
-                updateNumberInRow(rowIndex, val);
+            function formatNumberField(el) {
+                var v = el.value; if (v === '') return;
+                v = v.replace(',', '.'); var n = parseFloat(v);
+                el.value = !isNaN(n) ? formatNumber(v) : '';
+                var tr = el.closest('tr'); if (tr) { var i = Array.from(tr.parentNode.children).indexOf(tr); if (i >= 0 && i < TOTAL_ROWS) updateNumberInRow(i, el.value); }
             }
-
-            function formatNumberField(inputElement) {
-                var val = inputElement.value;
-                if (val === '') return;
-                val = val.replace(',', '.');
-                var num = parseFloat(val);
-                inputElement.value = !isNaN(num) ? formatNumber(val) : '';
-                var tr = inputElement.closest('tr');
-                if (tr) {
-                    var rowIndex = Array.from(tr.parentNode.children).indexOf(tr);
-                    if (rowIndex >= 0 && rowIndex < TOTAL_ROWS) updateNumberInRow(rowIndex, inputElement.value);
-                }
-            }
-
-            function updateNumberInRow(rowIndex, valueStr) {
-                if (!currentDateStr) return;
-                var dayData = getDayData(currentDateStr);
-                if (dayData.rows[rowIndex]) dayData.rows[rowIndex].number = valueStr;
-                saveData();
-                updateSumsDisplay();
-            }
-
+            function updateNumberInRow(i, v) { if (!currentDateStr) return; getDayData(currentDateStr).rows[i].number = v; saveData(); updateSumsDisplay(); }
             function getSpentSum() {
                 if (!currentDateStr) return 0;
-                var dayData = getDayData(currentDateStr);
-                var sum = 0;
-                for (var i = 0; i < TOTAL_ROWS; i++) {
-                    var numVal = dayData.rows[i] ? dayData.rows[i].number : '';
-                    if (numVal !== '' && numVal !== null && numVal !== undefined) {
-                        var n = parseFloat(numVal);
-                        if (!isNaN(n)) sum += n;
-                    }
-                }
-                return sum;
+                var rows = getDayData(currentDateStr).rows, s = 0;
+                for (var i = 0; i < TOTAL_ROWS; i++) { var nv = rows[i] ? rows[i].number : ''; if (nv !== '' && nv !== null) { var n = parseFloat(nv); if (!isNaN(n)) s += n; } }
+                return s;
             }
-
             function updateSumsDisplay() {
                 if (!currentDateStr) return;
-                var dayData = getDayData(currentDateStr);
-                var baseTotal = parseFloat(dayData.total) || 0;
-                var spentSum = getSpentSum();
-                var remaining = baseTotal - spentSum;
-                spentSumInput.value = spentSum === 0 ? '' : formatNumber(spentSum);
-                if (remaining === 0 && baseTotal === 0) totalSumInput.value = '';
-                else if (remaining === 0 && baseTotal > 0) totalSumInput.value = '0';
-                else totalSumInput.value = formatNumber(remaining);
+                var d = getDayData(currentDateStr), base = parseFloat(d.total) || 0, spent = getSpentSum(), rem = base - spent;
+                spentSumInput.value = spent === 0 ? '' : formatNumber(spent);
+                totalSumInput.value = (rem === 0 && base === 0) ? '' : (rem === 0 && base > 0 ? '0' : formatNumber(rem));
             }
-
-            function changeDate(newDateStr) {
-                if (!newDateStr || !/^\d{4}-\d{2}-\d{2}$/.test(newDateStr)) return;
-                if (currentDateStr) {
-                    var d = getDayData(currentDateStr);
-                    d.total = totalSumInput.value === '' ? '0' : totalSumInput.value;
-                    saveData();
-                }
-                currentDateStr = newDateStr;
-                renderCurrentDay();
+            function changeDate(ns) {
+                if (!ns || !/^\d{4}-\d{2}-\d{2}$/.test(ns)) return;
+                if (currentDateStr) { var d = getDayData(currentDateStr); d.total = totalSumInput.value === '' ? '0' : totalSumInput.value; saveData(); }
+                currentDateStr = ns; renderCurrentDay();
             }
-
             function shiftDate(days) {
                 if (!currentDateStr) return;
-                var parts = currentDateStr.split('-').map(Number);
-                var date = new Date(parts[0], parts[1] - 1, parts[2]);
-                date.setDate(date.getDate() + days);
-                changeDate(formatDateToStorage(date));
+                var p = currentDateStr.split('-').map(Number), date = new Date(p[0], p[1]-1, p[2]);
+                date.setDate(date.getDate() + days); changeDate(formatDateToStorage(date));
             }
 
-            document.addEventListener('click', function() {
-                if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
-            }, { once: true });
+            document.addEventListener('click', function(){ if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume(); }, {once:true});
 
             function init() {
-                loadData();
-                var today = getTodayString();
-                if (!appData[today]) { appData[today] = createEmptyDayData(); saveData(); }
-                currentDateStr = today;
+                loadData(); currentDateStr = getTodayString(); if (!appData[currentDateStr]) { appData[currentDateStr] = createEmptyDayData(); saveData(); }
                 renderCurrentDay();
-                prevBtn.addEventListener('click', function() { shiftDate(-1); });
-                nextBtn.addEventListener('click', function() { shiftDate(1); });
-                searchBtn.addEventListener('click', function() {
-                    var val = searchInput.value.trim();
-                    if (val === '') { changeDate(getTodayString()); return; }
-                    var parsed = parseDateFromInput(val);
-                    if (parsed) changeDate(parsed);
-                    else { alert('ВВЕДИТЕ ДАТУ 09.08.26'); searchInput.value = storageToDisplay(currentDateStr); }
+                prevBtn.addEventListener('click', function(){ shiftDate(-1); });
+                nextBtn.addEventListener('click', function(){ shiftDate(1); });
+                searchBtn.addEventListener('click', function(){
+                    var v = searchInput.value.trim(); if (v === '') { changeDate(getTodayString()); return; }
+                    var p = parseDateFromInput(v); if (p) changeDate(p); else { alert('ВВЕДИТЕ ДАТУ 09.08.26'); searchInput.value = storageToDisplay(currentDateStr); }
                 });
-                searchInput.addEventListener('keypress', function(e) { if (e.key === 'Enter') searchBtn.click(); });
-                todayBtn.addEventListener('click', function() { changeDate(getTodayString()); });
-                totalSumInput.addEventListener('input', function() {
+                searchInput.addEventListener('keypress', function(e){ if (e.key === 'Enter') searchBtn.click(); });
+                todayBtn.addEventListener('click', function(){ changeDate(getTodayString()); });
+                totalSumInput.addEventListener('input', function(){
                     if (!currentDateStr) return;
-                    var val = totalSumInput.value.replace(',', '.');
-                    if (val === '') { getDayData(currentDateStr).total = '0'; saveData(); updateSumsDisplay(); return; }
-                    if (val.indexOf('.') !== -1) {
-                        var parts = val.split('.');
-                        if (parts[1] && parts[1].length > 2) { parts[1] = parts[1].slice(0, 2); val = parts.join('.'); totalSumInput.value = val; }
-                    }
-                    if (!/^-?\d*\.?\d*$/.test(val)) { totalSumInput.value = val.slice(0, -1); return; }
-                    if (!isNaN(parseFloat(val))) { getDayData(currentDateStr).total = val; saveData(); updateSumsDisplay(); }
+                    var v = totalSumInput.value.replace(',', '.'); if (v === '') { getDayData(currentDateStr).total = '0'; saveData(); updateSumsDisplay(); return; }
+                    if (v.indexOf('.') !== -1) { var p = v.split('.'); if (p[1] && p[1].length > 2) { p[1] = p[1].slice(0,2); v = p.join('.'); totalSumInput.value = v; } }
+                    if (!/^-?\d*\.?\d*$/.test(v)) { totalSumInput.value = v.slice(0,-1); return; }
+                    if (!isNaN(parseFloat(v))) { getDayData(currentDateStr).total = v; saveData(); updateSumsDisplay(); }
                 });
-                totalSumInput.addEventListener('blur', function() {
+                totalSumInput.addEventListener('blur', function(){
                     if (!currentDateStr) return;
-                    var val = totalSumInput.value.replace(',', '.');
-                    if (val === '') { getDayData(currentDateStr).total = '0'; saveData(); updateSumsDisplay(); return; }
-                    var num = parseFloat(val);
-                    getDayData(currentDateStr).total = isNaN(num) ? '0' : formatNumber(val);
-                    saveData();
-                    updateSumsDisplay();
+                    var v = totalSumInput.value.replace(',', '.'); if (v === '') { getDayData(currentDateStr).total = '0'; saveData(); updateSumsDisplay(); return; }
+                    getDayData(currentDateStr).total = isNaN(parseFloat(v)) ? '0' : formatNumber(v); saveData(); updateSumsDisplay();
                 });
             }
-
             init();
         })();
     </script>
