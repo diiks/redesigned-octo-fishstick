@@ -42,21 +42,13 @@
         }
 
         .stars-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 55%;
-            pointer-events: none;
-            z-index: 0;
+            position: absolute; top: 0; left: 0; width: 100%; height: 55%;
+            pointer-events: none; z-index: 0;
         }
 
         .star {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-            animation: twinkle var(--dur) ease-in-out infinite;
-            animation-delay: var(--delay);
+            position: absolute; background: white; border-radius: 50%;
+            animation: twinkle var(--dur) ease-in-out infinite; animation-delay: var(--delay);
         }
 
         @keyframes twinkle {
@@ -65,30 +57,20 @@
         }
 
         .moon {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            width: 160px;
-            height: 160px;
-            pointer-events: none;
-            z-index: 0;
-            opacity: 0.6;
+            position: absolute; top: 8px; right: 8px; width: 160px; height: 160px;
+            pointer-events: none; z-index: 0; opacity: 0.6;
         }
 
         .moon-base {
-            width: 100%;
-            height: 100%;
+            width: 100%; height: 100%;
             background: radial-gradient(circle at 40% 40%, #e8d8c0 0%, #d4b896 20%, #b89868 45%, #9a7a48 70%, #7a5a30 100%);
-            border-radius: 50%;
-            position: relative;
+            border-radius: 50%; position: relative;
             box-shadow: 0 0 60px rgba(255,220,150,0.4), 0 0 100px rgba(255,200,120,0.2);
             animation: moonGlow 4s ease-in-out infinite;
         }
 
         .crater {
-            position: absolute;
-            background: rgba(120, 90, 50, 0.5);
-            border-radius: 50%;
+            position: absolute; background: rgba(120, 90, 50, 0.5); border-radius: 50%;
         }
         .crater-1 { width: 36px; height: 36px; top: 20%; left: 25%; }
         .crater-2 { width: 24px; height: 24px; top: 45%; left: 55%; }
@@ -103,13 +85,8 @@
         }
 
         .comet {
-            position: absolute;
-            top: -80px;
-            right: -80px;
-            font-size: 50px;
-            pointer-events: none;
-            z-index: 1;
-            opacity: 0;
+            position: absolute; top: -80px; right: -80px; font-size: 50px;
+            pointer-events: none; z-index: 1; opacity: 0;
             filter: drop-shadow(0 0 12px #ff6600) drop-shadow(0 0 25px #ff4400);
             animation: cometDiagonal 2s linear infinite;
         }
@@ -121,9 +98,7 @@
         }
 
         .plants-left, .plants-right, .plants-bottom {
-            position: absolute;
-            pointer-events: none;
-            z-index: 0;
+            position: absolute; pointer-events: none; z-index: 0;
         }
         .plants-left { left: -5px; top: 100px; bottom: 0; display: flex; flex-direction: column; justify-content: flex-end; font-size: 38px; opacity: 0.6; gap: 4px; animation: swayLeft 3s ease-in-out infinite; line-height: 0.9; }
         .plants-right { right: -5px; top: 100px; bottom: 0; display: flex; flex-direction: column; justify-content: flex-end; font-size: 38px; opacity: 0.6; gap: 4px; animation: swayRight 3s ease-in-out infinite; line-height: 0.9; }
@@ -134,39 +109,23 @@
         @keyframes swayBottom { 0%,100%{transform:translateX(0);} 50%{transform:translateX(6px);} }
 
         .content-layer {
-            position: relative;
-            z-index: 2;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1.4rem;
+            position: relative; z-index: 2; width: 100%;
+            display: flex; flex-direction: column; align-items: center; gap: 1.4rem;
         }
 
         .oval-header {
-            width: 100%;
-            max-width: 420px;
+            width: 100%; max-width: 420px;
             background: linear-gradient(180deg, #5a3a1a 0%, #3d2008 50%, #2a1505 100%);
             border: 4px solid #8b5a2b;
             box-shadow: inset 0 -4px 0 #2a1505, inset 0 4px 0 rgba(255, 200, 100, 0.3), 0 0 20px rgba(255, 100, 0, 0.4);
-            border-radius: 50%;
-            aspect-ratio: 1 / 0.55;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            margin-bottom: 0.3rem;
-            padding: 0.2rem;
-            position: relative;
-            overflow: hidden;
+            border-radius: 50%; aspect-ratio: 1 / 0.55;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            text-align: center; margin-bottom: 0.3rem; padding: 0.2rem;
+            position: relative; overflow: hidden;
         }
 
         .dino-in-oval {
-            position: absolute;
-            pointer-events: none;
-            opacity: 0.4;
-            z-index: 0;
+            position: absolute; pointer-events: none; opacity: 0.4; z-index: 0;
         }
         .dino-oval-1 { top: 15%; left: 5%; font-size: 2.5rem; animation: dinoFloat1 3s ease-in-out infinite; }
         .dino-oval-2 { top: 10%; right: 5%; font-size: 2.8rem; animation: dinoFloat2 3s ease-in-out infinite; }
@@ -177,36 +136,20 @@
         @keyframes dinoFloat3 { 0%,100%{transform:translateX(-50%) translateY(0);} 50%{transform:translateX(-50%) translateY(-6px);} }
 
         .brand-top {
-            font-size: 5.5rem;
-            font-weight: 400;
-            letter-spacing: 10px;
-            color: #ff8800;
-            text-shadow: 0 0 15px #ff4400, 0 0 30px #ff2200, 3px 3px 0px #331100;
-            line-height: 1;
-            font-family: 'Ruslan Display', cursive;
-            position: relative;
-            z-index: 1;
+            font-size: 5.5rem; font-weight: 400; letter-spacing: 10px;
+            color: #ff8800; text-shadow: 0 0 15px #ff4400, 0 0 30px #ff2200, 3px 3px 0px #331100;
+            line-height: 1; font-family: 'Ruslan Display', cursive; position: relative; z-index: 1;
         }
 
         .brand-sub {
-            font-size: 1rem;
-            font-weight: 400;
-            color: #ffdd44;
-            letter-spacing: 5px;
-            margin-top: 0.2rem;
-            font-family: 'Ruslan Display', cursive;
-            text-shadow: 0 0 10px #ffaa00, 2px 2px 0px #331100;
-            position: relative;
-            z-index: 1;
+            font-size: 1rem; font-weight: 400; color: #ffdd44; letter-spacing: 5px;
+            margin-top: 0.2rem; font-family: 'Ruslan Display', cursive;
+            text-shadow: 0 0 10px #ffaa00, 2px 2px 0px #331100; position: relative; z-index: 1;
         }
 
         .date-navigation {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1rem;
-            width: 100%;
-            flex-wrap: wrap;
+            display: flex; align-items: center; justify-content: center; gap: 1rem;
+            width: 100%; flex-wrap: wrap;
         }
 
         .arrow-btn {
@@ -224,85 +167,43 @@
         }
         .arrow-btn:active { transform: scale(0.9); }
 
-        /* Верхнее окно даты (активное, крупный шрифт) */
-        .date-window {
-            background: rgba(15,8,0,0.8);
-            border: 3px solid #8b5a2b;
+        /* Активное окно даты (вместо прежнего display) */
+        .date-window-input {
+            background: rgba(15,8,0,0.8); border: 3px solid #8b5a2b;
             box-shadow: inset 0 0 15px rgba(0,0,0,0.6), 0 0 10px rgba(255,100,0,0.2);
-            padding: 0.7rem 1.8rem;
-            font-size: 1.1rem;
-            font-weight: 400;
-            color: #ffaa44;
-            min-width: 180px;
-            text-align: center;
-            letter-spacing: 2px;
-            font-family: 'Press Start 2P', monospace;
-            text-shadow: 0 0 8px #ff6600;
-            border-radius: 4px;
+            padding: 0.7rem 1.8rem; font-size: 1.1rem; font-weight: 400;
+            color: #ffaa44; min-width: 180px; text-align: center;
+            letter-spacing: 2px; font-family: 'Press Start 2P', monospace;
+            text-shadow: 0 0 8px #ff6600; border-radius: 4px;
+            outline: none; transition: 0.2s;
         }
-
-        .search-row {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.7rem;
-            width: 100%;
-            flex-wrap: wrap;
-        }
-
-        /* Поле ввода даты — теперь идентично верхнему окну */
-        .date-search-input {
-            background: rgba(15,8,0,0.8);
-            border: 3px solid #8b5a2b;
-            box-shadow: inset 0 0 15px rgba(0,0,0,0.6), 0 0 10px rgba(255,100,0,0.2);
-            padding: 0.7rem 1.8rem;
-            font-size: 1.1rem;
-            font-weight: 400;
-            color: #ffaa44;
-            min-width: 180px;
-            text-align: center;
-            letter-spacing: 2px;
-            font-family: 'Press Start 2P', monospace;
-            text-shadow: 0 0 8px #ff6600;
-            border-radius: 4px;
-            outline: none;
-            transition: 0.2s;
-            flex: 2;
-        }
-        .date-search-input:focus {
+        .date-window-input:focus {
             border-color: #ff8800;
             box-shadow: 0 0 10px rgba(255,100,0,0.4), inset 0 0 10px rgba(0,0,0,0.5);
         }
-        .date-search-input::placeholder {
-            color: #5a3a1a;
-            text-shadow: none;
-            opacity: 0.8;
+        .date-window-input::placeholder {
+            color: #5a3a1a; text-shadow: none; opacity: 0.8;
         }
 
-        /* Новое поле "Потрачено за месяц" (неактивное) */
+        /* Строка с кнопками под датой */
+        .date-actions {
+            display: flex; align-items: center; justify-content: center; gap: 0.7rem;
+            width: 100%; flex-wrap: wrap;
+        }
+
+        /* Поле "Потрачено за месяц" – неактивное, как раньше */
         .monthly-spent-input {
-            background: rgba(15,8,0,0.8);
-            border: 3px solid #8b5a2b;
+            background: rgba(10,5,0,0.9); border: 3px solid #8b5a2b;
             box-shadow: inset 0 0 15px rgba(0,0,0,0.6), 0 0 10px rgba(255,100,0,0.2);
-            padding: 0.7rem 1rem;
-            font-size: 1.1rem;
-            font-weight: 400;
-            color: #ffaa44;
-            min-width: 150px;
-            text-align: center;
-            letter-spacing: 1px;
-            font-family: 'Press Start 2P', monospace;
-            text-shadow: 0 0 8px #ff6600;
-            border-radius: 4px;
-            outline: none;
-            cursor: default;
-            background: rgba(10,5,0,0.9);
-            color: #ff8800;
+            padding: 0.7rem 1rem; font-size: 1.1rem; font-weight: 400;
+            color: #ff8800; min-width: 150px; text-align: center;
+            letter-spacing: 1px; font-family: 'Press Start 2P', monospace;
+            text-shadow: 0 0 8px #ff6600; border-radius: 4px;
+            outline: none; cursor: default;
         }
 
         .search-btn, .today-btn {
-            padding: 0.7rem 1.2rem;
-            border-radius: 20px;
+            padding: 0.7rem 1.2rem; border-radius: 20px;
             background: linear-gradient(180deg, #7a4a1a 0%, #4a2008 100%);
             border: 3px solid #aa6a2a;
             box-shadow: inset 0 2px 0 rgba(255,180,80,0.4), 0 3px 6px rgba(0,0,0,0.5);
@@ -415,17 +316,21 @@
             <div class="brand-top">DIX</div>
             <div class="brand-sub">ПОДСЧЕТ МИЛЛИОНОВ</div>
         </div>
+
+        <!-- Дата со стрелками (теперь поле ввода) -->
         <div class="date-navigation">
             <button class="arrow-btn" id="prevDayBtn">◄</button>
-            <div class="date-window" id="currentDateDisplay"></div>
+            <input type="text" id="currentDateInput" class="date-window-input" placeholder="09.08.26">
             <button class="arrow-btn" id="nextDayBtn">►</button>
         </div>
-        <div class="search-row">
+
+        <!-- Кнопки под датой -->
+        <div class="date-actions">
             <input type="text" id="monthlySpentInput" class="monthly-spent-input" placeholder="0" readonly title="Потрачено за месяц">
-            <input type="text" id="searchDateInput" class="date-search-input" placeholder="09.08.26">
             <button class="search-btn" id="searchDateBtn">🔍 ПОИСК</button>
             <button class="today-btn" id="todayBtn">📅 СЕГОДНЯ</button>
         </div>
+
         <div class="sums-container">
             <div class="sum-block"><div class="sum-label">💰 ОБЩАЯ СУММА</div><input type="text" id="totalSumInput" class="sum-input" placeholder="0"></div>
             <div class="sum-block"><div class="sum-label">💸 ПОТРАЧЕНО</div><input type="text" id="spentSumInput" class="sum-input" placeholder="0" readonly></div>
@@ -455,7 +360,6 @@
     function storageToDisplay(s){var p=s.split('-').map(Number);return formatDateToDisplay(new Date(p[0],p[1]-1,p[2]));}
     function formatNumber(v){var n=parseFloat(v);if(isNaN(n))return'0';return n===Math.floor(n)?n.toString():n.toFixed(2);}
 
-    // Сумма потраченного за конкретный день (из его строк)
     function getSpentSumForDate(dateStr) {
         if (!appData[dateStr]) return 0;
         var rows = appData[dateStr].rows;
@@ -470,7 +374,6 @@
         return sum;
     }
 
-    // Сумма потраченного за весь месяц, к которому относится dateStr
     function getMonthlySpent(dateStr) {
         var parts = dateStr.split('-');
         var year = parts[0];
@@ -485,19 +388,38 @@
         return total;
     }
 
-    var cd=document.getElementById('currentDateDisplay'),pb=document.getElementById('prevDayBtn'),nb=document.getElementById('nextDayBtn');
-    var si=document.getElementById('searchDateInput'),sb=document.getElementById('searchDateBtn'),tb=document.getElementById('todayBtn');
-    var ti=document.getElementById('totalSumInput'),spi=document.getElementById('spentSumInput'),tbody=document.getElementById('tableBody');
+    var dateInput = document.getElementById('currentDateInput');
+    var prevBtn = document.getElementById('prevDayBtn');
+    var nextBtn = document.getElementById('nextDayBtn');
+    var searchBtn = document.getElementById('searchDateBtn');
+    var todayBtn = document.getElementById('todayBtn');
+    var ti = document.getElementById('totalSumInput');
+    var spi = document.getElementById('spentSumInput');
+    var tbody = document.getElementById('tableBody');
     var monthlyInput = document.getElementById('monthlySpentInput');
 
-    function renderCurrentDay(){if(!currentDateStr)return;var d=getDayData(currentDateStr);cd.textContent=storageToDisplay(currentDateStr);si.value=storageToDisplay(currentDateStr);ti.value=(d.total==='0'||d.total===''||parseFloat(d.total)===0)?'':d.total;tbody.innerHTML='';for(var i=0;i<TOTAL_ROWS;i++){var rd=d.rows[i]||{text:'',number:''},tr=document.createElement('tr');var tn=document.createElement('td');tn.className='row-number';tn.textContent=(i+1)+'.';tr.appendChild(tn);var te=document.createElement('td');te.className='emoji-cell';var eb=document.createElement('button');eb.className='emoji-btn';eb.textContent=emojis[i];eb.setAttribute('data-row',i);eb.addEventListener('click',function(e){var b=e.currentTarget;if(b.classList.contains('active')){b.classList.remove('active');b.style.color='';playDeactivateSound();}else{b.classList.add('active');b.style.color=glowColors[parseInt(b.getAttribute('data-row'))];playActivateSound();}});te.appendChild(eb);tr.appendChild(te);var tt=document.createElement('td');tt.className='text-cell';var it=document.createElement('input');it.type='text';it.placeholder='ОПИСАНИЕ';it.value=rd.text;it.addEventListener('input',(function(idx){return function(e){updateRowText(idx,e.target.value);};})(i));tt.appendChild(it);tr.appendChild(tt);var tnum=document.createElement('td');tnum.className='number-cell';var inum=document.createElement('input');inum.type='text';inum.placeholder='0';inum.value=rd.number;inum.style.textAlign='center';inum.addEventListener('input',(function(idx){return function(e){handleNumberInput(idx,e.target);};})(i));inum.addEventListener('blur',function(e){formatNumberField(e.target);});tnum.appendChild(inum);tr.appendChild(tnum);tbody.appendChild(tr);}updateSumsDisplay();}
+    function applyDateFromInput() {
+        var val = dateInput.value.trim();
+        if (val === '') {
+            changeDate(getTodayString());
+            return;
+        }
+        var parsed = parseDateFromInput(val);
+        if (parsed) {
+            changeDate(parsed);
+        } else {
+            alert('ВВЕДИТЕ ДАТУ 09.08.26');
+            dateInput.value = storageToDisplay(currentDateStr);
+        }
+    }
+
+    function renderCurrentDay(){if(!currentDateStr)return;var d=getDayData(currentDateStr);dateInput.value=storageToDisplay(currentDateStr);ti.value=(d.total==='0'||d.total===''||parseFloat(d.total)===0)?'':d.total;tbody.innerHTML='';for(var i=0;i<TOTAL_ROWS;i++){var rd=d.rows[i]||{text:'',number:''},tr=document.createElement('tr');var tn=document.createElement('td');tn.className='row-number';tn.textContent=(i+1)+'.';tr.appendChild(tn);var te=document.createElement('td');te.className='emoji-cell';var eb=document.createElement('button');eb.className='emoji-btn';eb.textContent=emojis[i];eb.setAttribute('data-row',i);eb.addEventListener('click',function(e){var b=e.currentTarget;if(b.classList.contains('active')){b.classList.remove('active');b.style.color='';playDeactivateSound();}else{b.classList.add('active');b.style.color=glowColors[parseInt(b.getAttribute('data-row'))];playActivateSound();}});te.appendChild(eb);tr.appendChild(te);var tt=document.createElement('td');tt.className='text-cell';var it=document.createElement('input');it.type='text';it.placeholder='ОПИСАНИЕ';it.value=rd.text;it.addEventListener('input',(function(idx){return function(e){updateRowText(idx,e.target.value);};})(i));tt.appendChild(it);tr.appendChild(tt);var tnum=document.createElement('td');tnum.className='number-cell';var inum=document.createElement('input');inum.type='text';inum.placeholder='0';inum.value=rd.number;inum.style.textAlign='center';inum.addEventListener('input',(function(idx){return function(e){handleNumberInput(idx,e.target);};})(i));inum.addEventListener('blur',function(e){formatNumberField(e.target);});tnum.appendChild(inum);tr.appendChild(tnum);tbody.appendChild(tr);}updateSumsDisplay();}
     function updateRowText(i,v){if(!currentDateStr)return;getDayData(currentDateStr).rows[i].text=v;saveData();}
     function handleNumberInput(i,el){if(!currentDateStr)return;var v=el.value;if(v===''){updateNumberInRow(i,'');return;}v=v.replace(',','.');if(!/^-?\d*\.?\d*$/.test(v)){el.value=v.slice(0,-1);return;}if(v.indexOf('.')!==-1){var p=v.split('.');if(p[1]&&p[1].length>2){p[1]=p[1].slice(0,2);v=p.join('.');el.value=v;}}updateNumberInRow(i,v);}
     function formatNumberField(el){var v=el.value;if(v==='')return;v=v.replace(',','.');var n=parseFloat(v);el.value=!isNaN(n)?formatNumber(v):'';var tr=el.closest('tr');if(tr){var i=Array.from(tr.parentNode.children).indexOf(tr);if(i>=0&&i<TOTAL_ROWS)updateNumberInRow(i,el.value);}}
     function updateNumberInRow(i,v){if(!currentDateStr)return;getDayData(currentDateStr).rows[i].number=v;saveData();updateSumsDisplay();}
     function getSpentSum(){return getSpentSumForDate(currentDateStr);}
     function updateSumsDisplay(){if(!currentDateStr)return;var d=getDayData(currentDateStr),base=parseFloat(d.total)||0,spent=getSpentSum(),rem=base-spent;spi.value=spent===0?'':formatNumber(spent);ti.value=(rem===0&&base===0)?'':(rem===0&&base>0?'0':formatNumber(rem));
-        // Обновляем "Потрачено за месяц"
         var monthly = getMonthlySpent(currentDateStr);
         monthlyInput.value = monthly === 0 ? '' : formatNumber(monthly);
     }
@@ -506,9 +428,12 @@
     document.addEventListener('click',function(){if(audioCtx&&audioCtx.state==='suspended')audioCtx.resume();},{once:true});
 
     function init(){loadData();currentDateStr=getTodayString();if(!appData[currentDateStr]){appData[currentDateStr]=createEmptyDayData();saveData();}renderCurrentDay();
-        pb.addEventListener('click',function(){shiftDate(-1);});nb.addEventListener('click',function(){shiftDate(1);});
-        sb.addEventListener('click',function(){var v=si.value.trim();if(v===''){changeDate(getTodayString());return;}var p=parseDateFromInput(v);if(p)changeDate(p);else{alert('ВВЕДИТЕ ДАТУ 09.08.26');si.value=storageToDisplay(currentDateStr);}});
-        si.addEventListener('keypress',function(e){if(e.key==='Enter')sb.click();});tb.addEventListener('click',function(){changeDate(getTodayString());});
+        prevBtn.addEventListener('click',function(){shiftDate(-1);});
+        nextBtn.addEventListener('click',function(){shiftDate(1);});
+        dateInput.addEventListener('keypress',function(e){if(e.key==='Enter'){applyDateFromInput();}});
+        dateInput.addEventListener('blur',function(){applyDateFromInput();});
+        searchBtn.addEventListener('click',function(){applyDateFromInput();});
+        todayBtn.addEventListener('click',function(){changeDate(getTodayString());});
         ti.addEventListener('input',function(){if(!currentDateStr)return;var v=ti.value.replace(',','.');if(v===''){getDayData(currentDateStr).total='0';saveData();updateSumsDisplay();return;}if(v.indexOf('.')!==-1){var p=v.split('.');if(p[1]&&p[1].length>2){p[1]=p[1].slice(0,2);v=p.join('.');ti.value=v;}}if(!/^-?\d*\.?\d*$/.test(v)){ti.value=v.slice(0,-1);return;}if(!isNaN(parseFloat(v))){getDayData(currentDateStr).total=v;saveData();updateSumsDisplay();}});
         ti.addEventListener('blur',function(){if(!currentDateStr)return;var v=ti.value.replace(',','.');if(v===''){getDayData(currentDateStr).total='0';saveData();updateSumsDisplay();return;}getDayData(currentDateStr).total=isNaN(parseFloat(v))?'0':formatNumber(v);saveData();updateSumsDisplay();});
     }init();})();
