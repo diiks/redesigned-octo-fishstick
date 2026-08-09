@@ -299,7 +299,7 @@
         </div>
 
         <div class="search-row">
-            <input type="text" id="searchDateInput" class="date-search-input" placeholder="дд.мм.гггг или гггг-мм-дд">
+            <input type="text" id="searchDateInput" class="date-search-input" placeholder="09.08.26">
             <button class="search-btn" id="searchDateBtn">🔍 Поиск</button>
             <button class="today-btn" id="todayBtn">📅 Сегодня</button>
         </div>
@@ -324,6 +324,13 @@
             var TOTAL_ROWS = 100;
 
             function formatDateToDisplay(date) {
+                var d = String(date.getDate()).padStart(2, '0');
+                var m = String(date.getMonth() + 1).padStart(2, '0');
+                var y = String(date.getFullYear()).slice(-2);
+                return d + '.' + m + '.' + y;
+            }
+
+            function formatDateToStorage(date) {
                 var y = date.getFullYear();
                 var m = String(date.getMonth() + 1).padStart(2, '0');
                 var d = String(date.getDate()).padStart(2, '0');
@@ -333,27 +340,33 @@
             function parseDateFromInput(str) {
                 str = str.trim();
                 if (!str) return null;
+
+                // Формат 09.08.26 или 09.08.2026
                 if (str.indexOf('.') !== -1) {
-                    var parts = str.split('.');
-                    if (parts.length === 3) {
-                        var day = parseInt(parts[0], 10);
-                        var month = parseInt(parts[1], 10);
-                        var year = parseInt(parts[2], 10);
-                        if (!isNaN(day) && !isNaN(month) && !isNaN(year) && year > 0 && month >= 1 && month <= 12) {
+                    var dotParts = str.split('.');
+                    if (dotParts.length === 3) {
+                        var day = parseInt(dotParts[0], 10);
+                        var month = parseInt(dotParts[1], 10);
+                        var yearPart = parseInt(dotParts[2], 10);
+                        if (!isNaN(day) && !isNaN(month) && !isNaN(yearPart) && month >= 1 && month <= 12) {
+                            var year = yearPart;
+                            if (yearPart < 100) {
+                                year = 2000 + yearPart;
+                            }
                             var date = new Date(year, month - 1, day);
-                            if (date && date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() ===
-                                day) {
-                                return formatDateToDisplay(date);
+                            if (date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day) {
+                                return formatDateToStorage(date);
                             }
                         }
                     }
                 }
+
+                // Формат YYYY-MM-DD
                 var regex = /^\d{4}-\d{2}-\d{2}$/;
                 if (regex.test(str)) {
-                    var parts2 = str.split('-').map(Number);
-                    var date2 = new Date(parts2[0], parts2[1] - 1, parts2[2]);
-                    if (date2.getFullYear() === parts2[0] && date2.getMonth() === parts2[1] - 1 && date2.getDate() === parts2[
-                            2]) {
+                    var isoParts = str.split('-').map(Number);
+                    var date2 = new Date(isoParts[0], isoParts[1] - 1, isoParts[2]);
+                    if (date2.getFullYear() === isoParts[0] && date2.getMonth() === isoParts[1] - 1 && date2.getDate() === isoParts[2]) {
                         return str;
                     }
                 }
@@ -361,6 +374,10 @@
             }
 
             function getTodayString() {
+                return formatDateToStorage(new Date());
+            }
+
+            function getTodayDisplayString() {
                 return formatDateToDisplay(new Date());
             }
 
@@ -401,6 +418,12 @@
                 return appData[dateStr];
             }
 
+            function storageToDisplay(dateStr) {
+                var parts = dateStr.split('-').map(Number);
+                var date = new Date(parts[0], parts[1] - 1, parts[2]);
+                return formatDateToDisplay(date);
+            }
+
             var currentDateDisplay = document.getElementById('currentDateDisplay');
             var prevBtn = document.getElementById('prevDayBtn');
             var nextBtn = document.getElementById('nextDayBtn');
@@ -413,7 +436,9 @@
             function renderCurrentDay() {
                 if (!currentDateStr) return;
                 var dayData = getDayData(currentDateStr);
-                currentDateDisplay.textContent = currentDateStr;
+                var displayDate = storageToDisplay(currentDateStr);
+                currentDateDisplay.textContent = displayDate;
+                searchInput.value = displayDate;
                 totalSumInput.value = dayData.total;
                 tableBody.innerHTML = '';
                 for (var i = 0; i < TOTAL_ROWS; i++) {
@@ -526,28 +551,10 @@
                 totalSumInput.value = newTotal.toFixed(2);
             }
 
-            function onTotalSumChange() {
-                if (!currentDateStr) return;
-                var val = totalSumInput.value.replace(',', '.');
-                if (val === '') val = '0';
-                var num = parseFloat(val);
-                if (isNaN(num)) {
-                    totalSumInput.value = getDayData(currentDateStr).total;
-                    return;
-                }
-                var fixed = num.toFixed(2);
-                totalSumInput.value = fixed;
-                var dayData = getDayData(currentDateStr);
-                dayData.total = fixed;
-                saveData();
-                recalcTotalFromRows();
-            }
-
             function changeDate(newDateStr) {
                 if (!newDateStr || !/^\d{4}-\d{2}-\d{2}$/.test(newDateStr)) return;
                 currentDateStr = newDateStr;
                 renderCurrentDay();
-                searchInput.value = '';
             }
 
             function shiftDate(days) {
@@ -555,7 +562,7 @@
                 var parts = currentDateStr.split('-').map(Number);
                 var date = new Date(parts[0], parts[1] - 1, parts[2]);
                 date.setDate(date.getDate() + days);
-                var newStr = formatDateToDisplay(date);
+                var newStr = formatDateToStorage(date);
                 changeDate(newStr);
             }
 
@@ -568,25 +575,35 @@
                 }
                 currentDateStr = today;
                 renderCurrentDay();
+
                 prevBtn.addEventListener('click', function() { shiftDate(-1); });
                 nextBtn.addEventListener('click', function() { shiftDate(1); });
+
                 searchBtn.addEventListener('click', function() {
                     var inputVal = searchInput.value.trim();
+                    if (inputVal === '') {
+                        changeDate(getTodayString());
+                        return;
+                    }
                     var parsed = parseDateFromInput(inputVal);
                     if (parsed) {
                         changeDate(parsed);
                     } else {
-                        alert('Введите корректную дату (дд.мм.гггг или гггг-мм-дд)');
+                        alert('Введите корректную дату в формате 09.08.26');
+                        searchInput.value = storageToDisplay(currentDateStr);
                     }
                 });
+
                 searchInput.addEventListener('keypress', function(e) {
                     if (e.key === 'Enter') {
                         searchBtn.click();
                     }
                 });
+
                 todayBtn.addEventListener('click', function() {
                     changeDate(getTodayString());
                 });
+
                 totalSumInput.addEventListener('input', function() {
                     if (!currentDateStr) return;
                     var val = totalSumInput.value.replace(',', '.');
@@ -607,6 +624,7 @@
                         recalcTotalFromRows();
                     }
                 });
+
                 totalSumInput.addEventListener('blur', function() {
                     if (!currentDateStr) return;
                     var val = totalSumInput.value.replace(',', '.');
