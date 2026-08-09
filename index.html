@@ -306,7 +306,7 @@
 
         <div class="total-sum-block">
             <span class="total-label">💰 Общая сумма</span>
-            <input type="number" id="totalSumInput" class="total-input" value="1000000" step="0.01" min="0" max="1000000">
+            <input type="number" id="totalSumInput" class="total-input" value="0" step="0.01" min="0" max="1000000">
         </div>
 
         <div class="table-container">
@@ -341,7 +341,6 @@
                 str = str.trim();
                 if (!str) return null;
 
-                // Формат 09.08.26 или 09.08.2026
                 if (str.indexOf('.') !== -1) {
                     var dotParts = str.split('.');
                     if (dotParts.length === 3) {
@@ -361,7 +360,6 @@
                     }
                 }
 
-                // Формат YYYY-MM-DD
                 var regex = /^\d{4}-\d{2}-\d{2}$/;
                 if (regex.test(str)) {
                     var isoParts = str.split('-').map(Number);
@@ -375,10 +373,6 @@
 
             function getTodayString() {
                 return formatDateToStorage(new Date());
-            }
-
-            function getTodayDisplayString() {
-                return formatDateToDisplay(new Date());
             }
 
             function loadData() {
@@ -403,7 +397,7 @@
                 for (var i = 0; i < TOTAL_ROWS; i++) {
                     rows.push({ text: '', number: '' });
                 }
-                return { total: '1000000', rows: rows };
+                return { total: '0', rows: rows };
             }
 
             function saveData() {
@@ -477,6 +471,8 @@
                     tr.appendChild(tdNumber);
                     tableBody.appendChild(tr);
                 }
+                // После отрисовки таблицы пересчитываем общую сумму
+                recalcTotalFromRows();
             }
 
             function updateRowText(rowIndex, value) {
@@ -521,6 +517,11 @@
                 } else {
                     inputElement.value = '';
                 }
+                // После форматирования обновляем данные
+                var rowIndex = Array.from(inputElement.closest('tr').parentNode.children).indexOf(inputElement.closest('tr'));
+                if (rowIndex >= 0 && rowIndex < TOTAL_ROWS) {
+                    updateNumberInRow(rowIndex, inputElement.value);
+                }
             }
 
             function updateNumberInRow(rowIndex, valueStr) {
@@ -536,7 +537,10 @@
             function recalcTotalFromRows() {
                 if (!currentDateStr) return;
                 var dayData = getDayData(currentDateStr);
+                // Базовая сумма — это то, что пользователь ввёл в поле "Общая сумма"
                 var baseTotal = parseFloat(dayData.total) || 0;
+                
+                // Суммируем все числа из таблицы
                 var subtractSum = 0;
                 for (var i = 0; i < TOTAL_ROWS; i++) {
                     var numVal = dayData.rows[i] ? dayData.rows[i].number : '';
@@ -547,12 +551,21 @@
                         }
                     }
                 }
+                
+                // Итоговая сумма = базовая сумма - сумма чисел из таблицы
                 var newTotal = baseTotal - subtractSum;
+                // Показываем результат в поле (может быть отрицательным)
                 totalSumInput.value = newTotal.toFixed(2);
             }
 
             function changeDate(newDateStr) {
                 if (!newDateStr || !/^\d{4}-\d{2}-\d{2}$/.test(newDateStr)) return;
+                // Сохраняем текущую базовую сумму перед сменой даты
+                if (currentDateStr) {
+                    var currentDayData = getDayData(currentDateStr);
+                    currentDayData.total = totalSumInput.value;
+                    saveData();
+                }
                 currentDateStr = newDateStr;
                 renderCurrentDay();
             }
@@ -604,6 +617,7 @@
                     changeDate(getTodayString());
                 });
 
+                // Когда пользователь меняет общую сумму вручную
                 totalSumInput.addEventListener('input', function() {
                     if (!currentDateStr) return;
                     var val = totalSumInput.value.replace(',', '.');
@@ -621,7 +635,8 @@
                         var dayData = getDayData(currentDateStr);
                         dayData.total = val;
                         saveData();
-                        recalcTotalFromRows();
+                        // НЕ пересчитываем здесь, чтобы пользователь видел введённое число
+                        // Пересчёт будет при вводе чисел в таблицу
                     }
                 });
 
