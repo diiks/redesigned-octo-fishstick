@@ -124,23 +124,31 @@
             position: relative; overflow: hidden;
         }
 
-        /* Динозаврики — крупнее, прозрачнее, плавная анимация */
+        /* Динозаврики */
         .dino-in-oval {
             position: absolute; pointer-events: none; z-index: 0;
-            font-size: 5.5rem; /* КРУПНЕЕ */
-            opacity: 0.35; /* БОЛЕЕ ПРОЗРАЧНЫЕ */
+            font-size: 5.5rem;
+            opacity: 0.35;
             top: 50%;
-            transform: translateY(-50%);
-            animation: dinoFloatSmooth 4s ease-in-out infinite;
+            animation: dinoFloatVertical 4s ease-in-out infinite;
         }
-        .dino-oval-1 { left: 2%; animation-delay: 0s; }
-        .dino-oval-2 { left: 50%; transform: translate(-50%, -50%); animation-delay: 0.5s; }
-        .dino-oval-3 { right: 2%; animation-delay: 1s; }
+        .dino-oval-1 { left: 2%; animation-delay: 0s; transform: translateY(-50%); }
+        .dino-oval-2 {
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-name: dinoFloatCenter;
+            animation-delay: 0.5s;
+        }
+        .dino-oval-3 { right: 2%; animation-delay: 1s; transform: translateY(-50%); }
 
-        @keyframes dinoFloatSmooth {
-            0%, 100% { transform: translateY(-50%) translateX(0); }
-            25% { transform: translateY(-52%) translateX(2px); }
-            75% { transform: translateY(-48%) translateX(-2px); }
+        @keyframes dinoFloatVertical {
+            0%, 100% { transform: translateY(-50%); }
+            50% { transform: translateY(-54%); }
+        }
+
+        @keyframes dinoFloatCenter {
+            0%, 100% { transform: translate(-50%, -50%); }
+            50% { transform: translate(-50%, -54%); }
         }
 
         .brand-top {
@@ -158,7 +166,6 @@
             margin-bottom: 2rem;
         }
 
-        /* Строка с "Потрачено за месяц" (над датой) */
         .monthly-row {
             display: flex; justify-content: center; width: 100%;
         }
@@ -193,7 +200,6 @@
         }
         .arrow-btn:active { transform: scale(0.9); }
 
-        /* Активное окно даты – прежние размеры */
         .date-window-input {
             background: rgba(15,8,0,0.8); border: 3px solid #8b5a2b;
             box-shadow: inset 0 0 15px rgba(0,0,0,0.6), 0 0 10px rgba(255,100,0,0.2);
@@ -211,7 +217,6 @@
             color: #5a3a1a; text-shadow: none; opacity: 0.8;
         }
 
-        /* Строка с кнопками под датой */
         .date-actions {
             display: flex; align-items: center; justify-content: center; gap: 0.7rem;
             width: 100%; flex-wrap: wrap;
@@ -332,19 +337,16 @@
             <div class="brand-sub">ПОДСЧЕТ МИЛЛИОНОВ</div>
         </div>
 
-        <!-- Поле "Потрачено за месяц" над датой -->
         <div class="monthly-row">
             <input type="text" id="monthlySpentInput" class="monthly-spent-input" placeholder="0" readonly title="Потрачено за месяц">
         </div>
 
-        <!-- Дата со стрелками (активное поле) -->
         <div class="date-navigation">
             <button class="arrow-btn" id="prevDayBtn">◄</button>
             <input type="text" id="currentDateInput" class="date-window-input" placeholder="09.08.26">
             <button class="arrow-btn" id="nextDayBtn">►</button>
         </div>
 
-        <!-- Кнопки под датой -->
         <div class="date-actions">
             <button class="search-btn" id="searchDateBtn">🔍 ПОИСК</button>
             <button class="today-btn" id="todayBtn">📅 СЕГОДНЯ</button>
