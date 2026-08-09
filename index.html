@@ -27,20 +27,9 @@
         .app {
             width: 100%;
             max-width: 800px;
-            background: 
-                /* Ночное небо */
-                linear-gradient(180deg, 
-                    #0d1b2a 0%, 
-                    #1b2838 20%, 
-                    #2d1a0a 45%, 
-                    #4a2a10 65%, 
-                    #3d2008 100%
-                );
+            background: linear-gradient(180deg, #0d1b2a 0%, #1b2838 20%, #2d1a0a 45%, #4a2a10 65%, #3d2008 100%);
             border: 6px solid #5a3a1a;
-            box-shadow: 
-                inset 0 0 0 3px rgba(139, 90, 43, 0.4),
-                0 0 30px rgba(255, 100, 0, 0.3),
-                0 0 60px rgba(255, 60, 0, 0.15);
+            box-shadow: inset 0 0 0 3px rgba(139, 90, 43, 0.4), 0 0 30px rgba(255, 100, 0, 0.3), 0 0 60px rgba(255, 60, 0, 0.15);
             padding: 1.8rem 1.8rem 2.2rem;
             display: flex;
             flex-direction: column;
@@ -52,13 +41,13 @@
             overflow: hidden;
         }
 
-        /* Звёзды внутри приложения */
+        /* Звёзды */
         .stars-container {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 60%;
+            height: 55%;
             pointer-events: none;
             z-index: 0;
         }
@@ -67,75 +56,119 @@
             position: absolute;
             background: white;
             border-radius: 50%;
-            animation: twinkle 2s ease-in-out infinite;
+            animation: twinkle var(--dur) ease-in-out infinite;
+            animation-delay: var(--delay);
         }
 
         @keyframes twinkle {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 1; }
+            0%, 100% { opacity: 0.2; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.5); }
         }
 
-        /* Луна внутри */
+        /* Луна в правом верхнем углу */
         .moon {
             position: absolute;
-            top: 8%;
-            right: 15%;
-            width: 70px;
-            height: 70px;
-            background: radial-gradient(circle at 40% 40%, #ffe8c0 0%, #ffcc66 40%, rgba(255,200,100,0.3) 70%, transparent 100%);
+            top: 10px;
+            right: 10px;
+            width: 55px;
+            height: 55px;
+            background: radial-gradient(circle at 35% 35%, #ffe8c0 0%, #ffcc66 35%, rgba(255,200,100,0.2) 65%, transparent 100%);
             border-radius: 50%;
             pointer-events: none;
             z-index: 0;
-            box-shadow: 0 0 40px rgba(255,200,100,0.4), 0 0 80px rgba(255,180,80,0.2);
+            box-shadow: 0 0 35px rgba(255,200,100,0.5), 0 0 70px rgba(255,180,80,0.3);
+            animation: moonGlow 3s ease-in-out infinite;
         }
 
-        /* Комета внутри */
+        @keyframes moonGlow {
+            0%, 100% { box-shadow: 0 0 35px rgba(255,200,100,0.5), 0 0 70px rgba(255,180,80,0.3); }
+            50% { box-shadow: 0 0 50px rgba(255,220,140,0.7), 0 0 90px rgba(255,200,100,0.4); }
+        }
+
+        /* Комета — летает в области строки поиска */
         .comet {
             position: absolute;
-            top: 5%;
-            right: 20%;
-            font-size: 80px;
+            top: 220px;
+            left: -60px;
+            font-size: 50px;
             pointer-events: none;
-            z-index: 0;
+            z-index: 1;
             opacity: 0.8;
-            filter: drop-shadow(0 0 15px #ff6600) drop-shadow(0 0 30px #ff4400);
-            animation: cometMove 6s ease-in-out infinite;
+            filter: drop-shadow(0 0 10px #ff6600) drop-shadow(0 0 20px #ff4400);
+            animation: cometFly 5s ease-in-out infinite;
         }
 
-        @keyframes cometMove {
-            0%, 100% { transform: translate(0, 0) rotate(-35deg); }
-            50% { transform: translate(-20px, 15px) rotate(-33deg); }
+        @keyframes cometFly {
+            0% { transform: translate(0, 0) rotate(-30deg); opacity: 0.3; }
+            20% { opacity: 0.9; }
+            40% { transform: translate(400px, -30px) rotate(-30deg); opacity: 0.9; }
+            60% { transform: translate(750px, -10px) rotate(-30deg); opacity: 0.5; }
+            80% { opacity: 0.2; }
+            100% { transform: translate(900px, 20px) rotate(-30deg); opacity: 0; }
         }
 
-        /* Динозавры внутри */
-        .dino-inside {
+        /* Растения по бокам и снизу */
+        .plants-left {
             position: absolute;
+            left: -5px;
+            top: 120px;
+            bottom: 0;
             pointer-events: none;
             z-index: 0;
-            font-size: 60px;
-            opacity: 0.5;
-            filter: brightness(0.4) sepia(0.6);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            font-size: 35px;
+            opacity: 0.35;
+            gap: 5px;
+            animation: swayLeft 4s ease-in-out infinite;
         }
 
-        .dino-left { bottom: 8%; left: 2%; font-size: 70px; transform: scaleX(-1); }
-        .dino-right { bottom: 10%; right: 3%; font-size: 55px; }
-        .dino-center { bottom: 5%; left: 50%; font-size: 40px; transform: translateX(-50%); opacity: 0.35; }
+        .plants-right {
+            position: absolute;
+            right: -5px;
+            top: 120px;
+            bottom: 0;
+            pointer-events: none;
+            z-index: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            font-size: 35px;
+            opacity: 0.35;
+            gap: 5px;
+            animation: swayRight 4s ease-in-out infinite;
+        }
 
-        /* Растения внутри */
-        .plants-inside {
+        .plants-bottom {
             position: absolute;
             bottom: 0;
             left: 0;
             width: 100%;
             pointer-events: none;
             z-index: 0;
-            font-size: 30px;
+            font-size: 28px;
             opacity: 0.3;
             display: flex;
             justify-content: space-around;
             align-items: flex-end;
-            height: 60px;
-            color: #1a3a0a;
+            height: 50px;
+            animation: swayBottom 3s ease-in-out infinite;
+        }
+
+        @keyframes swayLeft {
+            0%, 100% { transform: rotate(-2deg); }
+            50% { transform: rotate(2deg); }
+        }
+
+        @keyframes swayRight {
+            0%, 100% { transform: rotate(2deg); }
+            50% { transform: rotate(-2deg); }
+        }
+
+        @keyframes swayBottom {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(5px); }
         }
 
         /* Контент поверх фона */
@@ -149,15 +182,13 @@
             gap: 1.4rem;
         }
 
+        /* Овальная шапка с динозаврами */
         .oval-header {
             width: 100%;
             max-width: 380px;
             background: linear-gradient(180deg, #5a3a1a 0%, #3d2008 50%, #2a1505 100%);
             border: 4px solid #8b5a2b;
-            box-shadow: 
-                inset 0 -4px 0 #2a1505,
-                inset 0 4px 0 rgba(255, 200, 100, 0.3),
-                0 0 20px rgba(255, 100, 0, 0.4);
+            box-shadow: inset 0 -4px 0 #2a1505, inset 0 4px 0 rgba(255, 200, 100, 0.3), 0 0 20px rgba(255, 100, 0, 0.4);
             border-radius: 50%;
             aspect-ratio: 1 / 0.55;
             display: flex;
@@ -168,6 +199,25 @@
             margin-bottom: 0.3rem;
             padding: 0.2rem;
             position: relative;
+            overflow: hidden;
+        }
+
+        /* Динозавры в овале */
+        .dino-in-oval {
+            position: absolute;
+            pointer-events: none;
+            font-size: 35px;
+            opacity: 0.4;
+            animation: dinoFloat 3s ease-in-out infinite;
+        }
+
+        .dino-oval-1 { top: 5px; left: 15px; animation-delay: 0s; }
+        .dino-oval-2 { top: 5px; right: 15px; animation-delay: 0.5s; }
+        .dino-oval-3 { bottom: 5px; left: 40%; animation-delay: 1s; font-size: 28px; }
+
+        @keyframes dinoFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
         }
 
         .brand-top {
@@ -175,12 +225,11 @@
             font-weight: 400;
             letter-spacing: 8px;
             color: #ff8800;
-            text-shadow: 
-                0 0 10px #ff4400,
-                0 0 20px #ff2200,
-                2px 2px 0px #331100;
+            text-shadow: 0 0 10px #ff4400, 0 0 20px #ff2200, 2px 2px 0px #331100;
             line-height: 1;
             font-family: 'Ruslan Display', cursive;
+            position: relative;
+            z-index: 1;
         }
 
         .brand-sub {
@@ -194,6 +243,8 @@
             margin-top: 0.1rem;
             font-family: 'Press Start 2P', monospace;
             text-shadow: 1px 1px 0px #000;
+            position: relative;
+            z-index: 1;
         }
 
         .date-navigation {
@@ -211,10 +262,7 @@
             border-radius: 50%;
             background: linear-gradient(180deg, #8b6b3a 0%, #5a3a1a 100%);
             border: 3px solid #aa8b4a;
-            box-shadow: 
-                inset 0 2px 0 rgba(255, 200, 100, 0.4),
-                0 4px 8px rgba(0,0,0,0.5),
-                0 0 10px rgba(255, 100, 0, 0.2);
+            box-shadow: inset 0 2px 0 rgba(255, 200, 100, 0.4), 0 4px 8px rgba(0,0,0,0.5), 0 0 10px rgba(255, 100, 0, 0.2);
             font-size: 1.5rem;
             font-weight: bold;
             color: #ffcc66;
@@ -228,10 +276,7 @@
 
         .arrow-btn:hover {
             background: linear-gradient(180deg, #aa8b4a 0%, #7a5a2a 100%);
-            box-shadow: 
-                inset 0 2px 0 rgba(255, 220, 140, 0.5),
-                0 4px 12px rgba(0,0,0,0.5),
-                0 0 20px rgba(255, 150, 0, 0.4);
+            box-shadow: inset 0 2px 0 rgba(255, 220, 140, 0.5), 0 4px 12px rgba(0,0,0,0.5), 0 0 20px rgba(255, 150, 0, 0.4);
         }
 
         .arrow-btn:active {
@@ -241,9 +286,7 @@
         .date-window {
             background: rgba(15, 8, 0, 0.8);
             border: 3px solid #8b5a2b;
-            box-shadow: 
-                inset 0 0 15px rgba(0,0,0,0.6),
-                0 0 10px rgba(255, 100, 0, 0.2);
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.6), 0 0 10px rgba(255, 100, 0, 0.2);
             padding: 0.7rem 1.8rem;
             font-size: 0.8rem;
             font-weight: 400;
@@ -263,6 +306,7 @@
             gap: 0.7rem;
             width: 100%;
             flex-wrap: wrap;
+            position: relative;
         }
 
         .date-search-input {
@@ -285,19 +329,14 @@
             box-shadow: 0 0 10px rgba(255, 100, 0, 0.4), inset 0 0 10px rgba(0,0,0,0.5);
         }
 
-        .date-search-input::placeholder {
-            color: #5a3a1a;
-        }
+        .date-search-input::placeholder { color: #5a3a1a; }
 
-        .search-btn,
-        .today-btn {
+        .search-btn, .today-btn {
             padding: 0.6rem 1.2rem;
             border-radius: 20px;
             background: linear-gradient(180deg, #7a4a1a 0%, #4a2008 100%);
             border: 3px solid #aa6a2a;
-            box-shadow: 
-                inset 0 2px 0 rgba(255, 180, 80, 0.4),
-                0 3px 6px rgba(0,0,0,0.5);
+            box-shadow: inset 0 2px 0 rgba(255, 180, 80, 0.4), 0 3px 6px rgba(0,0,0,0.5);
             font-weight: 400;
             color: #ffcc66;
             cursor: pointer;
@@ -308,19 +347,12 @@
             text-shadow: 1px 1px 0px #331100;
         }
 
-        .search-btn:hover,
-        .today-btn:hover {
+        .search-btn:hover, .today-btn:hover {
             background: linear-gradient(180deg, #9a5a2a 0%, #5a2a08 100%);
-            box-shadow: 
-                inset 0 2px 0 rgba(255, 200, 100, 0.5),
-                0 3px 8px rgba(0,0,0,0.5),
-                0 0 15px rgba(255, 150, 0, 0.3);
+            box-shadow: inset 0 2px 0 rgba(255, 200, 100, 0.5), 0 3px 8px rgba(0,0,0,0.5), 0 0 15px rgba(255, 150, 0, 0.3);
         }
 
-        .search-btn:active,
-        .today-btn:active {
-            transform: scale(0.93);
-        }
+        .search-btn:active, .today-btn:active { transform: scale(0.93); }
 
         .today-btn {
             background: linear-gradient(180deg, #aa4a0a 0%, #6a2000 100%);
@@ -395,24 +427,10 @@
             backdrop-filter: blur(2px);
         }
 
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-            padding: 0.3rem;
-        }
-
-        .data-table tr {
-            border-bottom: 2px solid rgba(139, 90, 43, 0.3);
-        }
-
-        .data-table tr:last-child {
-            border-bottom: none;
-        }
-
-        .data-table td {
-            padding: 0.2rem 0.15rem;
-            vertical-align: middle;
-        }
+        .data-table { width: 100%; border-collapse: collapse; }
+        .data-table tr { border-bottom: 2px solid rgba(139, 90, 43, 0.3); }
+        .data-table tr:last-child { border-bottom: none; }
+        .data-table td { padding: 0.2rem 0.15rem; vertical-align: middle; }
 
         .row-number {
             font-weight: 400;
@@ -420,19 +438,11 @@
             font-size: 0.55rem;
             text-align: center;
             width: 32px;
-            white-space: nowrap;
-            padding-right: 0 !important;
-            padding-left: 0.2rem !important;
             font-family: 'Press Start 2P', monospace;
             text-shadow: 0 0 6px #ff4400;
         }
 
-        .emoji-cell {
-            text-align: center;
-            width: 48px;
-            padding-left: 0 !important;
-            padding-right: 0 !important;
-        }
+        .emoji-cell { text-align: center; width: 48px; }
 
         .emoji-btn {
             background: rgba(30, 10, 0, 0.7);
@@ -457,29 +467,14 @@
             opacity: 1;
             filter: grayscale(0%) brightness(1.5);
             border-color: #ff8800;
-            box-shadow: 
-                0 0 15px currentColor,
-                inset 0 0 10px currentColor;
+            box-shadow: 0 0 15px currentColor, inset 0 0 10px currentColor;
             text-shadow: 0 0 10px currentColor;
         }
 
-        .emoji-btn:hover {
-            opacity: 0.7;
-            filter: grayscale(30%) brightness(0.8);
-            border-color: #8b5a2b;
-        }
+        .emoji-btn:hover { opacity: 0.7; filter: grayscale(30%) brightness(0.8); border-color: #8b5a2b; }
+        .emoji-btn.active:hover { opacity: 1; filter: grayscale(0%) brightness(1.6); }
 
-        .emoji-btn.active:hover {
-            opacity: 1;
-            filter: grayscale(0%) brightness(1.6);
-        }
-
-        .text-cell {
-            padding-left: 0.1rem !important;
-        }
-
-        .text-cell input,
-        .number-cell input {
+        .text-cell input, .number-cell input {
             width: 100%;
             padding: 0.45rem 0.5rem;
             border: 2px solid #5a3a1a;
@@ -492,55 +487,23 @@
             border-radius: 4px;
         }
 
-        .text-cell input {
-            text-align: left;
-        }
+        .text-cell input { text-align: left; }
+        .number-cell input { text-align: center; max-width: 90px; color: #ffaa44; }
 
-        .number-cell input {
-            text-align: center;
-            max-width: 90px;
-            color: #ffaa44;
-        }
-
-        .text-cell input:focus,
-        .number-cell input:focus {
+        .text-cell input:focus, .number-cell input:focus {
             border-color: #ff8800;
             box-shadow: 0 0 8px rgba(255, 100, 0, 0.4), inset 0 0 6px rgba(0,0,0,0.5);
         }
 
-        .table-container::-webkit-scrollbar {
-            width: 14px;
-        }
-
-        .table-container::-webkit-scrollbar-track {
-            background: rgba(15, 8, 0, 0.8);
-            border: 2px solid #3d2008;
-        }
-
-        .table-container::-webkit-scrollbar-thumb {
-            background: linear-gradient(180deg, #7a4a1a, #4a2008);
-            border: 2px solid #5a3a1a;
-            border-radius: 4px;
-        }
+        .table-container::-webkit-scrollbar { width: 14px; }
+        .table-container::-webkit-scrollbar-track { background: rgba(15, 8, 0, 0.8); border: 2px solid #3d2008; }
+        .table-container::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #7a4a1a, #4a2008); border: 2px solid #5a3a1a; border-radius: 4px; }
     </style>
 </head>
 <body>
     <div class="app">
         <!-- Звёзды -->
-        <div class="stars-container">
-            <div class="star" style="top:5%;left:8%;width:3px;height:3px;animation-delay:0s;"></div>
-            <div class="star" style="top:12%;left:22%;width:2px;height:2px;animation-delay:0.3s;"></div>
-            <div class="star" style="top:8%;left:38%;width:3px;height:3px;animation-delay:0.7s;"></div>
-            <div class="star" style="top:3%;left:52%;width:2px;height:2px;animation-delay:1s;"></div>
-            <div class="star" style="top:15%;left:65%;width:3px;height:3px;animation-delay:0.5s;"></div>
-            <div class="star" style="top:6%;left:78%;width:2px;height:2px;animation-delay:1.2s;"></div>
-            <div class="star" style="top:18%;left:15%;width:2px;height:2px;animation-delay:0.8s;"></div>
-            <div class="star" style="top:10%;left:45%;width:3px;height:3px;animation-delay:0.4s;"></div>
-            <div class="star" style="top:20%;left:58%;width:2px;height:2px;animation-delay:1.5s;"></div>
-            <div class="star" style="top:7%;left:70%;width:3px;height:3px;animation-delay:0.2s;"></div>
-            <div class="star" style="top:14%;left:32%;width:2px;height:2px;animation-delay:0.9s;"></div>
-            <div class="star" style="top:22%;left:82%;width:3px;height:3px;animation-delay:0.6s;"></div>
-        </div>
+        <div class="stars-container" id="starsContainer"></div>
 
         <!-- Луна -->
         <div class="moon"></div>
@@ -548,25 +511,29 @@
         <!-- Комета -->
         <div class="comet">☄️</div>
 
-        <!-- Динозавры -->
-        <div class="dino-inside dino-left">🦕</div>
-        <div class="dino-inside dino-right">🦖</div>
-        <div class="dino-inside dino-center">🦕</div>
+        <!-- Растения слева -->
+        <div class="plants-left">🌿<br>🪴<br>🌿<br>🌴<br>🪴<br>🌿</div>
 
-        <!-- Растения -->
-        <div class="plants-inside">🌿 🌴 🌿 🪴 🌿 🌴 🌿 🪴 🌿</div>
+        <!-- Растения справа -->
+        <div class="plants-right">🌴<br>🌿<br>🪴<br>🌿<br>🌴<br>🪴</div>
+
+        <!-- Растения снизу -->
+        <div class="plants-bottom">🌿 🌴 🌿 🪴 🌿 🌴 🌿 🪴 🌿 🌴 🌿</div>
 
         <!-- Контент -->
         <div class="content-layer">
             <div class="oval-header">
+                <div class="dino-in-oval dino-oval-1">🦕</div>
+                <div class="dino-in-oval dino-oval-2">🦖</div>
+                <div class="dino-in-oval dino-oval-3">🦕</div>
                 <div class="brand-top">DIX</div>
                 <div class="brand-sub">ПОДСЧЕТ МИЛЛИОНОВ</div>
             </div>
 
             <div class="date-navigation">
-                <button class="arrow-btn" id="prevDayBtn" title="Предыдущий день">◄</button>
+                <button class="arrow-btn" id="prevDayBtn">◄</button>
                 <div class="date-window" id="currentDateDisplay"></div>
-                <button class="arrow-btn" id="nextDayBtn" title="Следующий день">►</button>
+                <button class="arrow-btn" id="nextDayBtn">►</button>
             </div>
 
             <div class="search-row">
@@ -587,136 +554,62 @@
             </div>
 
             <div class="table-container">
-                <table class="data-table">
-                    <tbody id="tableBody"></tbody>
-                </table>
+                <table class="data-table"><tbody id="tableBody"></tbody></table>
             </div>
         </div>
     </div>
 
     <script>
+        // Генерация множества звёзд
+        (function() {
+            var container = document.getElementById('starsContainer');
+            var html = '';
+            for (var i = 0; i < 80; i++) {
+                var top = Math.random() * 90;
+                var left = Math.random() * 95;
+                var size = Math.random() * 3 + 1;
+                var dur = Math.random() * 2 + 1.5;
+                var delay = Math.random() * 3;
+                html += '<div class="star" style="top:' + top + '%;left:' + left + '%;width:' + size + 'px;height:' + size + 'px;--dur:' + dur + 's;--delay:' + delay + 's;"></div>';
+            }
+            container.innerHTML = html;
+        })();
+
+        // Основной скрипт
         (function() {
             var STORAGE_KEY = 'dix_million_data';
             var appData = {};
             var currentDateStr = '';
             var TOTAL_ROWS = 50;
 
-            var emojis = [
-                '🐍', '🦭', '🦔', '🐑', '🐥', '🐘', '🐪', '🦜', '🐬', '🦕',
-                '🐝', '🪰', '🐡', '🐦‍🔥', '🦢', '🦘', '🦦', '🐦', '🐖', '🐈',
-                '🐕', '🦧', '🐅', '🦓', '🐿️', '🐇', '🐼', '🐧', '🐊', '🐳',
-                '🦋', '🪲', '🐌', '🪼', '🐙', '🦂', '🐞', '🦗', '🐠', '🦉',
-                '🦎', '🐻', '🦏', '🦇', '🦚', '🐓', '🐮', '🐯', '🐷', '🦄'
-            ];
-
-            var glowColors = [
-                '#ff4444', '#ff8800', '#ffdd00', '#44ff44', '#00ddff',
-                '#4488ff', '#aa44ff', '#ff44aa', '#ff6699', '#66ff99',
-                '#ff9966', '#99ff66', '#ff66cc', '#66ccff', '#ccff66',
-                '#ff6666', '#66ffcc', '#cc66ff', '#ffcc66', '#66cc99',
-                '#ff8888', '#88ff88', '#8888ff', '#ff88cc', '#88ccff',
-                '#cc88ff', '#ffcc88', '#88ffcc', '#ccff88', '#ff88aa',
-                '#aaff66', '#66aaff', '#ff66aa', '#aaffaa', '#ffaa66',
-                '#66ffaa', '#aa66ff', '#ffaa88', '#88aaff', '#aaffcc',
-                '#ccffaa', '#ffccaa', '#aaccff', '#ccffcc', '#ffaacc',
-                '#ccaaff', '#ffccdd', '#ddffcc', '#ccddff', '#ddccff'
-            ];
+            var emojis = ['🐍','🦭','🦔','🐑','🐥','🐘','🐪','🦜','🐬','🦕','🐝','🪰','🐡','🐦‍🔥','🦢','🦘','🦦','🐦','🐖','🐈','🐕','🦧','🐅','🦓','🐿️','🐇','🐼','🐧','🐊','🐳','🦋','🪲','🐌','🪼','🐙','🦂','🐞','🦗','🐠','🦉','🦎','🐻','🦏','🦇','🦚','🐓','🐮','🐯','🐷','🦄'];
+            var glowColors = ['#ff4444','#ff8800','#ffdd00','#44ff44','#00ddff','#4488ff','#aa44ff','#ff44aa','#ff6699','#66ff99','#ff9966','#99ff66','#ff66cc','#66ccff','#ccff66','#ff6666','#66ffcc','#cc66ff','#ffcc66','#66cc99','#ff8888','#88ff88','#8888ff','#ff88cc','#88ccff','#cc88ff','#ffcc88','#88ffcc','#ccff88','#ff88aa','#aaff66','#66aaff','#ff66aa','#aaffaa','#ffaa66','#66ffaa','#aa66ff','#ffaa88','#88aaff','#aaffcc','#ccffaa','#ffccaa','#aaccff','#ccffcc','#ffaacc','#ccaaff','#ffccdd','#ddffcc','#ccddff','#ddccff'];
 
             var audioCtx = null;
-
-            function getAudioContext() {
-                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                if (audioCtx.state === 'suspended') audioCtx.resume();
-                return audioCtx;
-            }
+            function getAudioContext() { if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)(); if (audioCtx.state === 'suspended') audioCtx.resume(); return audioCtx; }
 
             function playActivateSound() {
-                try {
-                    var ctx = getAudioContext();
-                    var now = ctx.currentTime;
-                    var osc = ctx.createOscillator();
-                    var gain = ctx.createGain();
-                    osc.type = 'sawtooth';
-                    osc.frequency.setValueAtTime(150, now);
-                    osc.frequency.setValueAtTime(200, now + 0.04);
-                    osc.frequency.exponentialRampToValueAtTime(60, now + 0.2);
-                    gain.gain.setValueAtTime(0.2, now);
-                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
-                    osc.connect(gain);
-                    gain.connect(ctx.destination);
-                    osc.start(now);
-                    osc.stop(now + 0.2);
-                } catch (e) {}
+                try { var ctx = getAudioContext(); var now = ctx.currentTime; var osc = ctx.createOscillator(); var gain = ctx.createGain(); osc.type = 'sawtooth'; osc.frequency.setValueAtTime(150, now); osc.frequency.setValueAtTime(200, now+0.04); osc.frequency.exponentialRampToValueAtTime(60, now+0.2); gain.gain.setValueAtTime(0.2, now); gain.gain.exponentialRampToValueAtTime(0.001, now+0.2); osc.connect(gain); gain.connect(ctx.destination); osc.start(now); osc.stop(now+0.2); } catch(e) {}
             }
-
             function playDeactivateSound() {
-                try {
-                    var ctx = getAudioContext();
-                    var now = ctx.currentTime;
-                    var bufferSize = ctx.sampleRate * 0.06;
-                    var buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-                    var data = buffer.getChannelData(0);
-                    for (var i = 0; i < bufferSize; i++) data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (ctx.sampleRate * 0.006));
-                    var noise = ctx.createBufferSource();
-                    var gain = ctx.createGain();
-                    var filter = ctx.createBiquadFilter();
-                    filter.type = 'bandpass';
-                    filter.frequency.value = 800;
-                    noise.buffer = buffer;
-                    gain.gain.setValueAtTime(0.3, now);
-                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
-                    noise.connect(filter);
-                    filter.connect(gain);
-                    gain.connect(ctx.destination);
-                    noise.start(now);
-                    noise.stop(now + 0.06);
-                } catch (e) {}
+                try { var ctx = getAudioContext(); var now = ctx.currentTime; var b = ctx.createBuffer(1, ctx.sampleRate*0.06, ctx.sampleRate); var d = b.getChannelData(0); for (var i=0; i<d.length; i++) d[i]=(Math.random()*2-1)*Math.exp(-i/(ctx.sampleRate*0.006)); var n = ctx.createBufferSource(); var g = ctx.createGain(); var f = ctx.createBiquadFilter(); f.type='bandpass'; f.frequency.value=800; n.buffer=b; g.gain.setValueAtTime(0.3, now); g.gain.exponentialRampToValueAtTime(0.001, now+0.06); n.connect(f); f.connect(g); g.connect(ctx.destination); n.start(now); n.stop(now+0.06); } catch(e) {}
             }
 
-            function formatDateToDisplay(date) {
-                return String(date.getDate()).padStart(2,'0') + '.' + String(date.getMonth()+1).padStart(2,'0') + '.' + String(date.getFullYear()).slice(-2);
-            }
-
-            function formatDateToStorage(date) {
-                return date.getFullYear() + '-' + String(date.getMonth()+1).padStart(2,'0') + '-' + String(date.getDate()).padStart(2,'0');
-            }
-
-            function parseDateFromInput(str) {
-                str = str.trim();
-                if (!str) return null;
-                if (str.indexOf('.') !== -1) {
-                    var p = str.split('.');
-                    if (p.length === 3) {
-                        var d = parseInt(p[0]), m = parseInt(p[1]), y = parseInt(p[2]);
-                        if (!isNaN(d) && !isNaN(m) && !isNaN(y) && m >= 1 && m <= 12) {
-                            if (y < 100) y += 2000;
-                            var date = new Date(y, m-1, d);
-                            if (date.getFullYear() === y && date.getMonth() === m-1 && date.getDate() === d) return formatDateToStorage(date);
-                        }
-                    }
-                }
-                if (/^\d{4}-\d{2}-\d{2}$/.test(str)) {
-                    var ip = str.split('-').map(Number);
-                    var d2 = new Date(ip[0], ip[1]-1, ip[2]);
-                    if (d2.getFullYear() === ip[0] && d2.getMonth() === ip[1]-1 && d2.getDate() === ip[2]) return str;
-                }
+            function formatDateToDisplay(d) { return String(d.getDate()).padStart(2,'0')+'.'+String(d.getMonth()+1).padStart(2,'0')+'.'+String(d.getFullYear()).slice(-2); }
+            function formatDateToStorage(d) { return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+            function parseDateFromInput(s) {
+                s=s.trim(); if(!s) return null;
+                if(s.indexOf('.')!==-1){var p=s.split('.');if(p.length===3){var d=parseInt(p[0]),m=parseInt(p[1]),y=parseInt(p[2]);if(!isNaN(d)&&!isNaN(m)&&!isNaN(y)&&m>=1&&m<=12){if(y<100)y+=2000;var dt=new Date(y,m-1,d);if(dt.getFullYear()===y&&dt.getMonth()===m-1&&dt.getDate()===d)return formatDateToStorage(dt);}}}
+                if(/^\d{4}-\d{2}-\d{2}$/.test(s)){var ip=s.split('-').map(Number);var d2=new Date(ip[0],ip[1]-1,ip[2]);if(d2.getFullYear()===ip[0]&&d2.getMonth()===ip[1]-1&&d2.getDate()===ip[2])return s;}
                 return null;
             }
-
-            function getTodayString() { return formatDateToStorage(new Date()); }
-            function loadData() {
-                try { appData = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch(e) { appData = {}; }
-                if (!appData[getTodayString()]) appData[getTodayString()] = createEmptyDayData();
-            }
-            function createEmptyDayData() {
-                var rows = [];
-                for (var i = 0; i < TOTAL_ROWS; i++) rows.push({text:'', number:''});
-                return {total:'0', rows:rows};
-            }
-            function saveData() { localStorage.setItem(STORAGE_KEY, JSON.stringify(appData)); }
-            function getDayData(d) { if (!appData[d]) { appData[d] = createEmptyDayData(); saveData(); } return appData[d]; }
-            function storageToDisplay(s) { var p = s.split('-').map(Number); return formatDateToDisplay(new Date(p[0], p[1]-1, p[2])); }
-            function formatNumber(v) { var n = parseFloat(v); if (isNaN(n)) return '0'; return n === Math.floor(n) ? n.toString() : n.toFixed(2); }
+            function getTodayString(){return formatDateToStorage(new Date());}
+            function loadData(){try{appData=JSON.parse(localStorage.getItem(STORAGE_KEY))||{};}catch(e){appData={};}if(!appData[getTodayString()])appData[getTodayString()]=createEmptyDayData();}
+            function createEmptyDayData(){var r=[];for(var i=0;i<TOTAL_ROWS;i++)r.push({text:'',number:''});return{total:'0',rows:r};}
+            function saveData(){localStorage.setItem(STORAGE_KEY,JSON.stringify(appData));}
+            function getDayData(d){if(!appData[d]){appData[d]=createEmptyDayData();saveData();}return appData[d];}
+            function storageToDisplay(s){var p=s.split('-').map(Number);return formatDateToDisplay(new Date(p[0],p[1]-1,p[2]));}
+            function formatNumber(v){var n=parseFloat(v);if(isNaN(n))return'0';return n===Math.floor(n)?n.toString():n.toFixed(2);}
 
             var currentDateDisplay = document.getElementById('currentDateDisplay');
             var prevBtn = document.getElementById('prevDayBtn');
@@ -729,101 +622,54 @@
             var tableBody = document.getElementById('tableBody');
 
             function renderCurrentDay() {
-                if (!currentDateStr) return;
-                var dayData = getDayData(currentDateStr);
-                currentDateDisplay.textContent = storageToDisplay(currentDateStr);
-                searchInput.value = storageToDisplay(currentDateStr);
-                totalSumInput.value = (dayData.total === '0' || dayData.total === '' || parseFloat(dayData.total) === 0) ? '' : dayData.total;
-                tableBody.innerHTML = '';
-                for (var i = 0; i < TOTAL_ROWS; i++) {
-                    var rowData = dayData.rows[i] || {text:'', number:''};
-                    var tr = document.createElement('tr');
-                    var tdNum = document.createElement('td'); tdNum.className = 'row-number'; tdNum.textContent = (i+1)+'.'; tr.appendChild(tdNum);
-                    var tdEmoji = document.createElement('td'); tdEmoji.className = 'emoji-cell';
-                    var emojiBtn = document.createElement('button'); emojiBtn.className = 'emoji-btn'; emojiBtn.textContent = emojis[i]; emojiBtn.setAttribute('data-row', i);
-                    emojiBtn.addEventListener('click', function(e) {
-                        var btn = e.currentTarget;
-                        if (btn.classList.contains('active')) { btn.classList.remove('active'); btn.style.color = ''; playDeactivateSound(); }
-                        else { btn.classList.add('active'); btn.style.color = glowColors[parseInt(btn.getAttribute('data-row'))]; playActivateSound(); }
-                    });
-                    tdEmoji.appendChild(emojiBtn); tr.appendChild(tdEmoji);
-                    var tdText = document.createElement('td'); tdText.className = 'text-cell';
-                    var inputText = document.createElement('input'); inputText.type = 'text'; inputText.placeholder = 'ОПИСАНИЕ'; inputText.value = rowData.text;
-                    inputText.addEventListener('input', (function(idx){ return function(e){ updateRowText(idx, e.target.value); }; })(i));
-                    tdText.appendChild(inputText); tr.appendChild(tdText);
-                    var tdNumber = document.createElement('td'); tdNumber.className = 'number-cell';
-                    var inputNumber = document.createElement('input'); inputNumber.type = 'text'; inputNumber.placeholder = '0'; inputNumber.value = rowData.number; inputNumber.style.textAlign = 'center';
-                    inputNumber.addEventListener('input', (function(idx){ return function(e){ handleNumberInput(idx, e.target); }; })(i));
-                    inputNumber.addEventListener('blur', function(e){ formatNumberField(e.target); });
-                    tdNumber.appendChild(inputNumber); tr.appendChild(tdNumber);
+                if(!currentDateStr)return;
+                var d = getDayData(currentDateStr);
+                currentDateDisplay.textContent=storageToDisplay(currentDateStr);
+                searchInput.value=storageToDisplay(currentDateStr);
+                totalSumInput.value=(d.total==='0'||d.total===''||parseFloat(d.total)===0)?'':d.total;
+                tableBody.innerHTML='';
+                for(var i=0;i<TOTAL_ROWS;i++){
+                    var rd=d.rows[i]||{text:'',number:''};
+                    var tr=document.createElement('tr');
+                    var tn=document.createElement('td');tn.className='row-number';tn.textContent=(i+1)+'.';tr.appendChild(tn);
+                    var te=document.createElement('td');te.className='emoji-cell';
+                    var eb=document.createElement('button');eb.className='emoji-btn';eb.textContent=emojis[i];eb.setAttribute('data-row',i);
+                    eb.addEventListener('click',function(e){var b=e.currentTarget;if(b.classList.contains('active')){b.classList.remove('active');b.style.color='';playDeactivateSound();}else{b.classList.add('active');b.style.color=glowColors[parseInt(b.getAttribute('data-row'))];playActivateSound();}});
+                    te.appendChild(eb);tr.appendChild(te);
+                    var tt=document.createElement('td');tt.className='text-cell';
+                    var it=document.createElement('input');it.type='text';it.placeholder='ОПИСАНИЕ';it.value=rd.text;
+                    it.addEventListener('input',(function(idx){return function(e){updateRowText(idx,e.target.value);};})(i));
+                    tt.appendChild(it);tr.appendChild(tt);
+                    var tnum=document.createElement('td');tnum.className='number-cell';
+                    var inum=document.createElement('input');inum.type='text';inum.placeholder='0';inum.value=rd.number;inum.style.textAlign='center';
+                    inum.addEventListener('input',(function(idx){return function(e){handleNumberInput(idx,e.target);};})(i));
+                    inum.addEventListener('blur',function(e){formatNumberField(e.target);});
+                    tnum.appendChild(inum);tr.appendChild(tnum);
                     tableBody.appendChild(tr);
                 }
                 updateSumsDisplay();
             }
 
-            function updateRowText(i, v) { if (!currentDateStr) return; getDayData(currentDateStr).rows[i].text = v; saveData(); }
-            function handleNumberInput(i, el) {
-                if (!currentDateStr) return;
-                var v = el.value; if (v === '') { updateNumberInRow(i, ''); return; }
-                v = v.replace(',', '.'); if (!/^-?\d*\.?\d*$/.test(v)) { el.value = v.slice(0,-1); return; }
-                if (v.indexOf('.') !== -1) { var p = v.split('.'); if (p[1] && p[1].length > 2) { p[1] = p[1].slice(0,2); v = p.join('.'); el.value = v; } }
-                updateNumberInRow(i, v);
-            }
-            function formatNumberField(el) {
-                var v = el.value; if (v === '') return;
-                v = v.replace(',', '.'); var n = parseFloat(v);
-                el.value = !isNaN(n) ? formatNumber(v) : '';
-                var tr = el.closest('tr'); if (tr) { var i = Array.from(tr.parentNode.children).indexOf(tr); if (i >= 0 && i < TOTAL_ROWS) updateNumberInRow(i, el.value); }
-            }
-            function updateNumberInRow(i, v) { if (!currentDateStr) return; getDayData(currentDateStr).rows[i].number = v; saveData(); updateSumsDisplay(); }
-            function getSpentSum() {
-                if (!currentDateStr) return 0;
-                var rows = getDayData(currentDateStr).rows, s = 0;
-                for (var i = 0; i < TOTAL_ROWS; i++) { var nv = rows[i] ? rows[i].number : ''; if (nv !== '' && nv !== null) { var n = parseFloat(nv); if (!isNaN(n)) s += n; } }
-                return s;
-            }
-            function updateSumsDisplay() {
-                if (!currentDateStr) return;
-                var d = getDayData(currentDateStr), base = parseFloat(d.total) || 0, spent = getSpentSum(), rem = base - spent;
-                spentSumInput.value = spent === 0 ? '' : formatNumber(spent);
-                totalSumInput.value = (rem === 0 && base === 0) ? '' : (rem === 0 && base > 0 ? '0' : formatNumber(rem));
-            }
-            function changeDate(ns) {
-                if (!ns || !/^\d{4}-\d{2}-\d{2}$/.test(ns)) return;
-                if (currentDateStr) { var d = getDayData(currentDateStr); d.total = totalSumInput.value === '' ? '0' : totalSumInput.value; saveData(); }
-                currentDateStr = ns; renderCurrentDay();
-            }
-            function shiftDate(days) {
-                if (!currentDateStr) return;
-                var p = currentDateStr.split('-').map(Number), date = new Date(p[0], p[1]-1, p[2]);
-                date.setDate(date.getDate() + days); changeDate(formatDateToStorage(date));
-            }
+            function updateRowText(i,v){if(!currentDateStr)return;getDayData(currentDateStr).rows[i].text=v;saveData();}
+            function handleNumberInput(i,el){if(!currentDateStr)return;var v=el.value;if(v===''){updateNumberInRow(i,'');return;}v=v.replace(',','.');if(!/^-?\d*\.?\d*$/.test(v)){el.value=v.slice(0,-1);return;}if(v.indexOf('.')!==-1){var p=v.split('.');if(p[1]&&p[1].length>2){p[1]=p[1].slice(0,2);v=p.join('.');el.value=v;}}updateNumberInRow(i,v);}
+            function formatNumberField(el){var v=el.value;if(v==='')return;v=v.replace(',','.');var n=parseFloat(v);el.value=!isNaN(n)?formatNumber(v):'';var tr=el.closest('tr');if(tr){var i=Array.from(tr.parentNode.children).indexOf(tr);if(i>=0&&i<TOTAL_ROWS)updateNumberInRow(i,el.value);}}
+            function updateNumberInRow(i,v){if(!currentDateStr)return;getDayData(currentDateStr).rows[i].number=v;saveData();updateSumsDisplay();}
+            function getSpentSum(){if(!currentDateStr)return 0;var r=getDayData(currentDateStr).rows,s=0;for(var i=0;i<TOTAL_ROWS;i++){var nv=r[i]?r[i].number:'';if(nv!==''&&nv!==null){var n=parseFloat(nv);if(!isNaN(n))s+=n;}}return s;}
+            function updateSumsDisplay(){if(!currentDateStr)return;var d=getDayData(currentDateStr),base=parseFloat(d.total)||0,spent=getSpentSum(),rem=base-spent;spentSumInput.value=spent===0?'':formatNumber(spent);totalSumInput.value=(rem===0&&base===0)?'':(rem===0&&base>0?'0':formatNumber(rem));}
+            function changeDate(ns){if(!ns||!/^\d{4}-\d{2}-\d{2}$/.test(ns))return;if(currentDateStr){var d=getDayData(currentDateStr);d.total=totalSumInput.value===''?'0':totalSumInput.value;saveData();}currentDateStr=ns;renderCurrentDay();}
+            function shiftDate(days){if(!currentDateStr)return;var p=currentDateStr.split('-').map(Number),date=new Date(p[0],p[1]-1,p[2]);date.setDate(date.getDate()+days);changeDate(formatDateToStorage(date));}
 
-            document.addEventListener('click', function(){ if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume(); }, {once:true});
+            document.addEventListener('click',function(){if(audioCtx&&audioCtx.state==='suspended')audioCtx.resume();},{once:true});
 
-            function init() {
-                loadData(); currentDateStr = getTodayString(); if (!appData[currentDateStr]) { appData[currentDateStr] = createEmptyDayData(); saveData(); }
-                renderCurrentDay();
-                prevBtn.addEventListener('click', function(){ shiftDate(-1); });
-                nextBtn.addEventListener('click', function(){ shiftDate(1); });
-                searchBtn.addEventListener('click', function(){
-                    var v = searchInput.value.trim(); if (v === '') { changeDate(getTodayString()); return; }
-                    var p = parseDateFromInput(v); if (p) changeDate(p); else { alert('ВВЕДИТЕ ДАТУ 09.08.26'); searchInput.value = storageToDisplay(currentDateStr); }
-                });
-                searchInput.addEventListener('keypress', function(e){ if (e.key === 'Enter') searchBtn.click(); });
-                todayBtn.addEventListener('click', function(){ changeDate(getTodayString()); });
-                totalSumInput.addEventListener('input', function(){
-                    if (!currentDateStr) return;
-                    var v = totalSumInput.value.replace(',', '.'); if (v === '') { getDayData(currentDateStr).total = '0'; saveData(); updateSumsDisplay(); return; }
-                    if (v.indexOf('.') !== -1) { var p = v.split('.'); if (p[1] && p[1].length > 2) { p[1] = p[1].slice(0,2); v = p.join('.'); totalSumInput.value = v; } }
-                    if (!/^-?\d*\.?\d*$/.test(v)) { totalSumInput.value = v.slice(0,-1); return; }
-                    if (!isNaN(parseFloat(v))) { getDayData(currentDateStr).total = v; saveData(); updateSumsDisplay(); }
-                });
-                totalSumInput.addEventListener('blur', function(){
-                    if (!currentDateStr) return;
-                    var v = totalSumInput.value.replace(',', '.'); if (v === '') { getDayData(currentDateStr).total = '0'; saveData(); updateSumsDisplay(); return; }
-                    getDayData(currentDateStr).total = isNaN(parseFloat(v)) ? '0' : formatNumber(v); saveData(); updateSumsDisplay();
-                });
+            function init(){
+                loadData();currentDateStr=getTodayString();if(!appData[currentDateStr]){appData[currentDateStr]=createEmptyDayData();saveData();}renderCurrentDay();
+                prevBtn.addEventListener('click',function(){shiftDate(-1);});
+                nextBtn.addEventListener('click',function(){shiftDate(1);});
+                searchBtn.addEventListener('click',function(){var v=searchInput.value.trim();if(v===''){changeDate(getTodayString());return;}var p=parseDateFromInput(v);if(p)changeDate(p);else{alert('ВВЕДИТЕ ДАТУ 09.08.26');searchInput.value=storageToDisplay(currentDateStr);}});
+                searchInput.addEventListener('keypress',function(e){if(e.key==='Enter')searchBtn.click();});
+                todayBtn.addEventListener('click',function(){changeDate(getTodayString());});
+                totalSumInput.addEventListener('input',function(){if(!currentDateStr)return;var v=totalSumInput.value.replace(',','.');if(v===''){getDayData(currentDateStr).total='0';saveData();updateSumsDisplay();return;}if(v.indexOf('.')!==-1){var p=v.split('.');if(p[1]&&p[1].length>2){p[1]=p[1].slice(0,2);v=p.join('.');totalSumInput.value=v;}}if(!/^-?\d*\.?\d*$/.test(v)){totalSumInput.value=v.slice(0,-1);return;}if(!isNaN(parseFloat(v))){getDayData(currentDateStr).total=v;saveData();updateSumsDisplay();}});
+                totalSumInput.addEventListener('blur',function(){if(!currentDateStr)return;var v=totalSumInput.value.replace(',','.');if(v===''){getDayData(currentDateStr).total='0';saveData();updateSumsDisplay();return;}getDayData(currentDateStr).total=isNaN(parseFloat(v))?'0':formatNumber(v);saveData();updateSumsDisplay();});
             }
             init();
         })();
