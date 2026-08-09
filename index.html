@@ -14,14 +14,11 @@
         }
 
         body {
-            background: #2d1b4e;
+            background: #5c3b1a;
             background-image: 
-                linear-gradient(45deg, #1a0a2e 25%, transparent 25%),
-                linear-gradient(-45deg, #1a0a2e 25%, transparent 25%),
-                linear-gradient(45deg, transparent 75%, #1a0a2e 75%),
-                linear-gradient(-45deg, transparent 75%, #1a0a2e 75%);
-            background-size: 20px 20px;
-            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+                repeating-linear-gradient(0deg, transparent, transparent 15px, rgba(0,0,0,0.08) 15px, rgba(0,0,0,0.08) 16px),
+                repeating-linear-gradient(90deg, transparent, transparent 15px, rgba(0,0,0,0.08) 15px, rgba(0,0,0,0.08) 16px),
+                linear-gradient(180deg, #7ec850 0%, #5c9e30 50%, #4a7a20 100%);
             font-family: 'Press Start 2P', 'Courier New', monospace;
             min-height: 100vh;
             display: flex;
@@ -35,25 +32,31 @@
         .app {
             width: 100%;
             max-width: 800px;
-            background: #1e1040;
-            border: 6px solid #ff6b9d;
+            background: #8b6b4a;
+            border: 8px solid #3d2b1a;
             box-shadow: 
-                8px 8px 0px #c44d7a,
-                8px 8px 0px 6px #ff6b9d;
-            padding: 2rem 1.8rem 2.2rem;
+                inset 0 0 0 4px #a08060,
+                inset 0 0 0 8px #6b4f32,
+                8px 8px 0px #2a1a0a;
+            padding: 1.5rem 1.8rem 2rem;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 1.6rem;
-            image-rendering: auto;
+            gap: 1.4rem;
+            background-image: 
+                repeating-linear-gradient(45deg, transparent, transparent 4px, rgba(0,0,0,0.03) 4px, rgba(0,0,0,0.03) 8px),
+                repeating-linear-gradient(-45deg, transparent, transparent 4px, rgba(0,0,0,0.03) 4px, rgba(0,0,0,0.03) 8px);
         }
 
         .oval-header {
             width: 100%;
             max-width: 380px;
-            background: #ffcc00;
-            border: 5px solid #ff6b00;
-            box-shadow: 6px 6px 0px #cc5500;
+            background: #7ec850;
+            border: 5px solid #3d6b1a;
+            box-shadow: 
+                inset 0 -4px 0 #4a7a20,
+                inset 0 4px 0 #a0e870,
+                4px 4px 0px #2a4a10;
             border-radius: 50%;
             aspect-ratio: 1 / 0.55;
             display: flex;
@@ -63,28 +66,31 @@
             text-align: center;
             margin-bottom: 0.3rem;
             padding: 0.2rem;
+            background-image: repeating-linear-gradient(0deg, transparent, transparent 8px, rgba(255,255,255,0.05) 8px, rgba(255,255,255,0.05) 10px);
         }
 
         .brand-top {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             font-weight: 400;
-            letter-spacing: 6px;
-            color: #8b0000;
-            text-shadow: 3px 3px 0px #ff4444;
+            letter-spacing: 8px;
+            color: #ffffff;
+            text-shadow: 3px 3px 0px #3d6b1a, -1px -1px 0px #3d6b1a;
             line-height: 1;
             font-family: 'Press Start 2P', monospace;
         }
 
         .brand-sub {
-            font-size: 0.7rem;
+            font-size: 0.6rem;
             font-weight: 400;
-            color: #4a0000;
-            letter-spacing: 2px;
-            background: rgba(255, 255, 100, 0.8);
+            color: #ffffff;
+            letter-spacing: 3px;
+            background: #5c3b1a;
             padding: 0.2rem 1rem;
-            border: 2px solid #cc4400;
+            border: 3px solid #3d2b1a;
+            box-shadow: inset 0 -2px 0 #2a1a0a;
             margin-top: 0.1rem;
             font-family: 'Press Start 2P', monospace;
+            text-shadow: 1px 1px 0px #000;
         }
 
         .date-navigation {
@@ -100,12 +106,15 @@
             width: 52px;
             height: 52px;
             border-radius: 0;
-            background: #00dd88;
-            border: 4px solid #00aa66;
-            box-shadow: 4px 4px 0px #007744;
+            background: #a0a0a0;
+            border: 4px solid #606060;
+            box-shadow: 
+                inset 0 -4px 0 #707070,
+                inset 0 4px 0 #c0c0c0,
+                4px 4px 0px #404040;
             font-size: 1.5rem;
             font-weight: bold;
-            color: #003322;
+            color: #ffffff;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -114,31 +123,34 @@
             user-select: none;
             transition: all 0.05s ease;
             font-family: 'Press Start 2P', monospace;
+            text-shadow: 2px 2px 0px #404040;
         }
 
         .arrow-btn:hover {
-            background: #00ff99;
-            border-color: #00cc77;
+            background: #b8b8b8;
         }
 
         .arrow-btn:active {
             transform: translate(4px, 4px);
-            box-shadow: 0px 0px 0px #007744;
+            box-shadow: 
+                inset 0 -2px 0 #707070,
+                inset 0 2px 0 #c0c0c0,
+                0px 0px 0px #404040;
         }
 
         .date-window {
-            background: #000033;
-            border: 4px solid #4488ff;
-            box-shadow: inset 0 0 10px #2244aa;
+            background: #3d2b1a;
+            border: 4px solid #5c3b1a;
+            box-shadow: inset 0 0 0 2px #1a0a00, inset 0 0 10px rgba(0,0,0,0.5);
             padding: 0.7rem 1.8rem;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: 400;
-            color: #00ff88;
+            color: #ffff88;
             min-width: 180px;
             text-align: center;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
             font-family: 'Press Start 2P', monospace;
-            text-shadow: 0 0 6px #00ff88;
+            text-shadow: 0 0 6px #ffff88;
         }
 
         .search-row {
@@ -154,62 +166,72 @@
             flex: 2;
             min-width: 180px;
             padding: 0.6rem 1rem;
-            border: 4px solid #aa66ff;
-            background: #000033;
-            font-size: 0.65rem;
+            border: 4px solid #5c3b1a;
+            background: #3d2b1a;
+            font-size: 0.6rem;
             outline: none;
             text-align: center;
             font-weight: 400;
-            color: #ffcc00;
+            color: #ffff88;
             font-family: 'Press Start 2P', monospace;
-            box-shadow: inset 0 0 8px #5533aa;
+            box-shadow: inset 0 0 8px rgba(0,0,0,0.5);
         }
 
         .date-search-input:focus {
-            border-color: #ff66cc;
-            box-shadow: 0 0 0 3px rgba(255, 102, 204, 0.6), inset 0 0 8px #5533aa;
+            border-color: #ffaa00;
+            box-shadow: 0 0 0 3px rgba(255, 170, 0, 0.4), inset 0 0 8px rgba(0,0,0,0.5);
         }
 
         .date-search-input::placeholder {
-            color: #5533aa;
+            color: #6b4f32;
         }
 
         .search-btn,
         .today-btn {
             padding: 0.6rem 1.2rem;
             border-radius: 0;
-            background: #ff66aa;
-            border: 4px solid #cc4488;
-            box-shadow: 4px 4px 0px #882266;
+            background: #7ec850;
+            border: 4px solid #4a8a20;
+            box-shadow: 
+                inset 0 -4px 0 #3d6b1a,
+                inset 0 4px 0 #a0e870,
+                4px 4px 0px #2a4a10;
             font-weight: 400;
             color: #ffffff;
             cursor: pointer;
             transition: all 0.05s ease;
             white-space: nowrap;
-            font-size: 0.6rem;
+            font-size: 0.55rem;
             font-family: 'Press Start 2P', monospace;
+            text-shadow: 1px 1px 0px #3d6b1a;
         }
 
         .search-btn:hover,
         .today-btn:hover {
-            background: #ff88bb;
+            background: #8ed860;
         }
 
         .search-btn:active,
         .today-btn:active {
             transform: translate(4px, 4px);
-            box-shadow: 0px 0px 0px #882266;
+            box-shadow: 
+                inset 0 -2px 0 #3d6b1a,
+                inset 0 2px 0 #a0e870,
+                0px 0px 0px #2a4a10;
         }
 
         .today-btn {
-            background: #ff8800;
-            border-color: #cc6600;
-            box-shadow: 4px 4px 0px #884400;
-            color: #ffffff;
+            background: #f0a030;
+            border-color: #b87010;
+            box-shadow: 
+                inset 0 -4px 0 #8a5010,
+                inset 0 4px 0 #f8c860,
+                4px 4px 0px #5a3000;
+            text-shadow: 1px 1px 0px #8a5010;
         }
 
         .today-btn:hover {
-            background: #ffaa33;
+            background: #f8b840;
         }
 
         .sums-container {
@@ -226,52 +248,55 @@
             flex-direction: column;
             align-items: center;
             gap: 0.4rem;
-            background: #2a1050;
+            background: #6b4f32;
             padding: 0.8rem 1rem;
-            border: 4px solid #9966ff;
-            box-shadow: 4px 4px 0px #6633aa;
+            border: 4px solid #4a3018;
+            box-shadow: 
+                inset 0 0 0 2px #8b6b4a,
+                3px 3px 0px #2a1a0a;
         }
 
         .sum-label {
             font-weight: 400;
-            color: #ffcc00;
-            font-size: 0.6rem;
+            color: #ffff88;
+            font-size: 0.55rem;
             text-align: center;
             font-family: 'Press Start 2P', monospace;
-            text-shadow: 2px 2px 0px #000000;
+            text-shadow: 2px 2px 0px #000;
         }
 
         .sum-input {
             width: 100%;
             padding: 0.5rem 0.7rem;
-            border: 3px solid #6644cc;
-            background: #000033;
-            font-size: 0.7rem;
+            border: 3px solid #3d2b1a;
+            background: #2a1a0a;
+            font-size: 0.65rem;
             font-weight: 400;
             text-align: center;
             outline: none;
-            color: #00ff88;
+            color: #ffff88;
             font-family: 'Press Start 2P', monospace;
-            box-shadow: inset 0 0 6px #3322aa;
+            box-shadow: inset 0 0 6px rgba(0,0,0,0.6);
         }
 
         .sum-input:focus {
-            border-color: #ff66cc;
-            box-shadow: 0 0 0 3px rgba(255, 102, 204, 0.5), inset 0 0 6px #3322aa;
+            border-color: #ffaa00;
+            box-shadow: 0 0 0 3px rgba(255, 170, 0, 0.4), inset 0 0 6px rgba(0,0,0,0.6);
         }
 
         .sum-input[readonly] {
-            background: #1a0a30;
+            background: #1a0a00;
             cursor: default;
-            color: #ff8800;
+            color: #ffaa44;
         }
 
         .table-container {
             width: 100%;
             max-height: 400px;
             overflow-y: auto;
-            background: #1a0a30;
-            border: 4px solid #9966ff;
+            background: #4a3018;
+            border: 4px solid #3d2b1a;
+            box-shadow: inset 0 0 0 2px #6b4f32;
             padding: 0.3rem;
         }
 
@@ -282,7 +307,7 @@
         }
 
         .data-table tr {
-            border-bottom: 3px solid #3a2060;
+            border-bottom: 3px solid #5c3b1a;
         }
 
         .data-table tr:last-child {
@@ -296,8 +321,8 @@
 
         .row-number {
             font-weight: 400;
-            color: #ffcc00;
-            font-size: 0.6rem;
+            color: #ffff88;
+            font-size: 0.55rem;
             text-align: center;
             width: 32px;
             white-space: nowrap;
@@ -315,14 +340,15 @@
         }
 
         .emoji-btn {
-            background: #2a1050;
-            border: 3px solid #5533aa;
+            background: #5c3b1a;
+            border: 3px solid #3d2b1a;
+            box-shadow: inset 0 -2px 0 #2a1a0a, inset 0 2px 0 #7a5030;
             font-size: 1.8rem;
             cursor: pointer;
             padding: 0;
-            opacity: 0.4;
+            opacity: 0.5;
             transition: all 0.1s ease;
-            filter: grayscale(100%) brightness(0.7);
+            filter: grayscale(80%) brightness(0.6);
             line-height: 1;
             width: 44px;
             height: 44px;
@@ -330,26 +356,28 @@
             align-items: center;
             justify-content: center;
             vertical-align: middle;
-            font-family: 'Press Start 2P', monospace;
         }
 
         .emoji-btn.active {
             opacity: 1;
-            filter: grayscale(0%) brightness(1.3);
-            border-color: #ff66cc;
-            box-shadow: 0 0 10px currentColor, inset 0 0 6px currentColor;
-            text-shadow: 0 0 8px currentColor;
+            filter: grayscale(0%) brightness(1.4);
+            border-color: #ffaa00;
+            box-shadow: 
+                0 0 8px currentColor,
+                inset 0 -2px 0 #cc8800,
+                inset 0 2px 0 #ffcc44;
+            text-shadow: 0 0 6px currentColor;
         }
 
         .emoji-btn:hover {
-            opacity: 0.7;
-            filter: grayscale(40%) brightness(0.9);
-            border-color: #9977dd;
+            opacity: 0.8;
+            filter: grayscale(30%) brightness(0.9);
+            border-color: #8b6b4a;
         }
 
         .emoji-btn.active:hover {
             opacity: 1;
-            filter: grayscale(0%) brightness(1.4);
+            filter: grayscale(0%) brightness(1.5);
         }
 
         .text-cell {
@@ -360,13 +388,13 @@
         .number-cell input {
             width: 100%;
             padding: 0.45rem 0.5rem;
-            border: 3px solid #5533aa;
-            background: #000033;
+            border: 3px solid #3d2b1a;
+            background: #2a1a0a;
             font-size: 0.55rem;
             outline: none;
-            color: #00ff88;
+            color: #ffffff;
             font-family: 'Press Start 2P', monospace;
-            box-shadow: inset 0 0 5px #3322aa;
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.5);
         }
 
         .text-cell input {
@@ -376,27 +404,28 @@
         .number-cell input {
             text-align: center;
             max-width: 90px;
-            color: #ffcc00;
+            color: #ffff88;
         }
 
         .text-cell input:focus,
         .number-cell input:focus {
-            border-color: #ff66cc;
-            box-shadow: 0 0 0 3px rgba(255, 102, 204, 0.5), inset 0 0 5px #3322aa;
+            border-color: #ffaa00;
+            box-shadow: 0 0 0 3px rgba(255, 170, 0, 0.4), inset 0 0 5px rgba(0,0,0,0.5);
         }
 
         .table-container::-webkit-scrollbar {
-            width: 12px;
+            width: 14px;
         }
 
         .table-container::-webkit-scrollbar-track {
-            background: #1a0a30;
-            border: 2px solid #5533aa;
+            background: #3d2b1a;
+            border: 2px solid #5c3b1a;
         }
 
         .table-container::-webkit-scrollbar-thumb {
-            background: #ff66aa;
-            border: 2px solid #cc4488;
+            background: #7a5030;
+            border: 3px solid #5c3b1a;
+            box-shadow: inset 0 -2px 0 #4a3018, inset 0 2px 0 #a08060;
         }
     </style>
 </head>
@@ -477,7 +506,7 @@
                 return audioCtx;
             }
 
-            // 8-bit звук активации — монетка
+            // Звук как клик в Minecraft — короткий щелчок
             function playActivateSound() {
                 try {
                     var ctx = getAudioContext();
@@ -485,18 +514,18 @@
                     var osc = ctx.createOscillator();
                     var gain = ctx.createGain();
                     osc.type = 'square';
-                    osc.frequency.setValueAtTime(987, now);
-                    osc.frequency.setValueAtTime(1318, now + 0.04);
-                    gain.gain.setValueAtTime(0.2, now);
-                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+                    osc.frequency.setValueAtTime(600, now);
+                    osc.frequency.exponentialRampToValueAtTime(200, now + 0.05);
+                    gain.gain.setValueAtTime(0.25, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
                     osc.connect(gain);
                     gain.connect(ctx.destination);
                     osc.start(now);
-                    osc.stop(now + 0.12);
+                    osc.stop(now + 0.08);
                 } catch (e) {}
             }
 
-            // 8-bit звук деактивации — блоп
+            // Звук как открытие сундука
             function playDeactivateSound() {
                 try {
                     var ctx = getAudioContext();
@@ -504,14 +533,15 @@
                     var osc = ctx.createOscillator();
                     var gain = ctx.createGain();
                     osc.type = 'square';
-                    osc.frequency.setValueAtTime(220, now);
-                    osc.frequency.exponentialRampToValueAtTime(80, now + 0.08);
+                    osc.frequency.setValueAtTime(400, now);
+                    osc.frequency.setValueAtTime(500, now + 0.03);
+                    osc.frequency.exponentialRampToValueAtTime(100, now + 0.1);
                     gain.gain.setValueAtTime(0.2, now);
-                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
                     osc.connect(gain);
                     gain.connect(ctx.destination);
                     osc.start(now);
-                    osc.stop(now + 0.1);
+                    osc.stop(now + 0.12);
                 } catch (e) {}
             }
 
