@@ -167,12 +167,12 @@
         }
         .arrow-btn:active { transform: scale(0.9); }
 
-        /* Активное окно даты (вместо прежнего display) */
+        /* Активное окно даты – прежние размеры (как было до увеличения) */
         .date-window-input {
             background: rgba(15,8,0,0.8); border: 3px solid #8b5a2b;
             box-shadow: inset 0 0 15px rgba(0,0,0,0.6), 0 0 10px rgba(255,100,0,0.2);
-            padding: 0.7rem 1.8rem; font-size: 1.1rem; font-weight: 400;
-            color: #ffaa44; min-width: 180px; text-align: center;
+            padding: 0.7rem 1.8rem; font-size: 0.8rem; font-weight: 400;
+            color: #ffaa44; min-width: 170px; text-align: center;
             letter-spacing: 2px; font-family: 'Press Start 2P', monospace;
             text-shadow: 0 0 8px #ff6600; border-radius: 4px;
             outline: none; transition: 0.2s;
@@ -191,11 +191,11 @@
             width: 100%; flex-wrap: wrap;
         }
 
-        /* Поле "Потрачено за месяц" – неактивное, как раньше */
+        /* Поле "Потрачено за месяц" */
         .monthly-spent-input {
             background: rgba(10,5,0,0.9); border: 3px solid #8b5a2b;
             box-shadow: inset 0 0 15px rgba(0,0,0,0.6), 0 0 10px rgba(255,100,0,0.2);
-            padding: 0.7rem 1rem; font-size: 1.1rem; font-weight: 400;
+            padding: 0.7rem 1rem; font-size: 0.8rem; font-weight: 400;
             color: #ff8800; min-width: 150px; text-align: center;
             letter-spacing: 1px; font-family: 'Press Start 2P', monospace;
             text-shadow: 0 0 8px #ff6600; border-radius: 4px;
@@ -317,7 +317,7 @@
             <div class="brand-sub">ПОДСЧЕТ МИЛЛИОНОВ</div>
         </div>
 
-        <!-- Дата со стрелками (теперь поле ввода) -->
+        <!-- Дата со стрелками (активное поле, прежний размер) -->
         <div class="date-navigation">
             <button class="arrow-btn" id="prevDayBtn">◄</button>
             <input type="text" id="currentDateInput" class="date-window-input" placeholder="09.08.26">
