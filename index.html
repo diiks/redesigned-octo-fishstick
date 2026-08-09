@@ -425,4 +425,30 @@
         }
     }
 
-    function renderCurrentDay(){if(!currentDateStr)return;var d=getDayData(currentDateStr);dateInput.value=storageToDisplay(currentDateStr);ti.value=(d.total==='0'||d.total===''||parseFloat(d.total)===0)?'':d.total;tbody.innerHTML='';for(var i=0;i<TOTAL_ROWS;i++){var rd=d.rows[i]||{text:'',number:''},tr=document.createElement('tr');var tn=document.createElement('td');tn.className='row-number';tn.textContent=(i+1)+'.';tr.appendChild(tn);var te=document.createElement('td');te.className='emoji-cell';var eb=document.createElement('button');eb.className='emoji-btn';eb.textContent=emojis[i];eb.setAttribute('data-row',i);eb.addEventListener('click',function(e){var b=e.currentTarget;if(b.classList.contains('active')){b.classList.remove('active');b.style.color='';playDeactivateSound();}else{b.classList.add('active');b.style.color=glowColors[parseInt(b.getAttribute('data-row'))];playActivateSound();}});te.appendChild(eb);tr.appendChild(te);var tt=document.createElement('td');tt.className='text-cell';var it=document.createElement
+    function renderCurrentDay(){if(!currentDateStr)return;var d=getDayData(currentDateStr);dateInput.value=storageToDisplay(currentDateStr);ti.value=(d.total==='0'||d.total===''||parseFloat(d.total)===0)?'':d.total;tbody.innerHTML='';for(var i=0;i<TOTAL_ROWS;i++){var rd=d.rows[i]||{text:'',number:''},tr=document.createElement('tr');var tn=document.createElement('td');tn.className='row-number';tn.textContent=(i+1)+'.';tr.appendChild(tn);var te=document.createElement('td');te.className='emoji-cell';var eb=document.createElement('button');eb.className='emoji-btn';eb.textContent=emojis[i];eb.setAttribute('data-row',i);eb.addEventListener('click',function(e){var b=e.currentTarget;if(b.classList.contains('active')){b.classList.remove('active');b.style.color='';playDeactivateSound();}else{b.classList.add('active');b.style.color=glowColors[parseInt(b.getAttribute('data-row'))];playActivateSound();}});te.appendChild(eb);tr.appendChild(te);var tt=document.createElement('td');tt.className='text-cell';var it=document.createElement('input');it.type='text';it.placeholder='ОПИСАНИЕ';it.value=rd.text;it.addEventListener('input',(function(idx){return function(e){updateRowText(idx,e.target.value);};})(i));tt.appendChild(it);tr.appendChild(tt);var tnum=document.createElement('td');tnum.className='number-cell';var inum=document.createElement('input');inum.type='text';inum.placeholder='0';inum.value=rd.number;inum.style.textAlign='center';inum.addEventListener('input',(function(idx){return function(e){handleNumberInput(idx,e.target);};})(i));inum.addEventListener('blur',function(e){formatNumberField(e.target);});tnum.appendChild(inum);tr.appendChild(tnum);tbody.appendChild(tr);}updateSumsDisplay();}
+    function updateRowText(i,v){if(!currentDateStr)return;getDayData(currentDateStr).rows[i].text=v;saveData();}
+    function handleNumberInput(i,el){if(!currentDateStr)return;var v=el.value;if(v===''){updateNumberInRow(i,'');return;}v=v.replace(',','.');if(!/^-?\d*\.?\d*$/.test(v)){el.value=v.slice(0,-1);return;}if(v.indexOf('.')!==-1){var p=v.split('.');if(p[1]&&p[1].length>2){p[1]=p[1].slice(0,2);v=p.join('.');el.value=v;}}updateNumberInRow(i,v);}
+    function formatNumberField(el){var v=el.value;if(v==='')return;v=v.replace(',','.');var n=parseFloat(v);el.value=!isNaN(n)?formatNumber(v):'';var tr=el.closest('tr');if(tr){var i=Array.from(tr.parentNode.children).indexOf(tr);if(i>=0&&i<TOTAL_ROWS)updateNumberInRow(i,el.value);}}
+    function updateNumberInRow(i,v){if(!currentDateStr)return;getDayData(currentDateStr).rows[i].number=v;saveData();updateSumsDisplay();}
+    function getSpentSum(){return getSpentSumForDate(currentDateStr);}
+    function updateSumsDisplay(){if(!currentDateStr)return;var d=getDayData(currentDateStr),base=parseFloat(d.total)||0,spent=getSpentSum(),rem=base-spent;spi.value=spent===0?'':formatNumber(spent);ti.value=(rem===0&&base===0)?'':(rem===0&&base>0?'0':formatNumber(rem));
+        var monthly = getMonthlySpent(currentDateStr);
+        monthlyInput.value = monthly === 0 ? '' : formatNumber(monthly);
+    }
+    function changeDate(ns){if(!ns||!/^\d{4}-\d{2}-\d{2}$/.test(ns))return;if(currentDateStr){var d=getDayData(currentDateStr);d.total=ti.value===''?'0':ti.value;saveData();}currentDateStr=ns;renderCurrentDay();}
+    function shiftDate(days){if(!currentDateStr)return;var p=currentDateStr.split('-').map(Number),date=new Date(p[0],p[1]-1,p[2]);date.setDate(date.getDate()+days);changeDate(formatDateToStorage(date));}
+    document.addEventListener('click',function(){if(audioCtx&&audioCtx.state==='suspended')audioCtx.resume();},{once:true});
+
+    function init(){loadData();currentDateStr=getTodayString();if(!appData[currentDateStr]){appData[currentDateStr]=createEmptyDayData();saveData();}renderCurrentDay();
+        prevBtn.addEventListener('click',function(){shiftDate(-1);});
+        nextBtn.addEventListener('click',function(){shiftDate(1);});
+        dateInput.addEventListener('keypress',function(e){if(e.key==='Enter'){applyDateFromInput();}});
+        dateInput.addEventListener('blur',function(){applyDateFromInput();});
+        searchBtn.addEventListener('click',function(){applyDateFromInput();});
+        todayBtn.addEventListener('click',function(){changeDate(getTodayString());});
+        ti.addEventListener('input',function(){if(!currentDateStr)return;var v=ti.value.replace(',','.');if(v===''){getDayData(currentDateStr).total='0';saveData();updateSumsDisplay();return;}if(v.indexOf('.')!==-1){var p=v.split('.');if(p[1]&&p[1].length>2){p[1]=p[1].slice(0,2);v=p.join('.');ti.value=v;}}if(!/^-?\d*\.?\d*$/.test(v)){ti.value=v.slice(0,-1);return;}if(!isNaN(parseFloat(v))){getDayData(currentDateStr).total=v;saveData();updateSumsDisplay();}});
+        ti.addEventListener('blur',function(){if(!currentDateStr)return;var v=ti.value.replace(',','.');if(v===''){getDayData(currentDateStr).total='0';saveData();updateSumsDisplay();return;}getDayData(currentDateStr).total=isNaN(parseFloat(v))?'0':formatNumber(v);saveData();updateSumsDisplay();});
+    }init();})();
+</script>
+</body>
+</html>
