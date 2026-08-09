@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DIX | Подсчёт миллионов</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Ruslan+Display&display=swap');
 
         * {
             margin: 0;
@@ -14,49 +14,158 @@
         }
 
         body {
-            background: #5c3b1a;
-            background-image: 
-                repeating-linear-gradient(0deg, transparent, transparent 15px, rgba(0,0,0,0.08) 15px, rgba(0,0,0,0.08) 16px),
-                repeating-linear-gradient(90deg, transparent, transparent 15px, rgba(0,0,0,0.08) 15px, rgba(0,0,0,0.08) 16px),
-                linear-gradient(180deg, #7ec850 0%, #5c9e30 50%, #4a7a20 100%);
-            font-family: 'Press Start 2P', 'Courier New', monospace;
+            background: #1a0a00;
+            font-family: 'Ruslan Display', 'Press Start 2P', cursive;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 1.5rem;
             margin: 0;
-            image-rendering: pixelated;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Фон с динозаврами и кометой */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                /* Небо */
+                linear-gradient(180deg, 
+                    #0d1b2a 0%, 
+                    #1b2838 15%, 
+                    #2d1a0a 40%, 
+                    #4a2a10 60%, 
+                    #3d2008 80%, 
+                    #1a0a00 100%
+                ),
+                /* Звёзды */
+                radial-gradient(1px 1px at 10% 10%, #ffffff, transparent),
+                radial-gradient(1px 1px at 25% 5%, #ffffff, transparent),
+                radial-gradient(2px 2px at 40% 8%, #ffffff, transparent),
+                radial-gradient(1px 1px at 55% 3%, #ffffff, transparent),
+                radial-gradient(1px 1px at 70% 12%, #ffffff, transparent),
+                radial-gradient(2px 2px at 85% 6%, #ffffff, transparent),
+                radial-gradient(1px 1px at 15% 18%, #ffdd88, transparent),
+                radial-gradient(1px 1px at 60% 15%, #ffdd88, transparent),
+                radial-gradient(1px 1px at 80% 20%, #ffffff, transparent),
+                radial-gradient(2px 2px at 33% 7%, #ffaa44, transparent),
+                /* Луна */
+                radial-gradient(60px 60px at 85% 12%, rgba(255,220,150,0.6) 0%, rgba(255,220,150,0.1) 40%, transparent 70%),
+                /* Сияние луны */
+                radial-gradient(120px 120px at 85% 12%, rgba(255,200,100,0.15) 0%, transparent 70%);
+            z-index: 0;
+        }
+
+        /* Динозавры на фоне */
+        .dino-bg {
+            position: fixed;
+            pointer-events: none;
+            z-index: 0;
+            font-size: 80px;
+            opacity: 0.2;
+            filter: brightness(0.3) sepia(0.6);
+        }
+
+        .dino1 { bottom: 5%; left: 3%; font-size: 100px; transform: scaleX(-1); }
+        .dino2 { bottom: 8%; right: 5%; font-size: 70px; }
+        .dino3 { bottom: 3%; left: 40%; font-size: 55px; opacity: 0.15; }
+        .dino4 { top: 5%; left: 8%; font-size: 45px; opacity: 0.12; transform: scaleX(-1); }
+        .dino5 { top: 10%; right: 12%; font-size: 50px; opacity: 0.13; }
+
+        /* Комета */
+        .comet {
+            position: fixed;
+            top: -5%;
+            right: 15%;
+            font-size: 100px;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.7;
+            filter: drop-shadow(0 0 20px #ff6600) drop-shadow(0 0 40px #ff4400);
+            animation: cometMove 8s ease-in-out infinite;
+        }
+
+        @keyframes cometMove {
+            0%, 100% { transform: translate(0, 0) rotate(-35deg); }
+            50% { transform: translate(-30px, 20px) rotate(-33deg); }
+        }
+
+        /* Растения */
+        .plants {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 120px;
+            pointer-events: none;
+            z-index: 0;
+            font-size: 40px;
+            opacity: 0.25;
+            letter-spacing: 10px;
+            color: #1a3a0a;
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
         }
 
         .app {
             width: 100%;
             max-width: 800px;
-            background: #8b6b4a;
-            border: 8px solid #3d2b1a;
+            background: rgba(30, 15, 5, 0.85);
+            border: 6px solid #5a3a1a;
             box-shadow: 
-                inset 0 0 0 4px #a08060,
-                inset 0 0 0 8px #6b4f32,
-                8px 8px 0px #2a1a0a;
-            padding: 1.5rem 1.8rem 2rem;
+                inset 0 0 0 3px rgba(139, 90, 43, 0.4),
+                0 0 30px rgba(255, 100, 0, 0.3),
+                0 0 60px rgba(255, 60, 0, 0.15);
+            padding: 1.8rem 1.8rem 2.2rem;
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 1.4rem;
+            position: relative;
+            z-index: 1;
+            border-radius: 8px;
+            backdrop-filter: blur(4px);
             background-image: 
-                repeating-linear-gradient(45deg, transparent, transparent 4px, rgba(0,0,0,0.03) 4px, rgba(0,0,0,0.03) 8px),
-                repeating-linear-gradient(-45deg, transparent, transparent 4px, rgba(0,0,0,0.03) 4px, rgba(0,0,0,0.03) 8px);
+                repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(139, 90, 43, 0.05) 20px, rgba(139, 90, 43, 0.05) 21px);
+        }
+
+        /* Следы лап */
+        .app::before {
+            content: '🐾';
+            position: absolute;
+            top: -25px;
+            left: 20px;
+            font-size: 30px;
+            opacity: 0.4;
+            transform: rotate(-15deg);
+        }
+
+        .app::after {
+            content: '🐾';
+            position: absolute;
+            top: -25px;
+            right: 25px;
+            font-size: 30px;
+            opacity: 0.4;
+            transform: rotate(10deg);
         }
 
         .oval-header {
             width: 100%;
             max-width: 380px;
-            background: #7ec850;
-            border: 5px solid #3d6b1a;
+            background: linear-gradient(180deg, #5a3a1a 0%, #3d2008 50%, #2a1505 100%);
+            border: 4px solid #8b5a2b;
             box-shadow: 
-                inset 0 -4px 0 #4a7a20,
-                inset 0 4px 0 #a0e870,
-                4px 4px 0px #2a4a10;
+                inset 0 -4px 0 #2a1505,
+                inset 0 4px 0 rgba(255, 200, 100, 0.3),
+                0 0 20px rgba(255, 100, 0, 0.4);
             border-radius: 50%;
             aspect-ratio: 1 / 0.55;
             display: flex;
@@ -66,28 +175,30 @@
             text-align: center;
             margin-bottom: 0.3rem;
             padding: 0.2rem;
-            background-image: repeating-linear-gradient(0deg, transparent, transparent 8px, rgba(255,255,255,0.05) 8px, rgba(255,255,255,0.05) 10px);
+            position: relative;
         }
 
         .brand-top {
-            font-size: 2.2rem;
+            font-size: 2.8rem;
             font-weight: 400;
             letter-spacing: 8px;
-            color: #ffffff;
-            text-shadow: 3px 3px 0px #3d6b1a, -1px -1px 0px #3d6b1a;
+            color: #ff8800;
+            text-shadow: 
+                0 0 10px #ff4400,
+                0 0 20px #ff2200,
+                2px 2px 0px #331100;
             line-height: 1;
-            font-family: 'Press Start 2P', monospace;
+            font-family: 'Ruslan Display', cursive;
         }
 
         .brand-sub {
-            font-size: 0.6rem;
+            font-size: 0.7rem;
             font-weight: 400;
-            color: #ffffff;
-            letter-spacing: 3px;
-            background: #5c3b1a;
+            color: #ffcc66;
+            letter-spacing: 4px;
+            background: rgba(20, 8, 0, 0.6);
             padding: 0.2rem 1rem;
-            border: 3px solid #3d2b1a;
-            box-shadow: inset 0 -2px 0 #2a1a0a;
+            border: 2px solid #8b5a2b;
             margin-top: 0.1rem;
             font-family: 'Press Start 2P', monospace;
             text-shadow: 1px 1px 0px #000;
@@ -105,52 +216,53 @@
         .arrow-btn {
             width: 52px;
             height: 52px;
-            border-radius: 0;
-            background: #a0a0a0;
-            border: 4px solid #606060;
+            border-radius: 50%;
+            background: linear-gradient(180deg, #8b6b3a 0%, #5a3a1a 100%);
+            border: 3px solid #aa8b4a;
             box-shadow: 
-                inset 0 -4px 0 #707070,
-                inset 0 4px 0 #c0c0c0,
-                4px 4px 0px #404040;
+                inset 0 2px 0 rgba(255, 200, 100, 0.4),
+                0 4px 8px rgba(0,0,0,0.5),
+                0 0 10px rgba(255, 100, 0, 0.2);
             font-size: 1.5rem;
             font-weight: bold;
-            color: #ffffff;
+            color: #ffcc66;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            line-height: 1;
-            user-select: none;
-            transition: all 0.05s ease;
-            font-family: 'Press Start 2P', monospace;
-            text-shadow: 2px 2px 0px #404040;
+            transition: all 0.1s ease;
+            text-shadow: 0 0 5px #ff8800;
         }
 
         .arrow-btn:hover {
-            background: #b8b8b8;
+            background: linear-gradient(180deg, #aa8b4a 0%, #7a5a2a 100%);
+            box-shadow: 
+                inset 0 2px 0 rgba(255, 220, 140, 0.5),
+                0 4px 12px rgba(0,0,0,0.5),
+                0 0 20px rgba(255, 150, 0, 0.4);
         }
 
         .arrow-btn:active {
-            transform: translate(4px, 4px);
-            box-shadow: 
-                inset 0 -2px 0 #707070,
-                inset 0 2px 0 #c0c0c0,
-                0px 0px 0px #404040;
+            transform: scale(0.9);
+            box-shadow: inset 0 3px 6px rgba(0,0,0,0.5);
         }
 
         .date-window {
-            background: #3d2b1a;
-            border: 4px solid #5c3b1a;
-            box-shadow: inset 0 0 0 2px #1a0a00, inset 0 0 10px rgba(0,0,0,0.5);
+            background: rgba(15, 8, 0, 0.8);
+            border: 3px solid #8b5a2b;
+            box-shadow: 
+                inset 0 0 15px rgba(0,0,0,0.6),
+                0 0 10px rgba(255, 100, 0, 0.2);
             padding: 0.7rem 1.8rem;
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             font-weight: 400;
-            color: #ffff88;
+            color: #ffaa44;
             min-width: 180px;
             text-align: center;
             letter-spacing: 2px;
             font-family: 'Press Start 2P', monospace;
-            text-shadow: 0 0 6px #ffff88;
+            text-shadow: 0 0 8px #ff6600;
+            border-radius: 4px;
         }
 
         .search-row {
@@ -166,72 +278,62 @@
             flex: 2;
             min-width: 180px;
             padding: 0.6rem 1rem;
-            border: 4px solid #5c3b1a;
-            background: #3d2b1a;
+            border: 3px solid #5a3a1a;
+            background: rgba(15, 8, 0, 0.8);
             font-size: 0.6rem;
             outline: none;
             text-align: center;
-            font-weight: 400;
-            color: #ffff88;
+            color: #ffaa44;
             font-family: 'Press Start 2P', monospace;
-            box-shadow: inset 0 0 8px rgba(0,0,0,0.5);
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+            border-radius: 4px;
         }
 
         .date-search-input:focus {
-            border-color: #ffaa00;
-            box-shadow: 0 0 0 3px rgba(255, 170, 0, 0.4), inset 0 0 8px rgba(0,0,0,0.5);
+            border-color: #ff8800;
+            box-shadow: 0 0 10px rgba(255, 100, 0, 0.4), inset 0 0 10px rgba(0,0,0,0.5);
         }
 
         .date-search-input::placeholder {
-            color: #6b4f32;
+            color: #5a3a1a;
         }
 
         .search-btn,
         .today-btn {
             padding: 0.6rem 1.2rem;
-            border-radius: 0;
-            background: #7ec850;
-            border: 4px solid #4a8a20;
+            border-radius: 20px;
+            background: linear-gradient(180deg, #7a4a1a 0%, #4a2008 100%);
+            border: 3px solid #aa6a2a;
             box-shadow: 
-                inset 0 -4px 0 #3d6b1a,
-                inset 0 4px 0 #a0e870,
-                4px 4px 0px #2a4a10;
+                inset 0 2px 0 rgba(255, 180, 80, 0.4),
+                0 3px 6px rgba(0,0,0,0.5);
             font-weight: 400;
-            color: #ffffff;
+            color: #ffcc66;
             cursor: pointer;
-            transition: all 0.05s ease;
+            transition: all 0.1s ease;
             white-space: nowrap;
             font-size: 0.55rem;
             font-family: 'Press Start 2P', monospace;
-            text-shadow: 1px 1px 0px #3d6b1a;
+            text-shadow: 1px 1px 0px #331100;
         }
 
         .search-btn:hover,
         .today-btn:hover {
-            background: #8ed860;
+            background: linear-gradient(180deg, #9a5a2a 0%, #5a2a08 100%);
+            box-shadow: 
+                inset 0 2px 0 rgba(255, 200, 100, 0.5),
+                0 3px 8px rgba(0,0,0,0.5),
+                0 0 15px rgba(255, 150, 0, 0.3);
         }
 
         .search-btn:active,
         .today-btn:active {
-            transform: translate(4px, 4px);
-            box-shadow: 
-                inset 0 -2px 0 #3d6b1a,
-                inset 0 2px 0 #a0e870,
-                0px 0px 0px #2a4a10;
+            transform: scale(0.93);
         }
 
         .today-btn {
-            background: #f0a030;
-            border-color: #b87010;
-            box-shadow: 
-                inset 0 -4px 0 #8a5010,
-                inset 0 4px 0 #f8c860,
-                4px 4px 0px #5a3000;
-            text-shadow: 1px 1px 0px #8a5010;
-        }
-
-        .today-btn:hover {
-            background: #f8b840;
+            background: linear-gradient(180deg, #aa4a0a 0%, #6a2000 100%);
+            border-color: #cc6600;
         }
 
         .sums-container {
@@ -248,56 +350,56 @@
             flex-direction: column;
             align-items: center;
             gap: 0.4rem;
-            background: #6b4f32;
+            background: rgba(20, 10, 0, 0.5);
             padding: 0.8rem 1rem;
-            border: 4px solid #4a3018;
-            box-shadow: 
-                inset 0 0 0 2px #8b6b4a,
-                3px 3px 0px #2a1a0a;
+            border: 3px solid #5a3a1a;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.4);
+            border-radius: 6px;
         }
 
         .sum-label {
             font-weight: 400;
-            color: #ffff88;
+            color: #ffaa44;
             font-size: 0.55rem;
             text-align: center;
             font-family: 'Press Start 2P', monospace;
-            text-shadow: 2px 2px 0px #000;
+            text-shadow: 1px 1px 0px #000;
         }
 
         .sum-input {
             width: 100%;
             padding: 0.5rem 0.7rem;
-            border: 3px solid #3d2b1a;
-            background: #2a1a0a;
+            border: 3px solid #4a2a0a;
+            background: rgba(10, 5, 0, 0.8);
             font-size: 0.65rem;
-            font-weight: 400;
             text-align: center;
             outline: none;
-            color: #ffff88;
+            color: #ffcc44;
             font-family: 'Press Start 2P', monospace;
-            box-shadow: inset 0 0 6px rgba(0,0,0,0.6);
+            box-shadow: inset 0 0 8px rgba(0,0,0,0.6);
+            border-radius: 4px;
         }
 
         .sum-input:focus {
-            border-color: #ffaa00;
-            box-shadow: 0 0 0 3px rgba(255, 170, 0, 0.4), inset 0 0 6px rgba(0,0,0,0.6);
+            border-color: #ff8800;
+            box-shadow: 0 0 10px rgba(255, 100, 0, 0.4), inset 0 0 8px rgba(0,0,0,0.6);
         }
 
         .sum-input[readonly] {
-            background: #1a0a00;
+            background: rgba(5, 2, 0, 0.9);
             cursor: default;
-            color: #ffaa44;
+            color: #ff8800;
         }
 
         .table-container {
             width: 100%;
             max-height: 400px;
             overflow-y: auto;
-            background: #4a3018;
-            border: 4px solid #3d2b1a;
-            box-shadow: inset 0 0 0 2px #6b4f32;
+            background: rgba(15, 8, 0, 0.6);
+            border: 3px solid #5a3a1a;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
             padding: 0.3rem;
+            border-radius: 6px;
         }
 
         .data-table {
@@ -307,7 +409,7 @@
         }
 
         .data-table tr {
-            border-bottom: 3px solid #5c3b1a;
+            border-bottom: 2px solid rgba(139, 90, 43, 0.3);
         }
 
         .data-table tr:last-child {
@@ -321,7 +423,7 @@
 
         .row-number {
             font-weight: 400;
-            color: #ffff88;
+            color: #ff8800;
             font-size: 0.55rem;
             text-align: center;
             width: 32px;
@@ -329,7 +431,7 @@
             padding-right: 0 !important;
             padding-left: 0.2rem !important;
             font-family: 'Press Start 2P', monospace;
-            text-shadow: 1px 1px 0px #000;
+            text-shadow: 0 0 6px #ff4400;
         }
 
         .emoji-cell {
@@ -340,44 +442,43 @@
         }
 
         .emoji-btn {
-            background: #5c3b1a;
-            border: 3px solid #3d2b1a;
-            box-shadow: inset 0 -2px 0 #2a1a0a, inset 0 2px 0 #7a5030;
+            background: rgba(30, 10, 0, 0.6);
+            border: 2px solid #5a3a1a;
             font-size: 1.8rem;
             cursor: pointer;
             padding: 0;
-            opacity: 0.5;
+            opacity: 0.35;
             transition: all 0.1s ease;
-            filter: grayscale(80%) brightness(0.6);
+            filter: grayscale(70%) brightness(0.5);
             line-height: 1;
             width: 44px;
             height: 44px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            vertical-align: middle;
+            border-radius: 50%;
+            box-shadow: inset 0 0 6px rgba(0,0,0,0.4);
         }
 
         .emoji-btn.active {
             opacity: 1;
-            filter: grayscale(0%) brightness(1.4);
-            border-color: #ffaa00;
+            filter: grayscale(0%) brightness(1.5);
+            border-color: #ff8800;
             box-shadow: 
-                0 0 8px currentColor,
-                inset 0 -2px 0 #cc8800,
-                inset 0 2px 0 #ffcc44;
-            text-shadow: 0 0 6px currentColor;
+                0 0 15px currentColor,
+                inset 0 0 10px currentColor;
+            text-shadow: 0 0 10px currentColor;
         }
 
         .emoji-btn:hover {
-            opacity: 0.8;
-            filter: grayscale(30%) brightness(0.9);
-            border-color: #8b6b4a;
+            opacity: 0.7;
+            filter: grayscale(30%) brightness(0.8);
+            border-color: #8b5a2b;
         }
 
         .emoji-btn.active:hover {
             opacity: 1;
-            filter: grayscale(0%) brightness(1.5);
+            filter: grayscale(0%) brightness(1.6);
         }
 
         .text-cell {
@@ -388,13 +489,14 @@
         .number-cell input {
             width: 100%;
             padding: 0.45rem 0.5rem;
-            border: 3px solid #3d2b1a;
-            background: #2a1a0a;
+            border: 2px solid #5a3a1a;
+            background: rgba(10, 5, 0, 0.8);
             font-size: 0.55rem;
             outline: none;
-            color: #ffffff;
+            color: #ffcc88;
             font-family: 'Press Start 2P', monospace;
-            box-shadow: inset 0 0 5px rgba(0,0,0,0.5);
+            box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+            border-radius: 4px;
         }
 
         .text-cell input {
@@ -404,13 +506,13 @@
         .number-cell input {
             text-align: center;
             max-width: 90px;
-            color: #ffff88;
+            color: #ffaa44;
         }
 
         .text-cell input:focus,
         .number-cell input:focus {
-            border-color: #ffaa00;
-            box-shadow: 0 0 0 3px rgba(255, 170, 0, 0.4), inset 0 0 5px rgba(0,0,0,0.5);
+            border-color: #ff8800;
+            box-shadow: 0 0 8px rgba(255, 100, 0, 0.4), inset 0 0 6px rgba(0,0,0,0.5);
         }
 
         .table-container::-webkit-scrollbar {
@@ -418,18 +520,31 @@
         }
 
         .table-container::-webkit-scrollbar-track {
-            background: #3d2b1a;
-            border: 2px solid #5c3b1a;
+            background: rgba(15, 8, 0, 0.8);
+            border: 2px solid #3d2008;
         }
 
         .table-container::-webkit-scrollbar-thumb {
-            background: #7a5030;
-            border: 3px solid #5c3b1a;
-            box-shadow: inset 0 -2px 0 #4a3018, inset 0 2px 0 #a08060;
+            background: linear-gradient(180deg, #7a4a1a, #4a2008);
+            border: 2px solid #5a3a1a;
+            border-radius: 4px;
         }
     </style>
 </head>
 <body>
+    <!-- Динозавры на фоне -->
+    <div class="dino-bg dino1">🦕</div>
+    <div class="dino-bg dino2">🦖</div>
+    <div class="dino-bg dino3">🦕</div>
+    <div class="dino-bg dino4">🦖</div>
+    <div class="dino-bg dino5">🦕</div>
+    
+    <!-- Комета -->
+    <div class="comet">☄️</div>
+    
+    <!-- Растения -->
+    <div class="plants">🌿 🌴 🌿 🪴 🌿 🌴 🌿 🪴 🌿 🌴 🌿 🪴 🌿 🌴 🌿</div>
+
     <div class="app">
         <div class="oval-header">
             <div class="brand-top">DIX</div>
@@ -506,42 +621,50 @@
                 return audioCtx;
             }
 
-            // Звук как клик в Minecraft — короткий щелчок
+            // Звук — рёв динозавра (низкий рык)
             function playActivateSound() {
                 try {
                     var ctx = getAudioContext();
                     var now = ctx.currentTime;
                     var osc = ctx.createOscillator();
                     var gain = ctx.createGain();
-                    osc.type = 'square';
-                    osc.frequency.setValueAtTime(600, now);
-                    osc.frequency.exponentialRampToValueAtTime(200, now + 0.05);
-                    gain.gain.setValueAtTime(0.25, now);
-                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(150, now);
+                    osc.frequency.setValueAtTime(200, now + 0.04);
+                    osc.frequency.exponentialRampToValueAtTime(60, now + 0.2);
+                    gain.gain.setValueAtTime(0.2, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
                     osc.connect(gain);
                     gain.connect(ctx.destination);
                     osc.start(now);
-                    osc.stop(now + 0.08);
+                    osc.stop(now + 0.2);
                 } catch (e) {}
             }
 
-            // Звук как открытие сундука
+            // Звук — треск ветки
             function playDeactivateSound() {
                 try {
                     var ctx = getAudioContext();
                     var now = ctx.currentTime;
-                    var osc = ctx.createOscillator();
+                    var bufferSize = ctx.sampleRate * 0.06;
+                    var buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+                    var data = buffer.getChannelData(0);
+                    for (var i = 0; i < bufferSize; i++) {
+                        data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (ctx.sampleRate * 0.006));
+                    }
+                    var noise = ctx.createBufferSource();
                     var gain = ctx.createGain();
-                    osc.type = 'square';
-                    osc.frequency.setValueAtTime(400, now);
-                    osc.frequency.setValueAtTime(500, now + 0.03);
-                    osc.frequency.exponentialRampToValueAtTime(100, now + 0.1);
-                    gain.gain.setValueAtTime(0.2, now);
-                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
-                    osc.connect(gain);
+                    var filter = ctx.createBiquadFilter();
+                    filter.type = 'bandpass';
+                    filter.frequency.value = 800;
+                    noise.buffer = buffer;
+                    gain.gain.setValueAtTime(0.3, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
+                    noise.connect(filter);
+                    filter.connect(gain);
                     gain.connect(ctx.destination);
-                    osc.start(now);
-                    osc.stop(now + 0.12);
+                    noise.start(now);
+                    noise.stop(now + 0.06);
                 } catch (e) {}
             }
 
@@ -742,31 +865,19 @@
             function updateRowText(rowIndex, value) {
                 if (!currentDateStr) return;
                 var dayData = getDayData(currentDateStr);
-                if (dayData.rows[rowIndex]) {
-                    dayData.rows[rowIndex].text = value;
-                }
+                if (dayData.rows[rowIndex]) dayData.rows[rowIndex].text = value;
                 saveData();
             }
 
             function handleNumberInput(rowIndex, inputElement) {
                 if (!currentDateStr) return;
                 var val = inputElement.value;
-                if (val === '') {
-                    updateNumberInRow(rowIndex, '');
-                    return;
-                }
+                if (val === '') { updateNumberInRow(rowIndex, ''); return; }
                 val = val.replace(',', '.');
-                if (!/^-?\d*\.?\d*$/.test(val)) {
-                    inputElement.value = inputElement.value.slice(0, -1);
-                    return;
-                }
+                if (!/^-?\d*\.?\d*$/.test(val)) { inputElement.value = val.slice(0, -1); return; }
                 if (val.indexOf('.') !== -1) {
                     var parts = val.split('.');
-                    if (parts[1] && parts[1].length > 2) {
-                        parts[1] = parts[1].slice(0, 2);
-                        val = parts.join('.');
-                        inputElement.value = val;
-                    }
+                    if (parts[1] && parts[1].length > 2) { parts[1] = parts[1].slice(0, 2); val = parts.join('.'); inputElement.value = val; }
                 }
                 updateNumberInRow(rowIndex, val);
             }
@@ -776,26 +887,18 @@
                 if (val === '') return;
                 val = val.replace(',', '.');
                 var num = parseFloat(val);
-                if (!isNaN(num)) {
-                    inputElement.value = formatNumber(val);
-                } else {
-                    inputElement.value = '';
-                }
+                inputElement.value = !isNaN(num) ? formatNumber(val) : '';
                 var tr = inputElement.closest('tr');
                 if (tr) {
                     var rowIndex = Array.from(tr.parentNode.children).indexOf(tr);
-                    if (rowIndex >= 0 && rowIndex < TOTAL_ROWS) {
-                        updateNumberInRow(rowIndex, inputElement.value);
-                    }
+                    if (rowIndex >= 0 && rowIndex < TOTAL_ROWS) updateNumberInRow(rowIndex, inputElement.value);
                 }
             }
 
             function updateNumberInRow(rowIndex, valueStr) {
                 if (!currentDateStr) return;
                 var dayData = getDayData(currentDateStr);
-                if (dayData.rows[rowIndex]) {
-                    dayData.rows[rowIndex].number = valueStr;
-                }
+                if (dayData.rows[rowIndex]) dayData.rows[rowIndex].number = valueStr;
                 saveData();
                 updateSumsDisplay();
             }
@@ -820,28 +923,17 @@
                 var baseTotal = parseFloat(dayData.total) || 0;
                 var spentSum = getSpentSum();
                 var remaining = baseTotal - spentSum;
-
-                if (spentSum === 0) {
-                    spentSumInput.value = '';
-                } else {
-                    spentSumInput.value = formatNumber(spentSum);
-                }
-
-                if (remaining === 0 && baseTotal === 0) {
-                    totalSumInput.value = '';
-                } else if (remaining === 0 && baseTotal > 0) {
-                    totalSumInput.value = '0';
-                } else {
-                    totalSumInput.value = formatNumber(remaining);
-                }
+                spentSumInput.value = spentSum === 0 ? '' : formatNumber(spentSum);
+                if (remaining === 0 && baseTotal === 0) totalSumInput.value = '';
+                else if (remaining === 0 && baseTotal > 0) totalSumInput.value = '0';
+                else totalSumInput.value = formatNumber(remaining);
             }
 
             function changeDate(newDateStr) {
                 if (!newDateStr || !/^\d{4}-\d{2}-\d{2}$/.test(newDateStr)) return;
                 if (currentDateStr) {
-                    var currentDayData = getDayData(currentDateStr);
-                    var val = totalSumInput.value;
-                    currentDayData.total = val === '' ? '0' : val;
+                    var d = getDayData(currentDateStr);
+                    d.total = totalSumInput.value === '' ? '0' : totalSumInput.value;
                     saveData();
                 }
                 currentDateStr = newDateStr;
@@ -857,91 +949,43 @@
             }
 
             document.addEventListener('click', function() {
-                if (audioCtx && audioCtx.state === 'suspended') {
-                    audioCtx.resume();
-                }
+                if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
             }, { once: true });
 
             function init() {
                 loadData();
                 var today = getTodayString();
-                if (!appData[today]) {
-                    appData[today] = createEmptyDayData();
-                    saveData();
-                }
+                if (!appData[today]) { appData[today] = createEmptyDayData(); saveData(); }
                 currentDateStr = today;
                 renderCurrentDay();
-
                 prevBtn.addEventListener('click', function() { shiftDate(-1); });
                 nextBtn.addEventListener('click', function() { shiftDate(1); });
-
                 searchBtn.addEventListener('click', function() {
-                    var inputVal = searchInput.value.trim();
-                    if (inputVal === '') {
-                        changeDate(getTodayString());
-                        return;
-                    }
-                    var parsed = parseDateFromInput(inputVal);
-                    if (parsed) {
-                        changeDate(parsed);
-                    } else {
-                        alert('ВВЕДИТЕ ДАТУ 09.08.26');
-                        searchInput.value = storageToDisplay(currentDateStr);
-                    }
+                    var val = searchInput.value.trim();
+                    if (val === '') { changeDate(getTodayString()); return; }
+                    var parsed = parseDateFromInput(val);
+                    if (parsed) changeDate(parsed);
+                    else { alert('ВВЕДИТЕ ДАТУ 09.08.26'); searchInput.value = storageToDisplay(currentDateStr); }
                 });
-
-                searchInput.addEventListener('keypress', function(e) {
-                    if (e.key === 'Enter') searchBtn.click();
-                });
-
-                todayBtn.addEventListener('click', function() {
-                    changeDate(getTodayString());
-                });
-
+                searchInput.addEventListener('keypress', function(e) { if (e.key === 'Enter') searchBtn.click(); });
+                todayBtn.addEventListener('click', function() { changeDate(getTodayString()); });
                 totalSumInput.addEventListener('input', function() {
                     if (!currentDateStr) return;
                     var val = totalSumInput.value.replace(',', '.');
-                    if (val === '') {
-                        getDayData(currentDateStr).total = '0';
-                        saveData();
-                        updateSumsDisplay();
-                        return;
-                    }
+                    if (val === '') { getDayData(currentDateStr).total = '0'; saveData(); updateSumsDisplay(); return; }
                     if (val.indexOf('.') !== -1) {
                         var parts = val.split('.');
-                        if (parts[1] && parts[1].length > 2) {
-                            parts[1] = parts[1].slice(0, 2);
-                            val = parts.join('.');
-                            totalSumInput.value = val;
-                        }
+                        if (parts[1] && parts[1].length > 2) { parts[1] = parts[1].slice(0, 2); val = parts.join('.'); totalSumInput.value = val; }
                     }
-                    if (!/^-?\d*\.?\d*$/.test(val)) {
-                        totalSumInput.value = val.slice(0, -1);
-                        return;
-                    }
-                    var num = parseFloat(val);
-                    if (!isNaN(num)) {
-                        getDayData(currentDateStr).total = val;
-                        saveData();
-                        updateSumsDisplay();
-                    }
+                    if (!/^-?\d*\.?\d*$/.test(val)) { totalSumInput.value = val.slice(0, -1); return; }
+                    if (!isNaN(parseFloat(val))) { getDayData(currentDateStr).total = val; saveData(); updateSumsDisplay(); }
                 });
-
                 totalSumInput.addEventListener('blur', function() {
                     if (!currentDateStr) return;
                     var val = totalSumInput.value.replace(',', '.');
-                    if (val === '') {
-                        getDayData(currentDateStr).total = '0';
-                        saveData();
-                        updateSumsDisplay();
-                        return;
-                    }
+                    if (val === '') { getDayData(currentDateStr).total = '0'; saveData(); updateSumsDisplay(); return; }
                     var num = parseFloat(val);
-                    if (isNaN(num)) {
-                        getDayData(currentDateStr).total = '0';
-                    } else {
-                        getDayData(currentDateStr).total = formatNumber(val);
-                    }
+                    getDayData(currentDateStr).total = isNaN(num) ? '0' : formatNumber(val);
                     saveData();
                     updateSumsDisplay();
                 });
