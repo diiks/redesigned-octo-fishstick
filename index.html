@@ -286,7 +286,8 @@ body {
 }
 
 .hud-item {
-  min-height: 38px;
+  min-height: 50px;
+  height: 50px;
   border-radius: 8px;
   display: flex;
   align-items: center;
@@ -299,12 +300,12 @@ body {
   transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
 }
 
-button.hud-item { border: 2px solid; }
+button.hud-item { border: 2px solid; width: 50px; }
 
 .hud-item:active { transform: scale(0.92); }
 
 .hud-sync {
-  padding: 0 12px;
+  padding: 0;
   background: rgba(0, 245, 255, 0.08);
   border-color: #00F5FF;
   color: #00F5FF;
@@ -316,15 +317,16 @@ button.hud-item { border: 2px solid; }
   box-shadow: 0 0 16px rgba(0,245,255,.55);
 }
 
-/* HUD Money - теперь это input */
+/* HUD Money - input */
 .hud-money {
   padding: 0;
   background: rgba(255,209,102,.08);
   border: 2px solid #FFD166;
   color: #FFD166;
   box-shadow: 0 0 10px rgba(255,209,102,.25);
-  min-width: 140px;
+  min-width: 150px;
   cursor: text;
+  height: 50px;
 }
 
 .hud-money-input {
@@ -336,6 +338,7 @@ button.hud-item { border: 2px solid; }
   font-size: 0.65rem;
   text-align: center;
   width: 100%;
+  height: 100%;
   padding: 0 10px;
   text-shadow: 0 0 8px #FFD166;
 }
@@ -347,7 +350,7 @@ button.hud-item { border: 2px solid; }
 }
 
 .hud-stats {
-  padding: 0 12px;
+  padding: 0;
   background: rgba(255,46,136,.08);
   border-color: #FF2E88;
   color: #FF2E88;
@@ -364,11 +367,12 @@ button.hud-item { border: 2px solid; }
 
 @media (max-width: 480px) {
   .mini-hud { gap: 0.35rem; }
-  .hud-item { min-height: 36px; }
+  .hud-item { min-height: 50px; height: 50px; }
   .hud-label { display: none; }
-  .hud-money { min-width: 110px; }
+  .hud-money { min-width: 120px; }
   .hud-icon { font-size: 0.85rem; }
   .hud-money-input { font-size: 0.55rem; }
+  button.hud-item { width: 50px; }
 }
 
 /* --- таблица --- */
@@ -529,7 +533,7 @@ button.hud-item { border: 2px solid; }
 .table-container::-webkit-scrollbar-track { background: rgba(7,9,31,.8); border: 2px solid var(--nv-bg2); }
 .table-container::-webkit-scrollbar-thumb { background: linear-gradient(180deg, var(--nv-pink), var(--nv-cyan), var(--nv-gold)); border: 2px solid rgba(255,255,255,.7); border-radius: 4px; }
 
-.table-container.fade-swap, .sums-container.fade-swap { animation: fadeSwap 0.35s ease; }
+.table-container.fade-swap { animation: fadeSwap 0.35s ease; }
 @keyframes fadeSwap { 0% { opacity: 0.2; transform: translateX(6px); } 100% { opacity: 1; transform: translateX(0); } }
 
 .sync-indicator {
@@ -606,11 +610,9 @@ button.hud-item { border: 2px solid; }
       <div class="mini-hud">
         <button class="hud-item hud-sync" id="syncBtn" title="Синхронизировать" aria-label="Синхронизировать данные">
           <span class="hud-icon">☁</span>
-          <span class="hud-label">СИНХР.</span>
         </button>
 
         <div class="hud-item hud-money">
-          <span class="hud-icon">💰</span>
           <input
             type="text"
             id="totalSumInput"
@@ -622,7 +624,6 @@ button.hud-item { border: 2px solid; }
 
         <button class="hud-item hud-stats" id="statsBtn" title="Статистика" aria-label="Открыть статистику">
           <span class="hud-icon">📊</span>
-          <span class="hud-label">СТАТ.</span>
         </button>
       </div>
     </div>
@@ -849,7 +850,15 @@ function parseDateFromInput(s) {
 
 function getTodayString() { return formatDateToStorage(new Date()); }
 function storageToDisplay(s) { const p = s.split('-').map(Number); return formatDateToDisplay(new Date(p[0], p[1]-1, p[2])); }
-function formatNumber(v) { const n = parseFloat(v); if (isNaN(n)) return ''; return n === Math.floor(n) ? n.toString() : n.toFixed(2); }
+
+function formatNumber(v) {
+  const n = parseFloat(v);
+  if (isNaN(n)) return '';
+  if (n === Math.floor(n)) {
+    return n.toString();
+  }
+  return n.toFixed(2);
+}
 
 function getGlobalTotal() {
   const val = localStorage.getItem(GLOBAL_TOTAL_KEY);
@@ -963,9 +972,7 @@ function updateTotalDisplay() {
     ti.value = '';
     ti.placeholder = 'СКОК ЧЕ';
   } else {
-    const spent = getSpentSum();
-    const remaining = globalTotal - spent;
-    ti.value = remaining < 0 ? '0' : formatNumber(remaining);
+    ti.value = formatNumber(globalTotal);
   }
 }
 
@@ -1201,7 +1208,6 @@ function init() {
     if (!isNaN(parseFloat(v))) {
       setGlobalTotal(parseFloat(v));
       saveDataLocal();
-      updateTotalDisplay();
       scheduleCloudSave();
     }
     ti.value = v;
