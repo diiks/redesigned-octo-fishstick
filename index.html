@@ -9,7 +9,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="DIX Vegas Counter">
-<link rel="manifest" href='data:application/json,{"name":"DIX Vegas Counter","short_name":"DIX","display":"standalone","start_url":".","background_color":"#1A2E0A","theme_color":"#8B6914"}'>
+<link rel="manifest" href='data:application/json,{"name":"DIX Vegas Counter","short_name":"DIX","display":"standalone","start_url":".","background_color":"#1A2E0A","theme_color":"#4CAF50"}'>
 <title>DIX | Vegas Counter</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -107,6 +107,51 @@ body {
   border-bottom: 3px solid var(--jr-green);
   flex-shrink: 0;
   overflow: hidden;
+}
+
+/* ТУМАН В ДЖУНГЛЯХ */
+.hero-header::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -50%;
+  width: 200%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  background: 
+    radial-gradient(ellipse at 30% 50%, rgba(124,179,66,0.25) 0%, transparent 40%),
+    radial-gradient(ellipse at 70% 50%, rgba(76,175,80,0.2) 0%, transparent 40%),
+    radial-gradient(ellipse at 50% 70%, rgba(139,105,20,0.15) 0%, transparent 35%);
+  animation: jungleFog 8s ease-in-out infinite;
+  filter: blur(12px);
+}
+
+@keyframes jungleFog {
+  0%, 100% { transform: translateX(-25%); opacity: 0.4; }
+  25% { transform: translateX(-10%); opacity: 0.6; }
+  50% { transform: translateX(0%); opacity: 0.7; }
+  75% { transform: translateX(-15%); opacity: 0.5; }
+}
+
+/* СЛЕДЫ ДИНОЗАВРА */
+.dino-trail {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  font-size: 1.5rem;
+  pointer-events: none;
+  z-index: 0;
+  animation: dinoWalk 10s linear infinite;
+  opacity: 0.25;
+}
+
+@keyframes dinoWalk {
+  0% { left: -10%; transform: translateY(-50%) scaleX(1); }
+  49% { left: 110%; transform: translateY(-50%) scaleX(1); }
+  50% { left: 110%; transform: translateY(-50%) scaleX(-1); }
+  99% { left: -10%; transform: translateY(-50%) scaleX(-1); }
+  100% { left: -10%; transform: translateY(-50%) scaleX(1); }
 }
 
 .hero-header::before {
@@ -271,10 +316,6 @@ body {
 .search-btn:active, .today-btn:active { transform: scale(0.93); }
 .today-btn { background: linear-gradient(180deg, var(--jr-brown), #4A3500); border-color: var(--jr-brown); }
 
-/* ==========================================
-   JURASSIC — COMPACT HUD
-   ========================================== */
-
 .mini-hud {
   width: 100%;
   display: flex;
@@ -396,7 +437,6 @@ button.hud-item {
   button.hud-item { width: 42px; min-width: 42px; }
 }
 
-/* --- таблица --- */
 .table-container {
   width: 100%; 
   flex: 1;
@@ -616,6 +656,8 @@ button.hud-item {
   <div class="content-layer">
 
     <div class="hero-header">
+      <span class="dino-trail">🦕</span>
+
       <div class="date-navigation">
         <button class="arrow-btn sfx-btn" id="prevDayBtn" aria-label="Предыдущий день">◀</button>
         <input type="text" id="currentDateInput" class="date-window-input" placeholder="20.08.26" aria-label="Текущая дата">
