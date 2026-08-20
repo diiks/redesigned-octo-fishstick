@@ -4,9 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>DIX | Vegas Counter</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Orbitron:wght@400;600;800&display=swap');
-
 * { margin:0; padding:0; box-sizing:border-box; }
 
 body {
@@ -37,7 +38,7 @@ body {
 /* --- шапка с неоновой вывеской --- */
 .hero-header {
   width: 100%;
-  padding: 0.5rem 1rem 0.7rem;
+  padding: 2.5rem 1rem 0.7rem;
   background: linear-gradient(180deg, rgba(255,215,0,0.2) 0%, rgba(255,0,0,0.1) 50%, rgba(20,0,0,0.9) 100%);
   display: flex;
   flex-direction: column;
@@ -48,25 +49,60 @@ body {
   border-bottom: 3px solid #ffd700;
 }
 
+/* Обновленный псевдоэлемент с анимацией и эмодзи */
 .hero-header::before {
-  content: '🎰DIX COUNTER🎰';
+  content: '🕹️ DIX COUNTER 🕹️';
   position: absolute;
-  top: 5px;
+  top: 0.7rem;
   left: 50%;
   transform: translateX(-50%);
   font-size: 0.6rem;
   color: #ffd700;
-  text-shadow: 0 0 10px #ffd700, 0 0 20px #ff0000, 0 0 30px #ffd700;
   font-family: 'Press Start 2P', monospace;
   white-space: nowrap;
-  z-index: 0;
-  opacity: 0.7;
+  opacity: 0.8;
+  z-index: 1;
+  
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  
+  animation: neonGlow 2s infinite alternate ease-in-out;
+}
+
+@keyframes neonGlow {
+  0% {
+    text-shadow: 
+      0 0 5px #ffd700, 
+      0 0 10px #ff0000, 
+      0 0 20px #ffd700;
+    opacity: 0.7;
+  }
+  100% {
+    text-shadow: 
+      0 0 10px #ffd700, 
+      0 0 25px #ff0000, 
+      0 0 40px #ff0000,
+      0 0 60px #ffd700;
+    opacity: 1;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-header::before {
+    font-size: 0.4rem;
+    top: 0.8rem;
+    gap: 4px;
+  }
 }
 
 .hero-header .date-navigation,
 .hero-header .date-actions {
   position: relative; z-index: 1;
-  margin-top: 1.5rem;
+}
+
+.date-navigation {
+  margin-top: 0.5rem;
 }
 
 /* --- навигация по датам --- */
@@ -238,15 +274,15 @@ body {
 
     <div class="sums-container" id="sumsContainer">
       <div class="sum-block">
-        <div class="sum-label">ОБЩАЯ СУММА</div>
+        <div class="sum-label">💰 ОБЩАЯ СУММА</div>
         <input type="text" id="totalSumInput" class="sum-input" placeholder="0">
       </div>
       <div class="sum-block">
-        <div class="sum-label">ПОТРАЧЕНО</div>
+        <div class="sum-label">💸 ПОТРАЧЕНО</div>
         <input type="text" id="spentSumInput" class="sum-input" placeholder="0" readonly>
       </div>
       <div class="sum-block">
-        <div class="sum-label">ЗА МЕСЯЦ</div>
+        <div class="sum-label">📆 ЗА МЕСЯЦ</div>
         <input type="text" id="monthlySpentInput" class="sum-input" placeholder="0" readonly>
       </div>
     </div>
@@ -271,7 +307,6 @@ body {
       osc.type='sine'; osc.frequency.setValueAtTime(800,now); osc.frequency.exponentialRampToValueAtTime(600,now+0.06);
       gain.gain.setValueAtTime(0.15,now); gain.gain.exponentialRampToValueAtTime(0.001,now+0.08);
       osc.connect(gain); gain.connect(ctx.destination); osc.start(now); osc.stop(now+0.08);
-      // Второй тон для эффекта монетки
       var osc2=ctx.createOscillator(), gain2=ctx.createGain();
       osc2.type='sine'; osc2.frequency.setValueAtTime(1200,now+0.02); osc2.frequency.exponentialRampToValueAtTime(900,now+0.08);
       gain2.gain.setValueAtTime(0.1,now+0.02); gain2.gain.exponentialRampToValueAtTime(0.001,now+0.1);
