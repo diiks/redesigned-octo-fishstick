@@ -38,7 +38,7 @@ body {
 /* --- шапка с неоновой вывеской --- */
 .hero-header {
   width: 100%;
-  padding: 2.5rem 1rem 0.7rem;
+  padding: 3.5rem 1rem 0.7rem;
   background: linear-gradient(180deg, rgba(255,215,0,0.2) 0%, rgba(255,0,0,0.1) 50%, rgba(20,0,0,0.9) 100%);
   display: flex;
   flex-direction: column;
@@ -53,10 +53,10 @@ body {
 .hero-header::before {
   content: '🕹️ DIX COUNTER 🕹️';
   position: absolute;
-  top: 0.7rem;
+  top: 0.8rem;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 0.6rem;
+  font-size: 1rem;
   color: #ffd700;
   font-family: 'Press Start 2P', monospace;
   white-space: nowrap;
@@ -65,7 +65,7 @@ body {
   
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   
   animation: neonGlow 2s infinite alternate ease-in-out;
 }
@@ -90,9 +90,12 @@ body {
 
 @media (max-width: 480px) {
   .hero-header::before {
-    font-size: 0.4rem;
-    top: 0.8rem;
-    gap: 4px;
+    font-size: 0.7rem;
+    top: 0.9rem;
+    gap: 5px;
+  }
+  .hero-header {
+    padding: 3rem 0.5rem 0.6rem;
   }
 }
 
@@ -196,51 +199,90 @@ body {
 .sum-input:focus { border-color: #ffd700; box-shadow: 0 0 10px rgba(255,215,0,0.5), inset 0 0 8px rgba(255,215,0,0.2); }
 .sum-input[readonly] { background: rgba(10,0,0,0.9); cursor: default; color: #ff4500; }
 
-/* --- таблица --- */
+/* --- таблица в стиле Excel --- */
 .table-container {
   width: 100%; max-height: 500px; overflow-y: auto;
   background: rgba(0,0,0,0.6); border-top: 2px solid #ffd700;
   padding: 0.3rem;
 }
-.data-table { width: 100%; border-collapse: collapse; }
+.data-table { 
+  width: 100%; border-collapse: collapse; 
+}
 .data-table tr {
   border-bottom: 1px solid rgba(255,215,0,0.15);
   animation: rowIn 0.35s ease both;
 }
 @keyframes rowIn { from { opacity:0; transform: translateY(6px); } to { opacity:1; transform: translateY(0); } }
 .data-table tr:last-child { border-bottom: none; }
-.data-table td { padding: 0.15rem 0.1rem; vertical-align: middle; }
-.data-table td.row-number { padding-right: 0.05rem; width: 24px; }
-.data-table td.text-cell { padding-left: 0.1rem; padding-right: 0.2rem; }
-.data-table td.number-cell { padding-left: 0.1rem; }
+.data-table td { 
+  padding: 0.15rem 0.1rem; 
+  vertical-align: middle;
+  height: 40px;
+}
+.data-table td.row-number { 
+  padding-right: 0.05rem; 
+  width: 30px;
+  font-size: 0.7rem;
+}
+.data-table td.text-cell { 
+  padding-left: 0.1rem; 
+  padding-right: 0.2rem;
+  width: 72%;
+}
+.data-table td.number-cell { 
+  padding-left: 0.1rem;
+  width: 22%;
+}
 
 .row-number {
-  font-weight: 400; color: #ffd700; font-size: 0.5rem;
+  font-weight: 400; color: #ffd700;
   text-align: center; font-family: 'Press Start 2P', monospace;
   text-shadow: 0 0 6px #ffd700;
 }
 
-.text-cell { width: 72%; }
-.number-cell { width: 22%; }
-
-.text-cell textarea, .number-cell input {
-  width: 100%; padding: 0.4rem 0.5rem; border: 2px solid #8b6914;
-  background: rgba(0,0,0,0.85); outline: none;
-  color: #ffd700; font-family: 'Press Start 2P', monospace;
-  box-shadow: inset 0 0 6px rgba(255,215,0,0.2); border-radius: 8px;
+/* Новые стили для ячеек в стиле Excel */
+.text-cell-input {
+  width: 100%;
+  height: 40px;
+  padding: 0.4rem 0.5rem;
+  border: 1px solid #8b6914;
+  background: rgba(0,0,0,0.85);
+  outline: none;
+  color: #ffd700;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: left;
+  box-shadow: inset 0 0 6px rgba(255,215,0,0.2);
+  border-radius: 4px;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
   box-sizing: border-box;
-  height: 2.8em;
 }
-.text-cell textarea {
-  resize: none; line-height: 1.3; font-size: 0.65rem;
-  text-align: left; font-family: 'Orbitron', sans-serif;
+
+.text-cell-input:focus {
+  border-color: #ffd700;
+  box-shadow: 0 0 8px rgba(255,215,0,0.4), inset 0 0 6px rgba(255,215,0,0.2);
 }
-.number-cell input {
-  text-align: center; color: #ff4500;
-  font-size: 0.9rem; font-weight: 700;
+
+.number-cell-input {
+  width: 100%;
+  height: 40px;
+  padding: 0.4rem 0.5rem;
+  border: 1px solid #8b6914;
+  background: rgba(0,0,0,0.85);
+  outline: none;
+  color: #ff4500;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-align: center;
+  box-shadow: inset 0 0 6px rgba(255,215,0,0.2);
+  border-radius: 4px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  box-sizing: border-box;
 }
-.text-cell textarea:focus, .number-cell input:focus {
+
+.number-cell-input:focus {
   border-color: #ffd700;
   box-shadow: 0 0 8px rgba(255,215,0,0.4), inset 0 0 6px rgba(255,215,0,0.2);
 }
@@ -406,8 +448,9 @@ body {
 
       var tt=document.createElement('td');
       tt.className='text-cell';
-      var it=document.createElement('textarea');
-      it.rows=2;
+      var it=document.createElement('input');
+      it.type='text';
+      it.className='text-cell-input';
       it.placeholder='ОПИСАНИЕ';
       it.value=rd.text;
       it.addEventListener('input', (function(idx){ return function(e){ updateRowText(idx, e.target.value); }; })(i));
@@ -418,6 +461,7 @@ body {
       tnum.className='number-cell';
       var inum=document.createElement('input');
       inum.type='text';
+      inum.className='number-cell-input';
       inum.placeholder='0';
       inum.value=rd.number;
       inum.addEventListener('input', (function(idx){ return function(e){ handleNumberInput(idx, e.target); }; })(i));
