@@ -50,50 +50,6 @@ body {
   background: linear-gradient(180deg, #0A0000 0%, #1A0000 30%, #2A0000 60%, #0A0000 100%);
 }
 
-/* Анимированные частицы крови */
-body::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 0;
-  background-image: 
-    radial-gradient(circle, #8B0000 1px, transparent 1px),
-    radial-gradient(circle, #DC143C 2px, transparent 2px),
-    radial-gradient(circle, #FF0000 1px, transparent 1px);
-  background-size: 50px 50px, 80px 80px, 30px 30px;
-  animation: bloodParticles 20s linear infinite;
-  opacity: 0.3;
-}
-
-@keyframes bloodParticles {
-  0% { transform: translateY(100vh); }
-  100% { transform: translateY(-100vh); }
-}
-
-/* Туман */
-body::after {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 200%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 0;
-  background: radial-gradient(ellipse at center, rgba(139,0,0,0.15) 0%, transparent 70%);
-  animation: fogMove 15s ease-in-out infinite;
-}
-
-@keyframes fogMove {
-  0% { transform: translateX(-50%); }
-  50% { transform: translateX(0%); }
-  100% { transform: translateX(-50%); }
-}
-
 .app {
   width: 100%; max-width: 900px;
   height: 100%;
@@ -107,12 +63,6 @@ body::after {
   display: flex; flex-direction: column; align-items: center;
   position: relative; z-index: 1; border-radius: 20px; overflow: hidden;
   margin: 0 auto;
-  animation: eternalGlow 3s ease-in-out infinite;
-}
-
-@keyframes eternalGlow {
-  0%, 100% { box-shadow: 0 0 40px rgba(139, 0, 0, 0.3), 0 0 80px rgba(220, 20, 60, 0.2); }
-  50% { box-shadow: 0 0 60px rgba(139, 0, 0, 0.5), 0 0 120px rgba(220, 20, 60, 0.4); }
 }
 
 .content-layer {
@@ -122,7 +72,7 @@ body::after {
   overflow: hidden;
 }
 
-/* --- шапка с неоновой вывеской --- */
+/* --- шапка с анимацией --- */
 .hero-header {
   width: 100%;
   padding: 2rem 1rem 0.7rem;
@@ -135,6 +85,32 @@ body::after {
   z-index: 2;
   border-bottom: 3px solid #8B0000;
   flex-shrink: 0;
+  overflow: hidden;
+}
+
+/* Анимированные частицы в шапке */
+.hero-header::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  background-image: 
+    radial-gradient(circle, #DC143C 2px, transparent 2px),
+    radial-gradient(circle, #8B0000 1px, transparent 1px);
+  background-size: 30px 30px, 20px 20px;
+  animation: headerParticles 10s linear infinite;
+  opacity: 0.5;
+}
+
+@keyframes headerParticles {
+  0% { transform: translateY(100%); opacity: 0; }
+  10% { opacity: 0.5; }
+  90% { opacity: 0.5; }
+  100% { transform: translateY(-100%); opacity: 0; }
 }
 
 .hero-header::before {
@@ -226,7 +202,7 @@ body::after {
 }
 
 .arrow-btn {
-  width: 36px; height: 36px; border-radius: 50%;
+  width: 36px; height: 36px; border-radius: 8px;
   background: linear-gradient(180deg, #DC143C 0%, #1A0000 100%);
   border: 2px solid #8B0000;
   box-shadow: inset 0 2px 0 rgba(255, 228, 225, 0.4), 0 4px 10px rgba(0,0,0,0.6), 0 0 12px rgba(139, 0, 0, 0.3);
@@ -264,7 +240,7 @@ body::after {
 }
 
 .search-btn, .today-btn {
-  padding: 0.6rem 1.2rem; border-radius: 20px;
+  padding: 0.6rem 1.2rem; border-radius: 8px;
   background: linear-gradient(180deg, #DC143C 0%, #1A0000 100%);
   border: 2px solid #8B0000;
   box-shadow: inset 0 2px 0 rgba(255, 228, 225, 0.4), 0 3px 8px rgba(0,0,0,0.6);
@@ -283,16 +259,41 @@ body::after {
 .today-btn { background: linear-gradient(180deg, #8B0000 0%, #4A0000 100%); border-color: #FFE4E1; }
 .today-btn:hover { background: linear-gradient(180deg, #A00000 0%, #5C0000 100%); box-shadow: inset 0 2px 0 rgba(255, 228, 225, 0.5), 0 3px 12px rgba(0,0,0,0.6), 0 0 18px rgba(255, 228, 225, 0.5); }
 
-/* --- блок сумм с кнопками по бокам --- */
+/* --- блок сумм с анимацией --- */
 .sums-container { 
-  width: 100%; display: flex; gap: 0.5rem; 
-  padding: 0.6rem 0.8rem;
+  width: 100%; display: flex; gap: 0.8rem; 
+  padding: 0.8rem 1rem;
   background: rgba(10, 0, 0, 0.4);
   flex-shrink: 0;
   justify-content: space-between;
   align-items: center;
   position: relative;
+  overflow: hidden;
 }
+
+/* Анимированные частицы в блоке сумм */
+.sums-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  background-image: 
+    radial-gradient(circle, #8B0000 1px, transparent 1px),
+    radial-gradient(circle, #DC143C 2px, transparent 2px);
+  background-size: 40px 40px, 25px 25px;
+  animation: sumsParticles 8s linear infinite;
+  opacity: 0.3;
+}
+
+@keyframes sumsParticles {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
 .sum-block {
   flex: 0 1 auto; min-width: 0; display: flex; flex-direction: column;
   align-items: center; gap: 0.3rem; background: rgba(139, 0, 0, 0.3);
@@ -300,7 +301,9 @@ body::after {
   box-shadow: inset 0 0 14px rgba(255, 228, 225, 0.2), 0 0 10px rgba(139, 0, 0, 0.3);
   border-radius: 10px;
   backdrop-filter: blur(3px);
-  width: 200px;
+  width: 180px;
+  position: relative;
+  z-index: 1;
 }
 .sum-label {
   font-weight: 400; color: #FFE4E1; font-size: 0.42rem;
@@ -317,9 +320,9 @@ body::after {
 .sum-input[readonly] { background: rgba(10, 0, 0, 0.9); cursor: default; color: #DC143C; }
 
 .sync-btn-side {
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  border-radius: 8px;
   background: rgba(139, 0, 0, 0.3);
   border: 2px solid #8B0000;
   color: #FFE4E1;
@@ -330,11 +333,13 @@ body::after {
   justify-content: center;
   transition: transform 0.15s ease, background 0.15s ease;
   flex-shrink: 0;
+  position: relative;
+  z-index: 1;
 }
 
 .sync-btn-side:hover {
   background: rgba(139, 0, 0, 0.5);
-  transform: scale(1.1);
+  transform: scale(1.05);
 }
 
 .sync-btn-side:active { transform: scale(0.9); }
@@ -346,9 +351,9 @@ body::after {
 }
 
 .stats-btn {
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  border-radius: 8px;
   background: rgba(139, 0, 0, 0.2);
   border: 2px solid #8B0000;
   color: #FFE4E1;
@@ -359,11 +364,13 @@ body::after {
   justify-content: center;
   transition: transform 0.15s ease, background 0.15s ease;
   flex-shrink: 0;
+  position: relative;
+  z-index: 1;
 }
 
 .stats-btn:hover {
   background: rgba(139, 0, 0, 0.4);
-  transform: scale(1.1);
+  transform: scale(1.05);
 }
 
 .stats-btn:active { transform: scale(0.9); }
