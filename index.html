@@ -268,7 +268,7 @@ body {
 .today-btn { background: linear-gradient(180deg, var(--nv-cyan), #12404B); border-color: var(--nv-cyan); }
 
 /* ==========================================
-   NEON VEGAS — COMPACT HUD
+   NEON VEGAS — COMPACT HUD (одинаковые размеры)
    ========================================== */
 
 .mini-hud {
@@ -276,39 +276,42 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
+  gap: 0.4rem;
   margin-top: 0.55rem;
-  padding: 0.35rem 0.5rem 0.1rem;
+  padding: 0.35rem 0.3rem 0.1rem;
   position: relative;
   z-index: 2;
 }
 
 .hud-item {
-  min-height: 38px;
-  height: 38px;
-  border-radius: 10px;
+  min-height: 36px;
+  height: 36px;
+  width: 60px;
+  min-width: 60px;
+  border-radius: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 5px;
+  gap: 4px;
   font-family: 'Press Start 2P', monospace;
-  font-size: 0.55rem;
+  font-size: 0.5rem;
   color: #F8F7FF;
   cursor: pointer;
   transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
 }
 
-button.hud-item { border: 2px solid; width: 45px; }
+button.hud-item { 
+  border: 2px solid; 
+  padding: 0;
+}
 
 .hud-item:active { transform: scale(0.92); }
 
 .hud-sync {
-  padding: 0;
   background: rgba(0, 245, 255, 0.08);
   border-color: #00F5FF;
   color: #00F5FF;
   box-shadow: 0 0 8px rgba(0,245,255,.25);
-  border-radius: 20px;
 }
 
 .hud-sync:hover {
@@ -316,17 +319,18 @@ button.hud-item { border: 2px solid; width: 45px; }
   box-shadow: 0 0 16px rgba(0,245,255,.55);
 }
 
-/* HUD Money - овальное окно */
+/* HUD Money - овальное окно, такое же по размеру */
 .hud-money {
   padding: 0;
   background: rgba(255,209,102,.08);
   border: 2px solid #FFD166;
   color: #FFD166;
   box-shadow: 0 0 10px rgba(255,209,102,.25);
-  min-width: 160px;
+  width: 60px;
+  min-width: 60px;
   cursor: text;
-  height: 38px;
-  border-radius: 20px;
+  height: 36px;
+  border-radius: 18px;
   position: relative;
 }
 
@@ -336,7 +340,7 @@ button.hud-item { border: 2px solid; width: 45px; }
   justify-content: center;
   width: 100%;
   height: 100%;
-  border-radius: 16px;
+  border-radius: 14px;
   background: rgba(7, 9, 31, 0.6);
   border: 1px solid rgba(255, 209, 102, 0.4);
 }
@@ -347,27 +351,25 @@ button.hud-item { border: 2px solid; width: 45px; }
   outline: none;
   color: #FFD166;
   font-family: 'Press Start 2P', monospace;
-  font-size: 0.55rem;
+  font-size: 0.45rem;
   text-align: center;
   width: 100%;
   height: 100%;
-  padding: 0 10px;
+  padding: 0 2px;
   text-shadow: 0 0 8px #FFD166;
 }
 
 .hud-money-input::placeholder {
   color: #FFD166;
   opacity: 0.4;
-  font-size: 0.5rem;
+  font-size: 0.4rem;
 }
 
 .hud-stats {
-  padding: 0;
   background: rgba(255,46,136,.08);
   border-color: #FF2E88;
   color: #FF2E88;
   box-shadow: 0 0 8px rgba(255,46,136,.25);
-  border-radius: 20px;
 }
 
 .hud-stats:hover {
@@ -375,17 +377,16 @@ button.hud-item { border: 2px solid; width: 45px; }
   box-shadow: 0 0 16px rgba(255,46,136,.55);
 }
 
-.hud-icon { font-size: 0.8rem; }
+.hud-icon { font-size: 0.7rem; }
 .hud-label { font-size: 0.5rem; }
 
 @media (max-width: 480px) {
-  .mini-hud { gap: 0.3rem; }
-  .hud-item { min-height: 36px; height: 36px; }
-  .hud-label { display: none; }
-  .hud-money { min-width: 120px; }
-  .hud-icon { font-size: 0.75rem; }
-  .hud-money-input { font-size: 0.5rem; }
-  button.hud-item { width: 40px; }
+  .mini-hud { gap: 0.3rem; padding: 0.35rem 0.2rem 0.1rem; }
+  .hud-item { min-height: 32px; height: 32px; width: 55px; min-width: 55px; border-radius: 16px; }
+  .hud-money { width: 55px; min-width: 55px; height: 32px; border-radius: 16px; }
+  .hud-money-inner { border-radius: 12px; }
+  .hud-icon { font-size: 0.65rem; }
+  .hud-money-input { font-size: 0.4rem; }
 }
 
 /* --- таблица --- */
@@ -874,7 +875,6 @@ function formatNumber(v) {
   } else {
     result = n.toFixed(2);
   }
-  // Добавляем пробелы для чисел больше 999
   const parts = result.split('.');
   parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
   return parts.join('.');
@@ -907,7 +907,7 @@ function getSpentSumForDate(dateStr) {
   for (let i = 0; i < TOTAL_ROWS; i++) {
     const val = rows[i] ? rows[i].number : '';
     if (val !== '' && val !== null && val !== undefined) {
-      const n = parseFloat(val);
+      const n = parseFloat(val.replace(/\s/g, ''));
       if (!isNaN(n)) sum += n;
     }
   }
