@@ -49,7 +49,6 @@ body {
   border-bottom: 3px solid #ffd700;
 }
 
-/* Обновленный псевдоэлемент с анимацией и эмодзи */
 .hero-header::before {
   content: '🕹️ DIX COUNTER 🕹️';
   position: absolute;
@@ -62,28 +61,19 @@ body {
   white-space: nowrap;
   opacity: 0.8;
   z-index: 1;
-  
   display: flex;
   align-items: center;
   gap: 8px;
-  
   animation: neonGlow 2s infinite alternate ease-in-out;
 }
 
 @keyframes neonGlow {
   0% {
-    text-shadow: 
-      0 0 5px #ffd700, 
-      0 0 10px #ff0000, 
-      0 0 20px #ffd700;
+    text-shadow: 0 0 5px #ffd700, 0 0 10px #ff0000, 0 0 20px #ffd700;
     opacity: 0.7;
   }
   100% {
-    text-shadow: 
-      0 0 10px #ffd700, 
-      0 0 25px #ff0000, 
-      0 0 40px #ff0000,
-      0 0 60px #ffd700;
+    text-shadow: 0 0 10px #ffd700, 0 0 25px #ff0000, 0 0 40px #ff0000, 0 0 60px #ffd700;
     opacity: 1;
   }
 }
@@ -106,10 +96,6 @@ body {
 
 .date-navigation {
   margin-top: 0.5rem;
-}
-
-/* --- навигация по датам --- */
-.date-navigation {
   display: flex; align-items: center; justify-content: center; gap: 0.5rem;
   width: 100%;
 }
@@ -205,9 +191,7 @@ body {
   background: rgba(0,0,0,0.6); border-top: 2px solid #ffd700;
   padding: 0.3rem;
 }
-.data-table { 
-  width: 100%; border-collapse: collapse; 
-}
+.data-table { width: 100%; border-collapse: collapse; }
 .data-table tr {
   border-bottom: 1px solid rgba(255,215,0,0.15);
   animation: rowIn 0.35s ease both;
@@ -240,7 +224,6 @@ body {
   text-shadow: 0 0 6px #ffd700;
 }
 
-/* Новые стили для ячеек в стиле Excel */
 .text-cell-input {
   width: 100%;
   height: 40px;
@@ -320,11 +303,11 @@ body {
         <input type="text" id="totalSumInput" class="sum-input" placeholder="0">
       </div>
       <div class="sum-block">
-        <div class="sum-label">💸 ПОТРАЧЕНО</div>
+        <div class="sum-label">💸 ПОТРАЧЕНО СЕГОДНЯ</div>
         <input type="text" id="spentSumInput" class="sum-input" placeholder="0" readonly>
       </div>
       <div class="sum-block">
-        <div class="sum-label">📆 ЗА МЕСЯЦ</div>
+        <div class="sum-label">📆 ПОТРАЧЕНО ЗА МЕСЯЦ</div>
         <input type="text" id="monthlySpentInput" class="sum-input" placeholder="0" readonly>
       </div>
     </div>
@@ -339,11 +322,11 @@ body {
 <script>
   (function(){
   var STORAGE_KEY='dix_million_data',appData={},currentDateStr='',TOTAL_ROWS=50;
+  var GLOBAL_TOTAL_KEY='dix_global_total';
 
   var audioCtx=null;
   function getAudioContext(){ if(!audioCtx) audioCtx=new (window.AudioContext||window.webkitAudioContext)(); if(audioCtx.state==='suspended') audioCtx.resume(); return audioCtx; }
 
-  // Звук как в казино (монетки)
   function playClickSound(){
     try{ var ctx=getAudioContext(),now=ctx.currentTime,osc=ctx.createOscillator(),gain=ctx.createGain();
       osc.type='sine'; osc.frequency.setValueAtTime(800,now); osc.frequency.exponentialRampToValueAtTime(600,now+0.06);
@@ -384,15 +367,27 @@ body {
     return null;
   }
   function getTodayString(){ return formatDateToStorage(new Date()); }
+  
   function loadData(){
     try{ appData=JSON.parse(localStorage.getItem(STORAGE_KEY))||{}; }catch(e){ appData={}; }
     if(!appData[getTodayString()]) appData[getTodayString()]=createEmptyDayData();
   }
+  
   function createEmptyDayData(){ var r=[]; for(var i=0;i<TOTAL_ROWS;i++) r.push({text:'',number:''}); return {total:'0', rows:r}; }
   function saveData(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(appData)); }
   function getDayData(d){ if(!appData[d]){ appData[d]=createEmptyDayData(); saveData(); } return appData[d]; }
   function storageToDisplay(s){ var p=s.split('-').map(Number); return formatDateToDisplay(new Date(p[0],p[1]-1,p[2])); }
   function formatNumber(v){ var n=parseFloat(v); if(isNaN(n)) return '0'; return n===Math.floor(n)?n.toString():n.toFixed(2); }
+
+  // Глобальная сумма (не обнуляется)
+  function getGlobalTotal(){
+    var val = localStorage.getItem(GLOBAL_TOTAL_KEY);
+    return val ? parseFloat(val) : 0;
+  }
+  
+  function setGlobalTotal(val){
+    localStorage.setItem(GLOBAL_TOTAL_KEY, val.toString());
+  }
 
   function getSpentSumForDate(dateStr){
     if(!appData[dateStr]) return 0;
@@ -403,6 +398,7 @@ body {
     }
     return sum;
   }
+  
   function getMonthlySpent(dateStr){
     var parts=dateStr.split('-'), prefix=parts[0]+'-'+parts[1]+'-', total=0;
     for(var key in appData){ if(key.indexOf(prefix)===0) total+=getSpentSumForDate(key); }
@@ -433,7 +429,11 @@ body {
     if(!currentDateStr) return;
     var d=getDayData(currentDateStr);
     dateInput.value=storageToDisplay(currentDateStr);
-    ti.value=(d.total==='0'||d.total===''||parseFloat(d.total)===0)?'':d.total;
+    
+    // Показываем глобальную сумму
+    var globalTotal = getGlobalTotal();
+    ti.value = globalTotal > 0 ? formatNumber(globalTotal) : '';
+    
     tbody.innerHTML='';
 
     for(var i=0;i<TOTAL_ROWS;i++){
@@ -513,11 +513,19 @@ body {
 
   function updateSumsDisplay(){
     if(!currentDateStr) return;
-    var d=getDayData(currentDateStr), base=parseFloat(d.total)||0, spent=getSpentSum(), rem=base-spent;
-    spi.value = spent===0 ? '' : formatNumber(spent);
-    ti.value = (rem===0 && base===0) ? '' : (rem===0 && base>0 ? '0' : formatNumber(rem));
-    var monthly=getMonthlySpent(currentDateStr);
-    monthlyInput.value = monthly===0 ? '' : formatNumber(monthly);
+    
+    // Потрачено сегодня
+    var spent = getSpentSum();
+    spi.value = spent > 0 ? formatNumber(spent) : '';
+    
+    // Потрачено за месяц
+    var monthly = getMonthlySpent(currentDateStr);
+    monthlyInput.value = monthly > 0 ? formatNumber(monthly) : '';
+    
+    // Общая сумма = глобальная сумма - потрачено за месяц
+    var globalTotal = getGlobalTotal();
+    var remaining = globalTotal - monthly;
+    ti.value = globalTotal > 0 ? formatNumber(remaining) : '';
   }
 
   function playSwapAnim(){
@@ -530,11 +538,6 @@ body {
 
   function changeDate(ns){
     if(!ns || !/^\d{4}-\d{2}-\d{2}$/.test(ns)) return;
-    if(currentDateStr){
-      var d=getDayData(currentDateStr);
-      d.total = ti.value==='' ? '0' : ti.value;
-      saveData();
-    }
     currentDateStr=ns;
     renderCurrentDay();
     playSwapAnim();
@@ -564,24 +567,37 @@ body {
     searchBtn.addEventListener('click', function(){ applyDateFromInput(); });
     todayBtn.addEventListener('click', function(){ changeDate(getTodayString()); });
 
+    // Обработка изменения общей суммы (глобальной)
     ti.addEventListener('input', function(){
-      if(!currentDateStr) return;
       var v=ti.value.replace(',','.');
-      if(v===''){ getDayData(currentDateStr).total='0'; saveData(); updateSumsDisplay(); return; }
+      if(v===''){ 
+        // Не удаляем глобальную сумму при очистке
+        updateSumsDisplay();
+        return; 
+      }
       if(v.indexOf('.')!==-1){
         var p=v.split('.');
         if(p[1] && p[1].length>2){ p[1]=p[1].slice(0,2); v=p.join('.'); ti.value=v; }
       }
       if(!/^-?\d*\.?\d*$/.test(v)){ ti.value=v.slice(0,-1); return; }
-      if(!isNaN(parseFloat(v))){ getDayData(currentDateStr).total=v; saveData(); updateSumsDisplay(); }
+      if(!isNaN(parseFloat(v))){ 
+        // Сохраняем новую глобальную сумму
+        setGlobalTotal(parseFloat(v));
+        updateSumsDisplay();
+      }
     });
 
     ti.addEventListener('blur', function(){
-      if(!currentDateStr) return;
       var v=ti.value.replace(',','.');
-      if(v===''){ getDayData(currentDateStr).total='0'; saveData(); updateSumsDisplay(); return; }
-      getDayData(currentDateStr).total = isNaN(parseFloat(v)) ? '0' : formatNumber(v);
-      saveData(); updateSumsDisplay();
+      if(v===''){ 
+        updateSumsDisplay();
+        return; 
+      }
+      var num = parseFloat(v);
+      if(!isNaN(num)){
+        setGlobalTotal(num);
+      }
+      updateSumsDisplay();
     });
 
     bindSfx();
