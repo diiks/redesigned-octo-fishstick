@@ -24,6 +24,8 @@ html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   color-scheme: dark;
+  height: 100%;
+  overflow: hidden;
 }
 
 body, button, input {
@@ -40,15 +42,17 @@ button, input {
 body {
   background: linear-gradient(180deg, #C42B34 0%, #a0242c 30%, #7a1c22 60%, #4a0f14 100%);
   font-family: 'Orbitron', 'Press Start 2P', sans-serif;
-  min-height: 100vh;
-  min-height: 100dvh;
-  display: flex; justify-content: center; align-items: flex-start;
-  padding: 0.5rem; margin: 0; overflow-x: hidden;
+  height: 100vh;
+  height: 100dvh;
+  display: flex; justify-content: center; align-items: center;
+  padding: 0.5rem; margin: 0; overflow: hidden;
   overscroll-behavior: none;
 }
 
 .app {
   width: 100%; max-width: 900px;
+  height: 100%;
+  max-height: 100%;
   background: linear-gradient(180deg, rgba(196, 43, 52, 0.95) 0%, rgba(122, 28, 34, 0.98) 100%);
   border: 3px solid #FC8A2D;
   box-shadow: inset 0 0 0 2px rgba(252, 138, 45, 0.3),
@@ -62,7 +66,9 @@ body {
 
 .content-layer {
   position: relative; z-index: 2; width: 100%;
+  height: 100%;
   display: flex; flex-direction: column; align-items: center;
+  overflow: hidden;
 }
 
 /* --- шапка с неоновой вывеской --- */
@@ -114,38 +120,6 @@ body {
 .hero-header .date-actions {
   position: relative; z-index: 1;
 }
-
-/* Добавляем кнопку статистики */
-.header-buttons {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  z-index: 10;
-  display: flex;
-  gap: 8px;
-}
-
-.stats-btn {
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  background: rgba(220, 79, 124, 0.3);
-  border: 2px solid #FC8A2D;
-  color: #FCE9AB;
-  font-size: 1.3rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.15s ease, background 0.15s ease;
-}
-
-.stats-btn:hover {
-  background: rgba(220, 79, 124, 0.5);
-  transform: scale(1.1);
-}
-
-.stats-btn:active { transform: scale(0.9); }
 
 /* Попап статистики */
 .stats-popup {
@@ -258,13 +232,15 @@ body {
 .today-btn { background: linear-gradient(180deg, #FC8A2D 0%, #c46b1a 100%); border-color: #FCE9AB; }
 .today-btn:hover { background: linear-gradient(180deg, #fda04d 0%, #d97d24 100%); box-shadow: inset 0 2px 0 rgba(252, 233, 171, 0.5), 0 3px 12px rgba(0,0,0,0.6), 0 0 18px rgba(252, 233, 171, 0.5); }
 
-/* --- блоки сумм --- */
+/* --- блок сумм с кнопкой статистики --- */
 .sums-container { 
   width: 100%; display: flex; gap: 0.5rem; 
   padding: 0.6rem 0.8rem;
   background: rgba(74, 15, 20, 0.4);
   flex-shrink: 0;
   justify-content: center;
+  align-items: center;
+  position: relative;
 }
 .sum-block {
   flex: 0 1 auto; min-width: 0; display: flex; flex-direction: column;
@@ -289,13 +265,42 @@ body {
 .sum-input:focus { border-color: #DC4F7C; box-shadow: 0 0 10px rgba(220, 79, 124, 0.5), inset 0 0 8px rgba(252, 233, 171, 0.2); }
 .sum-input[readonly] { background: rgba(74, 15, 20, 0.9); cursor: default; color: #DC4F7C; }
 
-/* --- таблица --- */
+.stats-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(220, 79, 124, 0.3);
+  border: 2px solid #FC8A2D;
+  color: #FCE9AB;
+  font-size: 1.3rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease, background 0.15s ease;
+  flex-shrink: 0;
+}
+
+.stats-btn:hover {
+  background: rgba(220, 79, 124, 0.5);
+  transform: scale(1.1);
+}
+
+.stats-btn:active { transform: scale(0.9); }
+
+/* --- таблица с плавной прокруткой --- */
 .table-container {
-  width: 100%; flex: 1;
+  width: 100%; 
+  flex: 1;
   overflow-y: auto;
-  background: rgba(74, 15, 20, 0.6); border-top: 2px solid #FC8A2D;
+  background: rgba(74, 15, 20, 0.6); 
+  border-top: 2px solid #FC8A2D;
   padding: 0.3rem;
   -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  overscroll-behavior: contain;
+  position: relative;
+  z-index: 1;
 }
 .data-table { width: 100%; border-collapse: collapse; }
 .data-table tr {
@@ -450,10 +455,6 @@ body {
   <div class="content-layer">
 
     <div class="hero-header">
-      <div class="header-buttons">
-        <button class="stats-btn" id="statsBtn" title="Статистика">📊</button>
-      </div>
-      
       <div class="stats-popup" id="statsPopup">
         <div class="stats-item">
           <span class="stats-label">СЕГОДНЯ</span>
@@ -482,6 +483,7 @@ body {
         <div class="sum-label">💰 ОБЩАЯ СУММА</div>
         <input type="text" id="totalSumInput" class="sum-input" placeholder="0">
       </div>
+      <button class="stats-btn" id="statsBtn" title="Статистика">📊</button>
     </div>
 
     <div class="table-container" id="tableContainer">
