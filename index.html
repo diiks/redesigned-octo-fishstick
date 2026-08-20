@@ -65,11 +65,11 @@ body {
   display: flex; flex-direction: column; align-items: center;
 }
 
-/* --- шапка с неоновой вывеской и фоном #4a001a --- */
+/* --- шапка с неоновой вывеской --- */
 .hero-header {
   width: 100%;
   padding: 3.5rem 1rem 0.7rem;
-  background: #4a001a;  /* Измененный фон */
+  background: #4a001a;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -115,6 +115,85 @@ body {
   position: relative; z-index: 1;
 }
 
+/* Добавляем кнопку статистики */
+.header-buttons {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  z-index: 10;
+  display: flex;
+  gap: 8px;
+}
+
+.stats-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(220, 79, 124, 0.3);
+  border: 2px solid #FC8A2D;
+  color: #FCE9AB;
+  font-size: 1.3rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.stats-btn:hover {
+  background: rgba(220, 79, 124, 0.5);
+  transform: scale(1.1);
+}
+
+.stats-btn:active { transform: scale(0.9); }
+
+/* Попап статистики */
+.stats-popup {
+  position: absolute;
+  top: 60px;
+  right: 15px;
+  background: rgba(74, 0, 26, 0.95);
+  border: 2px solid #FC8A2D;
+  border-radius: 16px;
+  padding: 12px 16px;
+  z-index: 100;
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 0.75rem;
+  color: #FCE9AB;
+  white-space: nowrap;
+  box-shadow: 0 0 20px rgba(252, 138, 45, 0.4), 0 0 40px rgba(220, 79, 124, 0.3);
+  backdrop-filter: blur(5px);
+}
+
+.stats-popup.show {
+  display: flex;
+}
+
+.stats-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 5px 0;
+}
+
+.stats-label {
+  font-size: 0.7rem;
+  letter-spacing: 1px;
+  color: #FC8A2D;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.stats-value {
+  color: #FCE9AB;
+  font-weight: 700;
+  font-size: 1rem;
+  text-shadow: 0 0 8px #FCE9AB;
+}
+
 .date-navigation {
   margin-top: 0.5rem;
   display: flex; align-items: center; justify-content: center; gap: 0.5rem;
@@ -139,7 +218,7 @@ body {
 .arrow-btn:active { transform: scale(0.9); }
 
 .date-window-input {
-  background: rgba(74, 0, 26, 0.85); /* темнее для контраста на #4a001a */
+  background: rgba(74, 0, 26, 0.85);
   border: 2px solid #FC8A2D;
   box-shadow: inset 0 0 14px rgba(252, 138, 45, 0.3), 0 0 10px rgba(220, 79, 124, 0.25);
   padding: 0.5rem 0.6rem; font-size: 0.7rem; font-weight: 400;
@@ -185,14 +264,16 @@ body {
   padding: 0.6rem 0.8rem;
   background: rgba(74, 15, 20, 0.4);
   flex-shrink: 0;
+  justify-content: center;
 }
 .sum-block {
-  flex: 1; min-width: 0; display: flex; flex-direction: column;
+  flex: 0 1 auto; min-width: 0; display: flex; flex-direction: column;
   align-items: center; gap: 0.3rem; background: rgba(220, 79, 124, 0.25);
   padding: 0.5rem 0.6rem; border: 2px solid #FC8A2D;
   box-shadow: inset 0 0 14px rgba(252, 233, 171, 0.2), 0 0 10px rgba(252, 138, 45, 0.3);
   border-radius: 10px;
   backdrop-filter: blur(3px);
+  width: 200px;
 }
 .sum-label {
   font-weight: 400; color: #FCE9AB; font-size: 0.42rem;
@@ -369,6 +450,21 @@ body {
   <div class="content-layer">
 
     <div class="hero-header">
+      <div class="header-buttons">
+        <button class="stats-btn" id="statsBtn" title="Статистика">📊</button>
+      </div>
+      
+      <div class="stats-popup" id="statsPopup">
+        <div class="stats-item">
+          <span class="stats-label">СЕГОДНЯ</span>
+          <span class="stats-value" id="statToday">0</span>
+        </div>
+        <div class="stats-item">
+          <span class="stats-label">МЕС</span>
+          <span class="stats-value" id="statMonth">0</span>
+        </div>
+      </div>
+
       <div class="date-navigation">
         <button class="arrow-btn sfx-btn" id="prevDayBtn">◄</button>
         <input type="text" id="currentDateInput" class="date-window-input" placeholder="09.08.26">
@@ -385,14 +481,6 @@ body {
       <div class="sum-block">
         <div class="sum-label">💰 ОБЩАЯ СУММА</div>
         <input type="text" id="totalSumInput" class="sum-input" placeholder="0">
-      </div>
-      <div class="sum-block">
-        <div class="sum-label">💸 ПОТРАЧЕНО СЕГОДНЯ</div>
-        <input type="text" id="spentSumInput" class="sum-input" placeholder="0" readonly>
-      </div>
-      <div class="sum-block">
-        <div class="sum-label">📆 ПОТРАЧЕНО ЗА МЕСЯЦ</div>
-        <input type="text" id="monthlySpentInput" class="sum-input" placeholder="0" readonly>
       </div>
     </div>
 
@@ -418,6 +506,7 @@ let dataVersion = 0;
 let lastSyncTime = null;
 let cloudSaveTimer = null;
 let audioContext = null;
+let statsVisible = false;
 
 const STORAGE_KEY = 'dix_vegas_data';
 const GLOBAL_TOTAL_KEY = 'dix_vegas_global_total';
@@ -664,12 +753,12 @@ const nextBtn = document.getElementById('nextDayBtn');
 const searchBtn = document.getElementById('searchDateBtn');
 const todayBtn = document.getElementById('todayBtn');
 const ti = document.getElementById('totalSumInput');
-const spi = document.getElementById('spentSumInput');
 const tbody = document.getElementById('tableBody');
-const monthlyInput = document.getElementById('monthlySpentInput');
 const tableContainer = document.getElementById('tableContainer');
 const sumsContainer = document.getElementById('sumsContainer');
 const syncBtn = document.getElementById('syncBtn');
+const statsBtn = document.getElementById('statsBtn');
+const statsPopup = document.getElementById('statsPopup');
 
 function applyDateFromInput() {
   const val = dateInput.value.trim();
@@ -677,6 +766,25 @@ function applyDateFromInput() {
   const parsed = parseDateFromInput(val);
   if (parsed) { changeDate(parsed); }
   else { alert('ВВЕДИТЕ ДАТУ 09.08.26'); dateInput.value = storageToDisplay(currentDateStr); }
+}
+
+function updateStats() {
+  if (!currentDateStr) return;
+  const todaySpent = getSpentSumForDate(currentDateStr);
+  const monthSpent = getMonthlySpent(currentDateStr);
+  
+  document.getElementById('statToday').textContent = formatNumber(todaySpent);
+  document.getElementById('statMonth').textContent = formatNumber(monthSpent);
+}
+
+function toggleStats() {
+  statsVisible = !statsVisible;
+  if (statsVisible) {
+    statsPopup.classList.add('show');
+    updateStats();
+  } else {
+    statsPopup.classList.remove('show');
+  }
 }
 
 function renderCurrentDay() {
@@ -728,7 +836,8 @@ function renderCurrentDay() {
     
     tbody.appendChild(tr);
   }
-  updateSumsDisplay();
+  
+  if (statsVisible) updateStats();
 }
 
 function updateRowText(i, v) {
@@ -767,25 +876,11 @@ function updateNumberInRow(i, v) {
   if (!currentDateStr) return;
   getDayData(currentDateStr).rows[i].number = v;
   saveDataLocal();
-  updateSumsDisplay();
+  if (statsVisible) updateStats();
   scheduleCloudSave();
 }
 
 function getSpentSum() { return getSpentSumForDate(currentDateStr); }
-
-function updateSumsDisplay() {
-  if (!currentDateStr) return;
-  
-  const spent = getSpentSum();
-  spi.value = spent > 0 ? formatNumber(spent) : '';
-  
-  const monthly = getMonthlySpent(currentDateStr);
-  monthlyInput.value = monthly > 0 ? formatNumber(monthly) : '';
-  
-  const globalTotal = getGlobalTotal();
-  const remaining = globalTotal - monthly;
-  ti.value = globalTotal > 0 ? formatNumber(remaining) : '';
-}
 
 function playSwapAnim() {
   tableContainer.classList.remove('fade-swap');
@@ -799,6 +894,7 @@ function changeDate(ns) {
   if (!ns || !/^\d{4}-\d{2}-\d{2}$/.test(ns)) return;
   currentDateStr = ns;
   renderCurrentDay();
+  if (statsVisible) updateStats();
   playSwapAnim();
 }
 
@@ -890,10 +986,11 @@ function init() {
   searchBtn.addEventListener('click', function() { playClickSound(); applyDateFromInput(); });
   todayBtn.addEventListener('click', function() { playClickSound(); changeDate(getTodayString()); });
   syncBtn.addEventListener('click', syncNow);
+  statsBtn.addEventListener('click', function() { playClickSound(); toggleStats(); });
   
   ti.addEventListener('input', function() {
     let v = ti.value.replace(',', '.');
-    if (v === '') { updateSumsDisplay(); return; }
+    if (v === '') { return; }
     if (v.indexOf('.') !== -1) {
       const p = v.split('.');
       if (p[1] && p[1].length > 2) { p[1] = p[1].slice(0, 2); v = p.join('.'); ti.value = v; }
@@ -902,20 +999,18 @@ function init() {
     if (!isNaN(parseFloat(v))) {
       setGlobalTotal(parseFloat(v));
       saveDataLocal();
-      updateSumsDisplay();
       scheduleCloudSave();
     }
   });
   
   ti.addEventListener('blur', function() {
     const v = ti.value.replace(',', '.');
-    if (v === '') { updateSumsDisplay(); return; }
+    if (v === '') { return; }
     const num = parseFloat(v);
     if (!isNaN(num)) {
       setGlobalTotal(num);
       saveDataLocal();
     }
-    updateSumsDisplay();
   });
 }
 
