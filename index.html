@@ -22,11 +22,12 @@
   --vt-blood-glow: rgba(139, 0, 0, 0.55);
   --vt-crimson: #DC143C;
   --vt-crimson-glow: rgba(220, 20, 60, 0.5);
-  --vt-gold: #FFD700;
-  --vt-gold-glow: rgba(255, 215, 0, 0.5);
+  --vt-silver: #C0C0C0;
+  --vt-silver-glow: rgba(192, 192, 192, 0.5);
   --vt-white: #FFE4E1;
   --vt-muted: #8B7B7B;
   --vt-purple: #4A0030;
+  --vt-ice: #E0E6ED;
 }
 
 * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
@@ -64,7 +65,7 @@ body {
   background:
     radial-gradient(circle at 20% 10%, rgba(139, 0, 0, 0.25), transparent 30%),
     radial-gradient(circle at 80% 20%, rgba(220, 20, 60, 0.15), transparent 30%),
-    radial-gradient(circle at 50% 100%, rgba(255, 215, 0, 0.05), transparent 35%),
+    radial-gradient(circle at 50% 100%, rgba(192, 192, 192, 0.05), transparent 35%),
     linear-gradient(180deg, #0A0000 0%, #1A0000 50%, #050000 100%);
 }
 
@@ -121,13 +122,13 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
-  text-shadow: 0 0 8px var(--vt-crimson), 0 0 20px var(--vt-crimson), 0 0 35px var(--vt-gold);
+  text-shadow: 0 0 8px var(--vt-crimson), 0 0 20px var(--vt-crimson), 0 0 35px var(--vt-silver);
   animation: vampireGlow 2s infinite alternate ease-in-out;
 }
 
 @keyframes vampireGlow {
-  0% { text-shadow: 0 0 8px var(--vt-crimson), 0 0 20px var(--vt-crimson), 0 0 35px var(--vt-gold); opacity: 0.9; }
-  100% { text-shadow: 0 0 15px var(--vt-crimson), 0 0 35px var(--vt-crimson), 0 0 60px var(--vt-gold), 0 0 80px var(--vt-blood); opacity: 1; }
+  0% { text-shadow: 0 0 8px var(--vt-crimson), 0 0 20px var(--vt-crimson), 0 0 35px var(--vt-silver); opacity: 0.9; }
+  100% { text-shadow: 0 0 15px var(--vt-crimson), 0 0 35px var(--vt-crimson), 0 0 60px var(--vt-silver), 0 0 80px var(--vt-blood); opacity: 1; }
 }
 
 @media (max-width: 480px) {
@@ -182,10 +183,10 @@ body {
 }
 
 .stats-value {
-  color: var(--vt-gold);
+  color: var(--vt-silver);
   font-weight: 700;
   font-size: 1.2rem;
-  text-shadow: 0 0 10px var(--vt-gold);
+  text-shadow: 0 0 10px var(--vt-silver);
 }
 
 .date-navigation {
@@ -206,39 +207,40 @@ body {
   flex-shrink: 0;
 }
 .arrow-btn:hover {
-  background: linear-gradient(180deg, var(--vt-gold), #4A3500);
-  border-color: var(--vt-gold);
-  box-shadow: 0 0 20px var(--vt-gold-glow);
+  background: linear-gradient(180deg, var(--vt-silver), #4A4A4A);
+  border-color: var(--vt-silver);
+  box-shadow: 0 0 20px var(--vt-silver-glow);
   transform: translateY(-1px);
 }
 .arrow-btn:active { transform: scale(0.9); }
 
 .date-window-input {
   background: rgba(10, 0, 0, 0.9);
-  border: 2px solid var(--vt-gold);
-  box-shadow: inset 0 0 12px rgba(255,215,0,.12), 0 0 12px rgba(255,215,0,.18);
+  border: 2px solid var(--vt-silver);
+  box-shadow: inset 0 0 12px rgba(192,192,192,.12), 0 0 12px rgba(192,192,192,.18);
   padding: 0.5rem 0.6rem; font-size: 0.7rem; font-weight: 400;
-  color: var(--vt-white); min-width: 120px; width: 140px; height: 42px; text-align: center;
+  color: var(--vt-white); width: 140px; height: 42px; text-align: center;
   letter-spacing: 2px; font-family: 'Press Start 2P', monospace;
-  text-shadow: 0 0 8px var(--vt-gold); border-radius: 8px;
+  text-shadow: 0 0 8px var(--vt-silver); border-radius: 8px;
   outline: none; transition: 0.2s;
+  box-sizing: border-box;
 }
 .date-window-input:focus {
   border-color: var(--vt-crimson);
   box-shadow: 0 0 18px var(--vt-crimson-glow), inset 0 0 12px rgba(220,20,60,.12);
 }
-.date-window-input::placeholder { color: var(--vt-gold); text-shadow:none; opacity:0.8; }
+.date-window-input::placeholder { color: var(--vt-silver); text-shadow:none; opacity:0.8; }
 
 .date-window-input.today-highlight {
   border-color: var(--vt-crimson);
-  box-shadow: 0 0 25px var(--vt-crimson-glow), 0 0 50px var(--vt-blood-glow), inset 0 0 15px rgba(255,215,0,.3);
+  box-shadow: 0 0 25px var(--vt-crimson-glow), 0 0 50px var(--vt-blood-glow), inset 0 0 15px rgba(192,192,192,.3);
   color: #fff;
   animation: todayPulse 2s infinite alternate;
 }
 
 @keyframes todayPulse {
-  0% { box-shadow: 0 0 25px var(--vt-crimson-glow), 0 0 50px var(--vt-blood-glow), inset 0 0 15px rgba(255,215,0,.3); }
-  100% { box-shadow: 0 0 40px var(--vt-crimson), 0 0 80px var(--vt-blood-glow), inset 0 0 20px rgba(255,215,0,.5); }
+  0% { box-shadow: 0 0 25px var(--vt-crimson-glow), 0 0 50px var(--vt-blood-glow), inset 0 0 15px rgba(192,192,192,.3); }
+  100% { box-shadow: 0 0 40px var(--vt-crimson), 0 0 80px var(--vt-blood-glow), inset 0 0 20px rgba(192,192,192,.5); }
 }
 
 .date-actions {
@@ -259,16 +261,16 @@ body {
   flex: 1; max-width: 160px;
 }
 .search-btn:hover, .today-btn:hover {
-  background: linear-gradient(180deg, var(--vt-gold), #4A3500);
-  border-color: var(--vt-gold);
-  box-shadow: 0 0 20px var(--vt-gold-glow);
+  background: linear-gradient(180deg, var(--vt-silver), #4A4A4A);
+  border-color: var(--vt-silver);
+  box-shadow: 0 0 20px var(--vt-silver-glow);
   transform: translateY(-1px);
 }
 .search-btn:active, .today-btn:active { transform: scale(0.93); }
-.today-btn { background: linear-gradient(180deg, var(--vt-gold), #4A3500); border-color: var(--vt-gold); }
+.today-btn { background: linear-gradient(180deg, var(--vt-silver), #4A4A4A); border-color: var(--vt-silver); }
 
 /* ==========================================
-   VAMPIRE TWILIGHT — COMPACT HUD
+   VAMPIRE — COMPACT HUD
    ========================================== */
 
 .mini-hud {
@@ -296,6 +298,7 @@ body {
   color: #FFE4E1;
   cursor: pointer;
   transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+  box-sizing: border-box;
 }
 
 button.hud-item { 
@@ -321,16 +324,17 @@ button.hud-item {
 
 .hud-money {
   padding: 0;
-  background: rgba(255,215,0,.08);
-  border: 2px solid #FFD700;
-  color: #FFD700;
-  box-shadow: inset 0 0 12px rgba(255,215,0,.12), 0 0 10px rgba(255,215,0,.25);
+  background: rgba(192,192,192,.08);
+  border: 2px solid #C0C0C0;
+  color: #C0C0C0;
+  box-shadow: inset 0 0 12px rgba(192,192,192,.12), 0 0 10px rgba(192,192,192,.25);
   width: 140px;
   min-width: 140px;
   cursor: text;
   height: 42px;
   border-radius: 8px;
   position: relative;
+  box-sizing: border-box;
 }
 
 .hud-money-inner {
@@ -341,26 +345,26 @@ button.hud-item {
   height: 100%;
   border-radius: 6px;
   background: rgba(10, 0, 0, 0.6);
-  border: 1px solid rgba(255, 215, 0, 0.4);
+  border: 1px solid rgba(192, 192, 192, 0.4);
 }
 
 .hud-money-input {
   background: transparent;
   border: none;
   outline: none;
-  color: #FFD700;
+  color: #C0C0C0;
   font-family: 'Press Start 2P', monospace;
   font-size: 0.7rem;
   text-align: center;
   width: 100%;
   height: 100%;
   padding: 0 4px;
-  text-shadow: 0 0 8px #FFD700;
+  text-shadow: 0 0 8px #C0C0C0;
   letter-spacing: 2px;
 }
 
 .hud-money-input::placeholder {
-  color: #FFD700;
+  color: #C0C0C0;
   opacity: 0.5;
   font-size: 0.55rem;
   letter-spacing: 1px;
@@ -384,7 +388,7 @@ button.hud-item {
 @media (max-width: 480px) {
   .mini-hud { gap: 0.4rem; padding: 0.35rem 0.2rem 0.1rem; }
   .hud-item { min-height: 42px; height: 42px; }
-  .hud-money { width: 120px; min-width: 120px; height: 42px; }
+  .hud-money { width: 140px; min-width: 140px; height: 42px; }
   .hud-icon { font-size: 0.9rem; }
   .hud-money-input { font-size: 0.6rem; }
   button.hud-item { width: 42px; min-width: 42px; }
@@ -471,15 +475,15 @@ button.hud-item {
 
 .number-cell-input {
   width: 100%; height: 44px; padding: 0.4rem 0.5rem;
-  border: 1px solid rgba(255,215,0,.45);
-  background: linear-gradient(180deg, rgba(255,215,0,.08), rgba(10,0,0,.9));
+  border: 1px solid rgba(192,192,192,.45);
+  background: linear-gradient(180deg, rgba(192,192,192,.08), rgba(10,0,0,.9));
   outline: none;
-  color: var(--vt-gold);
+  color: var(--vt-silver);
   font-family: 'Orbitron', sans-serif;
   font-size: 1rem; font-weight: 700;
   text-align: center;
-  text-shadow: 0 0 8px var(--vt-gold);
-  box-shadow: inset 0 0 6px rgba(255,215,0,.08);
+  text-shadow: 0 0 8px var(--vt-silver);
+  box-shadow: inset 0 0 6px rgba(192,192,192,.08);
   border-radius: 8px;
   transition: border-color 0.15s ease, box-shadow 0.15s ease, color 0.15s ease;
   box-sizing: border-box;
@@ -513,10 +517,10 @@ button.hud-item {
 }
 
 .number-cell-input.amount-medium {
-  color: #FFD700;
-  border-color: rgba(255,215,0,.6);
-  text-shadow: 0 0 8px rgba(255,215,0,.8);
-  box-shadow: 0 0 8px rgba(255,215,0,.2);
+  color: #C0C0C0;
+  border-color: rgba(192,192,192,.6);
+  text-shadow: 0 0 8px rgba(192,192,192,.8);
+  box-shadow: 0 0 8px rgba(192,192,192,.2);
 }
 
 .number-cell-input.amount-high {
@@ -545,7 +549,7 @@ button.hud-item {
 
 .table-container::-webkit-scrollbar { width: 10px; }
 .table-container::-webkit-scrollbar-track { background: rgba(10,0,0,.8); border: 2px solid var(--vt-bg2); }
-.table-container::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #8B0000, #DC143C, #FFD700); border: 2px solid rgba(255,228,225,.7); border-radius: 4px; }
+.table-container::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #8B0000, #DC143C, #C0C0C0); border: 2px solid rgba(255,228,225,.7); border-radius: 4px; }
 
 .table-container.fade-swap { animation: fadeSwap 0.35s ease; }
 @keyframes fadeSwap { 0% { opacity: 0.2; transform: translateX(6px); } 100% { opacity: 1; transform: translateX(0); } }
@@ -572,7 +576,7 @@ button.hud-item {
 }
 
 .sync-indicator.show { opacity: 1; }
-.sync-indicator.error { background: var(--vt-gold); }
+.sync-indicator.error { background: var(--vt-silver); }
 
 .sync-indicator .sync-spinner {
   display: none;
@@ -995,6 +999,7 @@ function updateTotalDisplay() {
   } else {
     const spent = getSpentSum();
     const remaining = globalTotal - spent;
+    setGlobalTotal(remaining < 0 ? 0 : remaining);
     ti.value = remaining < 0 ? '0' : formatNumber(remaining);
   }
 }
@@ -1042,7 +1047,7 @@ function renderCurrentDay() {
     const inum = document.createElement('input');
     inum.type = 'text';
     inum.className = 'number-cell-input';
-    inum.placeholder = '0';
+    inum.placeholder = '💲';
     inum.value = rd.number;
     updateAmountColor(inum);
     inum.addEventListener('input', (function(idx) { return function(e) {
@@ -1106,6 +1111,14 @@ function updateNumberInRow(i, v) {
   const cleanV = v.replace(/\s/g, '');
   getDayData(currentDateStr).rows[i].number = cleanV;
   saveDataLocal();
+  
+  const globalTotal = getGlobalTotal();
+  if (globalTotal !== null) {
+    const spent = getSpentSum();
+    const remaining = globalTotal - spent;
+    setGlobalTotal(remaining < 0 ? 0 : remaining);
+  }
+  
   updateTotalDisplay();
   if (statsVisible) updateStats();
   scheduleCloudSave();
