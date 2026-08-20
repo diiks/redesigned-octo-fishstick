@@ -316,19 +316,34 @@ button.hud-item { border: 2px solid; }
   box-shadow: 0 0 16px rgba(0,245,255,.55);
 }
 
+/* HUD Money - теперь это input */
 .hud-money {
-  padding: 0 14px;
+  padding: 0;
   background: rgba(255,209,102,.08);
   border: 2px solid #FFD166;
   color: #FFD166;
   box-shadow: 0 0 10px rgba(255,209,102,.25);
-  min-width: 110px;
+  min-width: 140px;
+  cursor: text;
 }
 
-.hud-money-value {
-  font-size: 0.65rem;
+.hud-money-input {
+  background: transparent;
+  border: none;
+  outline: none;
   color: #FFD166;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.65rem;
+  text-align: center;
+  width: 100%;
+  padding: 0 10px;
   text-shadow: 0 0 8px #FFD166;
+}
+
+.hud-money-input::placeholder {
+  color: #FFD166;
+  opacity: 0.5;
+  font-size: 0.55rem;
 }
 
 .hud-stats {
@@ -347,76 +362,14 @@ button.hud-item { border: 2px solid; }
 .hud-icon { font-size: 0.9rem; }
 .hud-label { font-size: 0.5rem; }
 
-/* ЗАГОЛОВОК БАЛАНСА */
-
-.balance-title {
-  position: absolute;
-  top: -9px;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 0 8px;
-  background: #10133A;
-  color: #00F5FF;
-  font-family: 'Press Start 2P', monospace;
-  font-size: 0.45rem;
-  letter-spacing: 1px;
-  white-space: nowrap;
-}
-
-/* БАЛАНС */
-
-.sum-block {
-  position: relative;
-  width: min(420px, 85%);
-  border-color: #FFD166 !important;
-  background: linear-gradient(90deg, rgba(255,46,136,.05), rgba(255,209,102,.12), rgba(0,245,255,.05)) !important;
-  box-shadow: 0 0 15px rgba(255,209,102,.25) !important;
-}
-
 @media (max-width: 480px) {
   .mini-hud { gap: 0.35rem; }
   .hud-item { min-height: 36px; }
   .hud-label { display: none; }
-  .hud-money { min-width: 100px; }
+  .hud-money { min-width: 110px; }
   .hud-icon { font-size: 0.85rem; }
-  .hud-money-value { font-size: 0.58rem; }
+  .hud-money-input { font-size: 0.55rem; }
 }
-
-/* --- блок сумм --- */
-.sums-container { 
-  width: 100%; display: flex; gap: 1rem; 
-  padding: 0.6rem 1rem;
-  background: linear-gradient(90deg, rgba(255,46,136,.08), rgba(0,245,255,.08), rgba(255,209,102,.08));
-  flex-shrink: 0;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.sum-block {
-  flex: 0 1 auto; min-width: 0; display: flex;
-  flex-direction: column;
-  align-items: center; justify-content: center;
-  background: rgba(255,46,136,.08);
-  border: 2px solid var(--nv-gold);
-  box-shadow: inset 0 0 14px rgba(255,209,102,.08), 0 0 15px var(--nv-gold-glow);
-  border-radius: 10px;
-  backdrop-filter: blur(3px);
-  height: 55px;
-  position: relative;
-  z-index: 1;
-}
-
-.sum-input {
-  width: 200px; height: 100%; padding: 0 0.5rem; border: none;
-  background: transparent; font-size: 0.9rem; text-align: center;
-  outline: none; color: var(--nv-gold); font-family: 'Press Start 2P', monospace;
-  box-shadow: none; border-radius: 0;
-  text-shadow: 0 0 10px var(--nv-gold);
-}
-.sum-input:focus { border: none; box-shadow: none; }
-.sum-input::placeholder { color: var(--nv-gold); opacity: 0.5; font-size: 0.9rem; }
 
 /* --- таблица --- */
 .table-container {
@@ -533,10 +486,7 @@ button.hud-item { border: 2px solid; }
   filter: drop-shadow(0 0 7px rgba(255,46,136,.25));
 }
 
-/* ==========================================
-   EXPENSE COLORS
-   ========================================== */
-
+/* EXPENSE COLORS */
 .number-cell-input.amount-low {
   color: #00E676;
   border-color: rgba(0,230,118,.55);
@@ -579,11 +529,9 @@ button.hud-item { border: 2px solid; }
 .table-container::-webkit-scrollbar-track { background: rgba(7,9,31,.8); border: 2px solid var(--nv-bg2); }
 .table-container::-webkit-scrollbar-thumb { background: linear-gradient(180deg, var(--nv-pink), var(--nv-cyan), var(--nv-gold)); border: 2px solid rgba(255,255,255,.7); border-radius: 4px; }
 
-/* плавная смена дня */
 .table-container.fade-swap, .sums-container.fade-swap { animation: fadeSwap 0.35s ease; }
 @keyframes fadeSwap { 0% { opacity: 0.2; transform: translateX(6px); } 100% { opacity: 1; transform: translateX(0); } }
 
-/* --- индикатор синхронизации --- */
 .sync-indicator {
   position: fixed;
   top: 10px;
@@ -663,20 +611,19 @@ button.hud-item { border: 2px solid; }
 
         <div class="hud-item hud-money">
           <span class="hud-icon">💰</span>
-          <span class="hud-money-value" id="hudMoneyValue">—</span>
+          <input
+            type="text"
+            id="totalSumInput"
+            class="hud-money-input"
+            placeholder="СКОК ЧЕ"
+            aria-label="Общий бюджет"
+            inputmode="decimal">
         </div>
 
         <button class="hud-item hud-stats" id="statsBtn" title="Статистика" aria-label="Открыть статистику">
           <span class="hud-icon">📊</span>
           <span class="hud-label">СТАТ.</span>
         </button>
-      </div>
-    </div>
-
-    <div class="sums-container" id="sumsContainer">
-      <div class="sum-block">
-        <div class="balance-title">ОСТАЛОСЬ</div>
-        <input type="text" id="totalSumInput" class="sum-input" placeholder="СКОК ЧЕ" aria-label="Общий бюджет">
       </div>
     </div>
 
@@ -962,7 +909,6 @@ const todayBtn = document.getElementById('todayBtn');
 const ti = document.getElementById('totalSumInput');
 const tbody = document.getElementById('tableBody');
 const tableContainer = document.getElementById('tableContainer');
-const sumsContainer = document.getElementById('sumsContainer');
 const syncBtn = document.getElementById('syncBtn');
 const statsBtn = document.getElementById('statsBtn');
 const statsPopup = document.getElementById('statsPopup');
@@ -1011,19 +957,6 @@ function playBigExpenseAnimation(el) {
   setTimeout(() => { el.classList.remove('big-expense'); }, 500);
 }
 
-function updateHudMoney() {
-  const hud = document.getElementById('hudMoneyValue');
-  if (!hud) return;
-  const globalTotal = getGlobalTotal();
-  if (globalTotal === null) {
-    hud.textContent = '—';
-    return;
-  }
-  const spent = getSpentSum();
-  const remaining = globalTotal - spent;
-  hud.textContent = formatNumber(remaining < 0 ? 0 : remaining);
-}
-
 function updateTotalDisplay() {
   const globalTotal = getGlobalTotal();
   if (globalTotal === null) {
@@ -1034,7 +967,6 @@ function updateTotalDisplay() {
     const remaining = globalTotal - spent;
     ti.value = remaining < 0 ? '0' : formatNumber(remaining);
   }
-  updateHudMoney();
 }
 
 function renderCurrentDay() {
@@ -1109,7 +1041,6 @@ function handleNumberInput(i, el) {
   if (v === '') {
     el.classList.remove('amount-low', 'amount-medium', 'amount-high', 'amount-danger');
     updateNumberInRow(i, '');
-    updateHudMoney();
     return;
   }
   v = v.replace(',', '.');
@@ -1120,7 +1051,6 @@ function handleNumberInput(i, el) {
   }
   updateNumberInRow(i, v);
   updateAmountColor(el);
-  updateHudMoney();
   
   const numericValue = parseFloat(v.replace(',', '.'));
   if (!isNaN(numericValue) && numericValue >= 100) {
@@ -1153,10 +1083,8 @@ function getSpentSum() { return getSpentSumForDate(currentDateStr); }
 
 function playSwapAnim() {
   tableContainer.classList.remove('fade-swap');
-  sumsContainer.classList.remove('fade-swap');
   void tableContainer.offsetWidth;
   tableContainer.classList.add('fade-swap');
-  sumsContainer.classList.add('fade-swap');
 }
 
 function changeDate(ns) {
