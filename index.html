@@ -88,7 +88,6 @@ body {
   overflow: hidden;
 }
 
-/* --- шапка --- */
 .hero-header {
   width: 100%;
   padding: 1.5rem 1rem 0.5rem;
@@ -144,7 +143,6 @@ body {
   position: relative; z-index: 1;
 }
 
-/* Попап статистики */
 .stats-popup {
   position: fixed;
   top: 50%;
@@ -278,7 +276,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.6rem;
+  gap: 0.5rem;
   margin-top: 0.55rem;
   padding: 0.35rem 0.5rem 0.1rem;
   position: relative;
@@ -286,13 +284,13 @@ body {
 }
 
 .hud-item {
-  min-height: 50px;
-  height: 50px;
-  border-radius: 8px;
+  min-height: 38px;
+  height: 38px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 5px;
   font-family: 'Press Start 2P', monospace;
   font-size: 0.55rem;
   color: #F8F7FF;
@@ -300,7 +298,7 @@ body {
   transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
 }
 
-button.hud-item { border: 2px solid; width: 50px; }
+button.hud-item { border: 2px solid; width: 45px; }
 
 .hud-item:active { transform: scale(0.92); }
 
@@ -310,6 +308,7 @@ button.hud-item { border: 2px solid; width: 50px; }
   border-color: #00F5FF;
   color: #00F5FF;
   box-shadow: 0 0 8px rgba(0,245,255,.25);
+  border-radius: 20px;
 }
 
 .hud-sync:hover {
@@ -317,16 +316,29 @@ button.hud-item { border: 2px solid; width: 50px; }
   box-shadow: 0 0 16px rgba(0,245,255,.55);
 }
 
-/* HUD Money - input */
+/* HUD Money - овальное окно */
 .hud-money {
   padding: 0;
   background: rgba(255,209,102,.08);
   border: 2px solid #FFD166;
   color: #FFD166;
   box-shadow: 0 0 10px rgba(255,209,102,.25);
-  min-width: 150px;
+  min-width: 160px;
   cursor: text;
-  height: 50px;
+  height: 38px;
+  border-radius: 20px;
+  position: relative;
+}
+
+.hud-money-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
+  background: rgba(7, 9, 31, 0.6);
+  border: 1px solid rgba(255, 209, 102, 0.4);
 }
 
 .hud-money-input {
@@ -335,7 +347,7 @@ button.hud-item { border: 2px solid; width: 50px; }
   outline: none;
   color: #FFD166;
   font-family: 'Press Start 2P', monospace;
-  font-size: 0.65rem;
+  font-size: 0.55rem;
   text-align: center;
   width: 100%;
   height: 100%;
@@ -345,8 +357,8 @@ button.hud-item { border: 2px solid; width: 50px; }
 
 .hud-money-input::placeholder {
   color: #FFD166;
-  opacity: 0.5;
-  font-size: 0.55rem;
+  opacity: 0.4;
+  font-size: 0.5rem;
 }
 
 .hud-stats {
@@ -355,6 +367,7 @@ button.hud-item { border: 2px solid; width: 50px; }
   border-color: #FF2E88;
   color: #FF2E88;
   box-shadow: 0 0 8px rgba(255,46,136,.25);
+  border-radius: 20px;
 }
 
 .hud-stats:hover {
@@ -362,17 +375,17 @@ button.hud-item { border: 2px solid; width: 50px; }
   box-shadow: 0 0 16px rgba(255,46,136,.55);
 }
 
-.hud-icon { font-size: 0.9rem; }
+.hud-icon { font-size: 0.8rem; }
 .hud-label { font-size: 0.5rem; }
 
 @media (max-width: 480px) {
-  .mini-hud { gap: 0.35rem; }
-  .hud-item { min-height: 50px; height: 50px; }
+  .mini-hud { gap: 0.3rem; }
+  .hud-item { min-height: 36px; height: 36px; }
   .hud-label { display: none; }
   .hud-money { min-width: 120px; }
-  .hud-icon { font-size: 0.85rem; }
-  .hud-money-input { font-size: 0.55rem; }
-  button.hud-item { width: 50px; }
+  .hud-icon { font-size: 0.75rem; }
+  .hud-money-input { font-size: 0.5rem; }
+  button.hud-item { width: 40px; }
 }
 
 /* --- таблица --- */
@@ -490,7 +503,6 @@ button.hud-item { border: 2px solid; width: 50px; }
   filter: drop-shadow(0 0 7px rgba(255,46,136,.25));
 }
 
-/* EXPENSE COLORS */
 .number-cell-input.amount-low {
   color: #00E676;
   border-color: rgba(0,230,118,.55);
@@ -613,13 +625,15 @@ button.hud-item { border: 2px solid; width: 50px; }
         </button>
 
         <div class="hud-item hud-money">
-          <input
-            type="text"
-            id="totalSumInput"
-            class="hud-money-input"
-            placeholder="СКОК ЧЕ"
-            aria-label="Общий бюджет"
-            inputmode="decimal">
+          <div class="hud-money-inner">
+            <input
+              type="text"
+              id="totalSumInput"
+              class="hud-money-input"
+              placeholder="СКОК ЧЕ"
+              aria-label="Общий бюджет"
+              inputmode="decimal">
+          </div>
         </div>
 
         <button class="hud-item hud-stats" id="statsBtn" title="Статистика" aria-label="Открыть статистику">
@@ -854,10 +868,16 @@ function storageToDisplay(s) { const p = s.split('-').map(Number); return format
 function formatNumber(v) {
   const n = parseFloat(v);
   if (isNaN(n)) return '';
+  let result;
   if (n === Math.floor(n)) {
-    return n.toString();
+    result = n.toString();
+  } else {
+    result = n.toFixed(2);
   }
-  return n.toFixed(2);
+  // Добавляем пробелы для чисел больше 999
+  const parts = result.split('.');
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  return parts.join('.');
 }
 
 function getGlobalTotal() {
@@ -951,7 +971,7 @@ function toggleStats() {
 
 function updateAmountColor(el) {
   el.classList.remove('amount-low', 'amount-medium', 'amount-high', 'amount-danger');
-  const value = parseFloat(el.value.replace(',', '.'));
+  const value = parseFloat(el.value.replace(',', '.').replace(/\s/g, ''));
   if (isNaN(value) || value < 0) return;
   if (value <= 10) el.classList.add('amount-low');
   else if (value <= 50) el.classList.add('amount-medium');
@@ -972,7 +992,9 @@ function updateTotalDisplay() {
     ti.value = '';
     ti.placeholder = 'СКОК ЧЕ';
   } else {
-    ti.value = formatNumber(globalTotal);
+    const spent = getSpentSum();
+    const remaining = globalTotal - spent;
+    ti.value = remaining < 0 ? '0' : formatNumber(remaining);
   }
 }
 
@@ -1050,23 +1072,24 @@ function handleNumberInput(i, el) {
     updateNumberInRow(i, '');
     return;
   }
-  v = v.replace(',', '.');
+  v = v.replace(',', '.').replace(/\s/g, '');
   if (!/^-?\d*\.?\d*$/.test(v)) { el.value = v.slice(0, -1); return; }
   if (v.indexOf('.') !== -1) {
     const p = v.split('.');
-    if (p[1] && p[1].length > 2) { p[1] = p[1].slice(0, 2); v = p.join('.'); el.value = v; }
+    if (p[1] && p[1].length > 2) { p[1] = p[1].slice(0, 2); v = p.join('.'); }
   }
+  el.value = v;
   updateNumberInRow(i, v);
   updateAmountColor(el);
   
-  const numericValue = parseFloat(v.replace(',', '.'));
+  const numericValue = parseFloat(v);
   if (!isNaN(numericValue) && numericValue >= 100) {
     playBigExpenseAnimation(el);
   }
 }
 
 function formatNumberField(el) {
-  const v = el.value;
+  const v = el.value.replace(/\s/g, '');
   if (v === '') return;
   const n = parseFloat(v.replace(',', '.'));
   el.value = !isNaN(n) ? formatNumber(v) : '';
@@ -1079,7 +1102,8 @@ function formatNumberField(el) {
 
 function updateNumberInRow(i, v) {
   if (!currentDateStr) return;
-  getDayData(currentDateStr).rows[i].number = v;
+  const cleanV = v.replace(/\s/g, '');
+  getDayData(currentDateStr).rows[i].number = cleanV;
   saveDataLocal();
   updateTotalDisplay();
   if (statsVisible) updateStats();
@@ -1193,7 +1217,7 @@ function init() {
   statsBtn.addEventListener('click', function() { playClickSound(); toggleStats(); });
   
   ti.addEventListener('input', function() {
-    let v = ti.value.replace(',', '.');
+    let v = ti.value.replace(',', '.').replace(/\s/g, '');
     if (v === '') { 
       localStorage.removeItem(GLOBAL_TOTAL_KEY);
       updateTotalDisplay();
@@ -1214,7 +1238,7 @@ function init() {
   });
   
   ti.addEventListener('blur', function() {
-    const v = ti.value.replace(',', '.');
+    let v = ti.value.replace(/\s/g, '');
     if (v === '') { 
       localStorage.removeItem(GLOBAL_TOTAL_KEY);
       updateTotalDisplay();
