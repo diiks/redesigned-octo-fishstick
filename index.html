@@ -9,7 +9,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="DIX Vegas Counter">
-<link rel="manifest" href='data:application/json,{"name":"DIX Vegas Counter","short_name":"DIX","display":"standalone","start_url":".","background_color":"#1a0000","theme_color":"#ffd700"}'>
+<link rel="manifest" href='data:application/json,{"name":"DIX Vegas Counter","short_name":"DIX","display":"standalone","start_url":".","background_color":"#0A3323","theme_color":"#105666"}'>
 <title>DIX | Vegas Counter</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,7 +20,7 @@
 html {
   width: 100%;
   min-height: 100%;
-  background: #1a0000;
+  background: #0A3323;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   color-scheme: dark;
@@ -38,7 +38,7 @@ button, input {
 }
 
 body {
-  background: linear-gradient(180deg, #1a0000 0%, #3d0000 30%, #660000 60%, #2a0000 100%);
+  background: linear-gradient(180deg, #0A3323 0%, #1e4d3a 30%, #2a6b4f 60%, #0f2e1d 100%);
   font-family: 'Orbitron', 'Press Start 2P', sans-serif;
   min-height: 100vh;
   min-height: 100dvh;
@@ -49,11 +49,11 @@ body {
 
 .app {
   width: 100%; max-width: 900px;
-  background: linear-gradient(180deg, rgba(20,0,0,0.95) 0%, rgba(40,0,0,0.98) 100%);
-  border: 3px solid #ffd700;
-  box-shadow: inset 0 0 0 2px rgba(255,215,0,0.3),
-              0 0 40px rgba(255,215,0,0.25),
-              0 0 80px rgba(255,0,0,0.20);
+  background: linear-gradient(180deg, rgba(10, 33, 25, 0.95) 0%, rgba(16, 60, 40, 0.98) 100%);
+  border: 3px solid #D3968C;
+  box-shadow: inset 0 0 0 2px rgba(211, 150, 140, 0.3),
+              0 0 40px rgba(211, 150, 140, 0.25),
+              0 0 80px rgba(16, 86, 102, 0.2);
   padding: 0;
   display: flex; flex-direction: column; align-items: center;
   position: relative; z-index: 1; border-radius: 20px; overflow: hidden;
@@ -69,14 +69,14 @@ body {
 .hero-header {
   width: 100%;
   padding: 3.5rem 1rem 0.7rem;
-  background: linear-gradient(180deg, rgba(255,215,0,0.2) 0%, rgba(255,0,0,0.1) 50%, rgba(20,0,0,0.9) 100%);
+  background: linear-gradient(180deg, rgba(131, 153, 88, 0.2) 0%, rgba(211, 150, 140, 0.15) 50%, rgba(16, 86, 102, 0.9) 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.4rem;
   position: relative;
   z-index: 2;
-  border-bottom: 3px solid #ffd700;
+  border-bottom: 3px solid #839958;
   flex-shrink: 0;
 }
 
@@ -87,7 +87,7 @@ body {
   left: 50%;
   transform: translateX(-50%);
   font-size: 1rem;
-  color: #ffd700;
+  color: #F7F4D5;
   font-family: 'Press Start 2P', monospace;
   white-space: nowrap;
   opacity: 0.8;
@@ -99,15 +99,15 @@ body {
 }
 
 @keyframes neonGlow {
-  0% { text-shadow: 0 0 5px #ffd700, 0 0 10px #ff0000, 0 0 20px #ffd700; opacity: 0.7; }
-  100% { text-shadow: 0 0 10px #ffd700, 0 0 25px #ff0000, 0 0 40px #ff0000, 0 0 60px #ffd700; opacity: 1; }
+  0% { text-shadow: 0 0 5px #839958, 0 0 10px #D3968C, 0 0 20px #105666; opacity: 0.7; }
+  100% { text-shadow: 0 0 10px #839958, 0 0 25px #D3968C, 0 0 40px #105666, 0 0 60px #F7F4D5; opacity: 1; }
 }
 
 @media (max-width: 480px) {
   .hero-header::before { font-size: 0.7rem; top: 0.9rem; gap: 5px; }
   .hero-header { padding: 3rem 0.5rem 0.6rem; }
   body { padding: 0; }
-  .app { border-radius: 0; border-left: 2px solid #ffd700; border-right: 2px solid #ffd700; }
+  .app { border-radius: 0; border-left: 2px solid #D3968C; border-right: 2px solid #D3968C; }
 }
 
 .hero-header .date-navigation,
@@ -123,35 +123,35 @@ body {
 
 .arrow-btn {
   width: 36px; height: 36px; border-radius: 50%;
-  background: linear-gradient(180deg, #cc0000 0%, #660000 100%);
-  border: 2px solid #ffd700;
-  box-shadow: inset 0 2px 0 rgba(255,215,0,0.4), 0 4px 10px rgba(0,0,0,0.6), 0 0 12px rgba(255,215,0,0.3);
-  font-size: 1rem; font-weight: bold; color: #ffd700; cursor: pointer;
+  background: linear-gradient(180deg, #105666 0%, #0A3323 100%);
+  border: 2px solid #D3968C;
+  box-shadow: inset 0 2px 0 rgba(247, 244, 213, 0.4), 0 4px 10px rgba(0,0,0,0.6), 0 0 12px rgba(131, 153, 88, 0.3);
+  font-size: 1rem; font-weight: bold; color: #F7F4D5; cursor: pointer;
   display: flex; align-items: center; justify-content: center;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
-  text-shadow: 0 0 6px #ffd700;
+  text-shadow: 0 0 6px #F7F4D5;
 }
 .arrow-btn:hover {
-  background: linear-gradient(180deg, #ff0000 0%, #990000 100%);
-  box-shadow: inset 0 2px 0 rgba(255,215,0,0.5), 0 4px 14px rgba(0,0,0,0.6), 0 0 22px rgba(255,215,0,0.5);
+  background: linear-gradient(180deg, #0f6b7a 0%, #0a3f2e 100%);
+  box-shadow: inset 0 2px 0 rgba(247, 244, 213, 0.5), 0 4px 14px rgba(0,0,0,0.6), 0 0 22px rgba(131, 153, 88, 0.5);
   transform: translateY(-1px);
 }
 .arrow-btn:active { transform: scale(0.9); }
 
 .date-window-input {
-  background: rgba(0,0,0,0.8); border: 2px solid #ffd700;
-  box-shadow: inset 0 0 14px rgba(255,215,0,0.3), 0 0 10px rgba(255,215,0,0.25);
+  background: rgba(10, 51, 35, 0.8); border: 2px solid #D3968C;
+  box-shadow: inset 0 0 14px rgba(131, 153, 88, 0.3), 0 0 10px rgba(211, 150, 140, 0.25);
   padding: 0.5rem 0.6rem; font-size: 0.7rem; font-weight: 400;
-  color: #ffd700; min-width: 120px; width: 140px; text-align: center;
+  color: #F7F4D5; min-width: 120px; width: 140px; text-align: center;
   letter-spacing: 2px; font-family: 'Press Start 2P', monospace;
-  text-shadow: 0 0 8px #ffd700; border-radius: 8px;
+  text-shadow: 0 0 8px #F7F4D5; border-radius: 8px;
   outline: none; transition: 0.2s;
 }
 .date-window-input:focus {
-  border-color: #ffd700;
-  box-shadow: 0 0 14px rgba(255,215,0,0.5), inset 0 0 10px rgba(255,215,0,0.3);
+  border-color: #839958;
+  box-shadow: 0 0 14px rgba(131, 153, 88, 0.5), inset 0 0 10px rgba(131, 153, 88, 0.3);
 }
-.date-window-input::placeholder { color: #660000; text-shadow:none; opacity:0.8; }
+.date-window-input::placeholder { color: #105666; text-shadow:none; opacity:0.8; }
 
 .date-actions {
   display: flex; align-items: center; justify-content: center; gap: 0.5rem;
@@ -160,64 +160,64 @@ body {
 
 .search-btn, .today-btn {
   padding: 0.6rem 1.2rem; border-radius: 20px;
-  background: linear-gradient(180deg, #cc0000 0%, #660000 100%);
-  border: 2px solid #ffd700;
-  box-shadow: inset 0 2px 0 rgba(255,215,0,0.4), 0 3px 8px rgba(0,0,0,0.6);
-  font-weight: 400; color: #ffd700; cursor: pointer;
+  background: linear-gradient(180deg, #105666 0%, #0A3323 100%);
+  border: 2px solid #D3968C;
+  box-shadow: inset 0 2px 0 rgba(247, 244, 213, 0.4), 0 3px 8px rgba(0,0,0,0.6);
+  font-weight: 400; color: #F7F4D5; cursor: pointer;
   transition: transform 0.15s ease, box-shadow 0.15s ease; white-space: nowrap;
   font-size: 0.7rem; font-family: 'Press Start 2P', monospace;
-  text-shadow: 1px 1px 0px #330000;
+  text-shadow: 1px 1px 0px #0A3323;
   flex: 1; max-width: 160px;
 }
 .search-btn:hover, .today-btn:hover {
-  background: linear-gradient(180deg, #ff0000 0%, #990000 100%);
-  box-shadow: inset 0 2px 0 rgba(255,215,0,0.5), 0 3px 12px rgba(0,0,0,0.6), 0 0 18px rgba(255,215,0,0.5);
+  background: linear-gradient(180deg, #0f6b7a 0%, #0a3f2e 100%);
+  box-shadow: inset 0 2px 0 rgba(247, 244, 213, 0.5), 0 3px 12px rgba(0,0,0,0.6), 0 0 18px rgba(131, 153, 88, 0.5);
   transform: translateY(-1px);
 }
 .search-btn:active, .today-btn:active { transform: scale(0.93); }
-.today-btn { background: linear-gradient(180deg, #8b6914 0%, #4a3500 100%); border-color: #ffd700; }
-.today-btn:hover { background: linear-gradient(180deg, #a8821a 0%, #6b4e00 100%); box-shadow: inset 0 2px 0 rgba(255,215,0,0.5), 0 3px 12px rgba(0,0,0,0.6), 0 0 18px rgba(255,215,0,0.5); }
+.today-btn { background: linear-gradient(180deg, #839958 0%, #3a4f2a 100%); border-color: #D3968C; }
+.today-btn:hover { background: linear-gradient(180deg, #9cb36c 0%, #4a6535 100%); box-shadow: inset 0 2px 0 rgba(247, 244, 213, 0.5), 0 3px 12px rgba(0,0,0,0.6), 0 0 18px rgba(211, 150, 140, 0.5); }
 
 /* --- блоки сумм --- */
 .sums-container { 
   width: 100%; display: flex; gap: 0.5rem; 
   padding: 0.6rem 0.8rem;
-  background: rgba(0,0,0,0.3);
+  background: rgba(10, 33, 23, 0.3);
   flex-shrink: 0;
 }
 .sum-block {
   flex: 1; min-width: 0; display: flex; flex-direction: column;
-  align-items: center; gap: 0.3rem; background: rgba(30,0,0,0.7);
-  padding: 0.5rem 0.6rem; border: 2px solid #ffd700;
-  box-shadow: inset 0 0 14px rgba(255,215,0,0.2), 0 0 10px rgba(255,0,0,0.3);
+  align-items: center; gap: 0.3rem; background: rgba(16, 86, 102, 0.5);
+  padding: 0.5rem 0.6rem; border: 2px solid #839958;
+  box-shadow: inset 0 0 14px rgba(247, 244, 213, 0.2), 0 0 10px rgba(211, 150, 140, 0.3);
   border-radius: 10px;
   backdrop-filter: blur(3px);
 }
 .sum-label {
-  font-weight: 400; color: #ffd700; font-size: 0.42rem;
+  font-weight: 400; color: #F7F4D5; font-size: 0.42rem;
   text-align: center; font-family: 'Press Start 2P', monospace;
-  text-shadow: 1px 1px 0px #330000, 0 0 10px #ffd700; line-height: 1.2;
+  text-shadow: 1px 1px 0px #0A3323, 0 0 10px #D3968C; line-height: 1.2;
 }
 .sum-input {
-  width: 100%; padding: 0.4rem 0.4rem; border: 2px solid #8b6914;
-  background: rgba(0,0,0,0.85); font-size: 0.55rem; text-align: center;
-  outline: none; color: #ffd700; font-family: 'Press Start 2P', monospace;
-  box-shadow: inset 0 0 8px rgba(255,215,0,0.2); border-radius: 8px;
+  width: 100%; padding: 0.4rem 0.4rem; border: 2px solid #839958;
+  background: rgba(10, 33, 23, 0.85); font-size: 0.55rem; text-align: center;
+  outline: none; color: #F7F4D5; font-family: 'Press Start 2P', monospace;
+  box-shadow: inset 0 0 8px rgba(247, 244, 213, 0.2); border-radius: 8px;
 }
-.sum-input:focus { border-color: #ffd700; box-shadow: 0 0 10px rgba(255,215,0,0.5), inset 0 0 8px rgba(255,215,0,0.2); }
-.sum-input[readonly] { background: rgba(10,0,0,0.9); cursor: default; color: #ff4500; }
+.sum-input:focus { border-color: #D3968C; box-shadow: 0 0 10px rgba(211, 150, 140, 0.5), inset 0 0 8px rgba(247, 244, 213, 0.2); }
+.sum-input[readonly] { background: rgba(10, 33, 23, 0.9); cursor: default; color: #D3968C; }
 
 /* --- таблица --- */
 .table-container {
   width: 100%; flex: 1;
   overflow-y: auto;
-  background: rgba(0,0,0,0.6); border-top: 2px solid #ffd700;
+  background: rgba(10, 33, 23, 0.6); border-top: 2px solid #D3968C;
   padding: 0.3rem;
   -webkit-overflow-scrolling: touch;
 }
 .data-table { width: 100%; border-collapse: collapse; }
 .data-table tr {
-  border-bottom: 1px solid rgba(255,215,0,0.15);
+  border-bottom: 1px solid rgba(211, 150, 140, 0.15);
   animation: rowIn 0.35s ease both;
 }
 @keyframes rowIn { from { opacity:0; transform: translateY(6px); } to { opacity:1; transform: translateY(0); } }
@@ -228,52 +228,52 @@ body {
 .data-table td.number-cell { padding-left: 0.1rem; width: 22%; }
 
 .row-number {
-  font-weight: 400; color: #ffd700;
+  font-weight: 400; color: #D3968C;
   text-align: center; font-family: 'Press Start 2P', monospace;
-  text-shadow: 0 0 6px #ffd700;
+  text-shadow: 0 0 6px #D3968C;
 }
 
 .text-cell-input {
   width: 100%; height: 40px; padding: 0.4rem 0.5rem;
-  border: 1px solid #8b6914;
-  background: rgba(0,0,0,0.85);
+  border: 1px solid #839958;
+  background: rgba(10, 33, 23, 0.85);
   outline: none;
-  color: #ffd700;
+  color: #F7F4D5;
   font-family: 'Orbitron', sans-serif;
   font-size: 1rem; font-weight: 600;
   text-align: left;
-  box-shadow: inset 0 0 6px rgba(255,215,0,0.2);
+  box-shadow: inset 0 0 6px rgba(247, 244, 213, 0.2);
   border-radius: 4px;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
   box-sizing: border-box;
 }
 .text-cell-input:focus {
-  border-color: #ffd700;
-  box-shadow: 0 0 8px rgba(255,215,0,0.4), inset 0 0 6px rgba(255,215,0,0.2);
+  border-color: #D3968C;
+  box-shadow: 0 0 8px rgba(211, 150, 140, 0.4), inset 0 0 6px rgba(247, 244, 213, 0.2);
 }
 
 .number-cell-input {
   width: 100%; height: 40px; padding: 0.4rem 0.5rem;
-  border: 1px solid #8b6914;
-  background: rgba(0,0,0,0.85);
+  border: 1px solid #839958;
+  background: rgba(10, 33, 23, 0.85);
   outline: none;
-  color: #ff4500;
+  color: #D3968C;
   font-family: 'Orbitron', sans-serif;
   font-size: 1.2rem; font-weight: 700;
   text-align: center;
-  box-shadow: inset 0 0 6px rgba(255,215,0,0.2);
+  box-shadow: inset 0 0 6px rgba(247, 244, 213, 0.2);
   border-radius: 4px;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
   box-sizing: border-box;
 }
 .number-cell-input:focus {
-  border-color: #ffd700;
-  box-shadow: 0 0 8px rgba(255,215,0,0.4), inset 0 0 6px rgba(255,215,0,0.2);
+  border-color: #F7F4D5;
+  box-shadow: 0 0 8px rgba(247, 244, 213, 0.4), inset 0 0 6px rgba(247, 244, 213, 0.2);
 }
 
 .table-container::-webkit-scrollbar { width: 10px; }
-.table-container::-webkit-scrollbar-track { background: rgba(0,0,0,0.8); border: 2px solid #660000; }
-.table-container::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #cc0000, #660000); border: 2px solid #ffd700; border-radius: 4px; }
+.table-container::-webkit-scrollbar-track { background: rgba(10, 33, 23, 0.8); border: 2px solid #105666; }
+.table-container::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #105666, #0A3323); border: 2px solid #D3968C; border-radius: 4px; }
 
 /* плавная смена дня */
 .table-container.fade-swap, .sums-container.fade-swap { animation: fadeSwap 0.35s ease; }
@@ -285,8 +285,8 @@ body {
   top: 10px;
   left: 50%;
   transform: translateX(-50%);
-  background: #4CAF50;
-  color: white;
+  background: #839958;
+  color: #F7F4D5;
   padding: 8px 20px;
   border-radius: 20px;
   font-size: 0.8rem;
@@ -301,14 +301,14 @@ body {
 }
 
 .sync-indicator.show { opacity: 1; }
-.sync-indicator.error { background: #ff9800; }
+.sync-indicator.error { background: #D3968C; }
 
 .sync-indicator .sync-spinner {
   display: none;
   width: 12px;
   height: 12px;
-  border: 2px solid rgba(255,255,255,0.3);
-  border-top: 2px solid white;
+  border: 2px solid rgba(247, 244, 213, 0.3);
+  border-top: 2px solid #F7F4D5;
   border-radius: 50%;
   animation: spin 0.6s linear infinite;
 }
@@ -324,9 +324,9 @@ body {
   width: 42px;
   height: 42px;
   border-radius: 50%;
-  background: rgba(255,215,0,0.3);
-  border: 2px solid #ffd700;
-  color: #ffd700;
+  background: rgba(247, 244, 213, 0.15);
+  border: 2px solid #D3968C;
+  color: #F7F4D5;
   font-size: 1.4rem;
   cursor: pointer;
   display: flex;
@@ -346,7 +346,7 @@ body {
 
 .last-sync-time {
   font-size: 0.6rem;
-  color: rgba(255,215,0,0.5);
+  color: rgba(247, 244, 213, 0.5);
   text-align: center;
   padding: 4px 8px;
   font-family: 'Orbitron', sans-serif;
