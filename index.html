@@ -65,11 +65,11 @@ body {
   display: flex; flex-direction: column; align-items: center;
 }
 
-/* --- шапка с неоновой вывеской --- */
+/* --- шапка с неоновой вывеской и фоном #4a001a --- */
 .hero-header {
   width: 100%;
   padding: 3.5rem 1rem 0.7rem;
-  background: linear-gradient(180deg, rgba(252, 138, 45, 0.25) 0%, rgba(220, 79, 124, 0.15) 50%, rgba(196, 43, 52, 0.9) 100%);
+  background: #4a001a;  /* Измененный фон */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -139,7 +139,8 @@ body {
 .arrow-btn:active { transform: scale(0.9); }
 
 .date-window-input {
-  background: rgba(74, 15, 20, 0.85); border: 2px solid #FC8A2D;
+  background: rgba(74, 0, 26, 0.85); /* темнее для контраста на #4a001a */
+  border: 2px solid #FC8A2D;
   box-shadow: inset 0 0 14px rgba(252, 138, 45, 0.3), 0 0 10px rgba(220, 79, 124, 0.25);
   padding: 0.5rem 0.6rem; font-size: 0.7rem; font-weight: 400;
   color: #FCE9AB; min-width: 120px; width: 140px; text-align: center;
