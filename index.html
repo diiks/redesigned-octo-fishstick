@@ -74,7 +74,7 @@ body {
 /* --- шапка с неоновой вывеской --- */
 .hero-header {
   width: 100%;
-  padding: 3.5rem 1rem 0.7rem;
+  padding: 2rem 1rem 0.7rem;
   background: #1A0A00;
   display: flex;
   flex-direction: column;
@@ -111,7 +111,7 @@ body {
 
 @media (max-width: 480px) {
   .hero-header::before { font-size: 0.7rem; top: 0.9rem; gap: 5px; }
-  .hero-header { padding: 3rem 0.5rem 0.6rem; }
+  .hero-header { padding: 2.5rem 0.5rem 0.6rem; }
   body { padding: 0; }
   .app { border-radius: 0; border-left: 2px solid #FFD700; border-right: 2px solid #FFD700; }
 }
@@ -169,7 +169,7 @@ body {
 }
 
 .date-navigation {
-  margin-top: 0.5rem;
+  margin-top: 0.3rem;
   display: flex; align-items: center; justify-content: center; gap: 0.5rem;
   width: 100%;
 }
@@ -232,13 +232,13 @@ body {
 .today-btn { background: linear-gradient(180deg, #FFD700 0%, #B8860B 100%); border-color: #FFF8DC; }
 .today-btn:hover { background: linear-gradient(180deg, #FFE44D 0%, #DAA520 100%); box-shadow: inset 0 2px 0 rgba(255, 248, 220, 0.5), 0 3px 12px rgba(0,0,0,0.6), 0 0 18px rgba(255, 248, 220, 0.5); }
 
-/* --- блок сумм с кнопкой статистики --- */
+/* --- блок сумм с кнопками по бокам --- */
 .sums-container { 
   width: 100%; display: flex; gap: 0.5rem; 
   padding: 0.6rem 0.8rem;
   background: rgba(26, 10, 0, 0.4);
   flex-shrink: 0;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   position: relative;
 }
@@ -264,6 +264,35 @@ body {
 }
 .sum-input:focus { border-color: #FF8C00; box-shadow: 0 0 10px rgba(255, 140, 0, 0.5), inset 0 0 8px rgba(255, 248, 220, 0.2); }
 .sum-input[readonly] { background: rgba(26, 10, 0, 0.9); cursor: default; color: #FF8C00; }
+
+.sync-btn-side {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(255, 215, 0, 0.3);
+  border: 2px solid #FFD700;
+  color: #FFF8DC;
+  font-size: 1.4rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease, background 0.15s ease;
+  flex-shrink: 0;
+}
+
+.sync-btn-side:hover {
+  background: rgba(255, 215, 0, 0.5);
+  transform: scale(1.1);
+}
+
+.sync-btn-side:active { transform: scale(0.9); }
+.sync-btn-side.syncing { animation: syncSpin 0.8s linear infinite; }
+
+@keyframes syncSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
 
 .stats-btn {
   width: 42px;
@@ -404,33 +433,6 @@ body {
 
 @keyframes spin { to { transform: rotate(360deg); } }
 
-.sync-btn {
-  position: fixed;
-  top: 10px;
-  right: 10px;
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  background: rgba(255, 215, 0, 0.3);
-  border: 2px solid #FFD700;
-  color: #FFF8DC;
-  font-size: 1.4rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  transition: transform 0.15s ease;
-}
-
-.sync-btn:active { transform: scale(0.9); }
-.sync-btn.syncing { animation: syncSpin 0.8s linear infinite; }
-
-@keyframes syncSpin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
 .last-sync-time {
   font-size: 0.6rem;
   color: rgba(255, 248, 220, 0.5);
@@ -448,8 +450,6 @@ body {
     <span class="sync-spinner"></span>
     <span id="syncMessage">☁️ Готово</span>
 </div>
-
-<button class="sync-btn" id="syncBtn" title="Синхронизировать">💾</button>
 
 <div class="app">
   <div class="content-layer">
@@ -479,9 +479,10 @@ body {
     </div>
 
     <div class="sums-container" id="sumsContainer">
+      <button class="sync-btn-side" id="syncBtn" title="Синхронизировать">💾</button>
       <div class="sum-block">
         <div class="sum-label">💰 ОБЩАЯ СУММА</div>
-        <input type="text" id="totalSumInput" class="sum-input" placeholder="0">
+        <input type="text" id="totalSumInput" class="sum-input" placeholder="💲">
       </div>
       <button class="stats-btn" id="statsBtn" title="Статистика">📊</button>
     </div>
@@ -697,11 +698,11 @@ function parseDateFromInput(s) {
 
 function getTodayString() { return formatDateToStorage(new Date()); }
 function storageToDisplay(s) { const p = s.split('-').map(Number); return formatDateToDisplay(new Date(p[0], p[1]-1, p[2])); }
-function formatNumber(v) { const n = parseFloat(v); if (isNaN(n)) return '0'; return n === Math.floor(n) ? n.toString() : n.toFixed(2); }
+function formatNumber(v) { const n = parseFloat(v); if (isNaN(n)) return ''; return n === Math.floor(n) ? n.toString() : n.toFixed(2); }
 
 function getGlobalTotal() {
   const val = localStorage.getItem(GLOBAL_TOTAL_KEY);
-  return val ? parseFloat(val) : 0;
+  return val ? parseFloat(val) : null;
 }
 
 function setGlobalTotal(val) {
@@ -789,13 +790,24 @@ function toggleStats() {
   }
 }
 
+function updateTotalDisplay() {
+  const globalTotal = getGlobalTotal();
+  if (globalTotal === null) {
+    ti.value = '';
+    ti.placeholder = '💲';
+  } else {
+    const spent = getSpentSum();
+    const remaining = globalTotal - spent;
+    ti.value = formatNumber(remaining);
+  }
+}
+
 function renderCurrentDay() {
   if (!currentDateStr) return;
   const d = getDayData(currentDateStr);
   dateInput.value = storageToDisplay(currentDateStr);
   
-  const globalTotal = getGlobalTotal();
-  ti.value = globalTotal > 0 ? formatNumber(globalTotal) : '';
+  updateTotalDisplay();
   
   tbody.innerHTML = '';
   
@@ -878,6 +890,7 @@ function updateNumberInRow(i, v) {
   if (!currentDateStr) return;
   getDayData(currentDateStr).rows[i].number = v;
   saveDataLocal();
+  updateTotalDisplay();
   if (statsVisible) updateStats();
   scheduleCloudSave();
 }
@@ -992,7 +1005,11 @@ function init() {
   
   ti.addEventListener('input', function() {
     let v = ti.value.replace(',', '.');
-    if (v === '') { return; }
+    if (v === '') { 
+      localStorage.removeItem(GLOBAL_TOTAL_KEY);
+      updateTotalDisplay();
+      return; 
+    }
     if (v.indexOf('.') !== -1) {
       const p = v.split('.');
       if (p[1] && p[1].length > 2) { p[1] = p[1].slice(0, 2); v = p.join('.'); ti.value = v; }
@@ -1001,18 +1018,24 @@ function init() {
     if (!isNaN(parseFloat(v))) {
       setGlobalTotal(parseFloat(v));
       saveDataLocal();
+      updateTotalDisplay();
       scheduleCloudSave();
     }
   });
   
   ti.addEventListener('blur', function() {
     const v = ti.value.replace(',', '.');
-    if (v === '') { return; }
+    if (v === '') { 
+      localStorage.removeItem(GLOBAL_TOTAL_KEY);
+      updateTotalDisplay();
+      return; 
+    }
     const num = parseFloat(v);
     if (!isNaN(num)) {
       setGlobalTotal(num);
       saveDataLocal();
     }
+    updateTotalDisplay();
   });
 }
 
