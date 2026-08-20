@@ -3,19 +3,48 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="DIX Vegas Counter">
+<link rel="manifest" href='data:application/json,{"name":"DIX Vegas Counter","short_name":"DIX","display":"standalone","start_url":".","background_color":"#1a0000","theme_color":"#ffd700"}'>
 <title>DIX | Vegas Counter</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
-* { margin:0; padding:0; box-sizing:border-box; }
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
+
+html {
+  width: 100%;
+  min-height: 100%;
+  background: #1a0000;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  color-scheme: dark;
+}
+
+body, button, input {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  font-family: 'Orbitron', 'Press Start 2P', sans-serif;
+}
+
+button, input {
+  -webkit-appearance: none;
+  appearance: none;
+}
 
 body {
   background: linear-gradient(180deg, #1a0000 0%, #3d0000 30%, #660000 60%, #2a0000 100%);
   font-family: 'Orbitron', 'Press Start 2P', sans-serif;
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex; justify-content: center; align-items: flex-start;
   padding: 0.5rem; margin: 0; overflow-x: hidden;
+  overscroll-behavior: none;
 }
 
 .app {
@@ -28,6 +57,7 @@ body {
   padding: 0;
   display: flex; flex-direction: column; align-items: center;
   position: relative; z-index: 1; border-radius: 20px; overflow: hidden;
+  margin: 0 auto;
 }
 
 .content-layer {
@@ -47,6 +77,7 @@ body {
   position: relative;
   z-index: 2;
   border-bottom: 3px solid #ffd700;
+  flex-shrink: 0;
 }
 
 .hero-header::before {
@@ -68,25 +99,15 @@ body {
 }
 
 @keyframes neonGlow {
-  0% {
-    text-shadow: 0 0 5px #ffd700, 0 0 10px #ff0000, 0 0 20px #ffd700;
-    opacity: 0.7;
-  }
-  100% {
-    text-shadow: 0 0 10px #ffd700, 0 0 25px #ff0000, 0 0 40px #ff0000, 0 0 60px #ffd700;
-    opacity: 1;
-  }
+  0% { text-shadow: 0 0 5px #ffd700, 0 0 10px #ff0000, 0 0 20px #ffd700; opacity: 0.7; }
+  100% { text-shadow: 0 0 10px #ffd700, 0 0 25px #ff0000, 0 0 40px #ff0000, 0 0 60px #ffd700; opacity: 1; }
 }
 
 @media (max-width: 480px) {
-  .hero-header::before {
-    font-size: 0.7rem;
-    top: 0.9rem;
-    gap: 5px;
-  }
-  .hero-header {
-    padding: 3rem 0.5rem 0.6rem;
-  }
+  .hero-header::before { font-size: 0.7rem; top: 0.9rem; gap: 5px; }
+  .hero-header { padding: 3rem 0.5rem 0.6rem; }
+  body { padding: 0; }
+  .app { border-radius: 0; border-left: 2px solid #ffd700; border-right: 2px solid #ffd700; }
 }
 
 .hero-header .date-navigation,
@@ -162,6 +183,7 @@ body {
   width: 100%; display: flex; gap: 0.5rem; 
   padding: 0.6rem 0.8rem;
   background: rgba(0,0,0,0.3);
+  flex-shrink: 0;
 }
 .sum-block {
   flex: 1; min-width: 0; display: flex; flex-direction: column;
@@ -185,11 +207,13 @@ body {
 .sum-input:focus { border-color: #ffd700; box-shadow: 0 0 10px rgba(255,215,0,0.5), inset 0 0 8px rgba(255,215,0,0.2); }
 .sum-input[readonly] { background: rgba(10,0,0,0.9); cursor: default; color: #ff4500; }
 
-/* --- таблица в стиле Excel --- */
+/* --- таблица --- */
 .table-container {
-  width: 100%; max-height: 500px; overflow-y: auto;
+  width: 100%; flex: 1;
+  overflow-y: auto;
   background: rgba(0,0,0,0.6); border-top: 2px solid #ffd700;
   padding: 0.3rem;
+  -webkit-overflow-scrolling: touch;
 }
 .data-table { width: 100%; border-collapse: collapse; }
 .data-table tr {
@@ -198,25 +222,10 @@ body {
 }
 @keyframes rowIn { from { opacity:0; transform: translateY(6px); } to { opacity:1; transform: translateY(0); } }
 .data-table tr:last-child { border-bottom: none; }
-.data-table td { 
-  padding: 0.15rem 0.1rem; 
-  vertical-align: middle;
-  height: 40px;
-}
-.data-table td.row-number { 
-  padding-right: 0.05rem; 
-  width: 30px;
-  font-size: 0.7rem;
-}
-.data-table td.text-cell { 
-  padding-left: 0.1rem; 
-  padding-right: 0.2rem;
-  width: 72%;
-}
-.data-table td.number-cell { 
-  padding-left: 0.1rem;
-  width: 22%;
-}
+.data-table td { padding: 0.15rem 0.1rem; vertical-align: middle; height: 40px; }
+.data-table td.row-number { padding-right: 0.05rem; width: 30px; font-size: 0.7rem; }
+.data-table td.text-cell { padding-left: 0.1rem; padding-right: 0.2rem; width: 72%; }
+.data-table td.number-cell { padding-left: 0.1rem; width: 22%; }
 
 .row-number {
   font-weight: 400; color: #ffd700;
@@ -225,46 +234,38 @@ body {
 }
 
 .text-cell-input {
-  width: 100%;
-  height: 40px;
-  padding: 0.4rem 0.5rem;
+  width: 100%; height: 40px; padding: 0.4rem 0.5rem;
   border: 1px solid #8b6914;
   background: rgba(0,0,0,0.85);
   outline: none;
   color: #ffd700;
   font-family: 'Orbitron', sans-serif;
-  font-size: 1rem;
-  font-weight: 600;
+  font-size: 1rem; font-weight: 600;
   text-align: left;
   box-shadow: inset 0 0 6px rgba(255,215,0,0.2);
   border-radius: 4px;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
   box-sizing: border-box;
 }
-
 .text-cell-input:focus {
   border-color: #ffd700;
   box-shadow: 0 0 8px rgba(255,215,0,0.4), inset 0 0 6px rgba(255,215,0,0.2);
 }
 
 .number-cell-input {
-  width: 100%;
-  height: 40px;
-  padding: 0.4rem 0.5rem;
+  width: 100%; height: 40px; padding: 0.4rem 0.5rem;
   border: 1px solid #8b6914;
   background: rgba(0,0,0,0.85);
   outline: none;
   color: #ff4500;
   font-family: 'Orbitron', sans-serif;
-  font-size: 1.2rem;
-  font-weight: 700;
+  font-size: 1.2rem; font-weight: 700;
   text-align: center;
   box-shadow: inset 0 0 6px rgba(255,215,0,0.2);
   border-radius: 4px;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
   box-sizing: border-box;
 }
-
 .number-cell-input:focus {
   border-color: #ffd700;
   box-shadow: 0 0 8px rgba(255,215,0,0.4), inset 0 0 6px rgba(255,215,0,0.2);
@@ -277,10 +278,92 @@ body {
 /* плавная смена дня */
 .table-container.fade-swap, .sums-container.fade-swap { animation: fadeSwap 0.35s ease; }
 @keyframes fadeSwap { 0% { opacity: 0.2; transform: translateX(6px); } 100% { opacity: 1; transform: translateX(0); } }
+
+/* --- индикатор синхронизации --- */
+.sync-indicator {
+  position: fixed;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #4CAF50;
+  color: white;
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  opacity: 0;
+  transition: opacity 0.15s ease-out;
+  z-index: 1000;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Orbitron', sans-serif;
+}
+
+.sync-indicator.show { opacity: 1; }
+.sync-indicator.error { background: #ff9800; }
+
+.sync-indicator .sync-spinner {
+  display: none;
+  width: 12px;
+  height: 12px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top: 2px solid white;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+.sync-indicator.syncing .sync-spinner { display: inline-block; }
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.sync-btn {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(255,215,0,0.3);
+  border: 2px solid #ffd700;
+  color: #ffd700;
+  font-size: 1.4rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  transition: transform 0.15s ease;
+}
+
+.sync-btn:active { transform: scale(0.9); }
+.sync-btn.syncing { animation: syncSpin 0.8s linear infinite; }
+
+@keyframes syncSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.last-sync-time {
+  font-size: 0.6rem;
+  color: rgba(255,215,0,0.5);
+  text-align: center;
+  padding: 4px 8px;
+  font-family: 'Orbitron', sans-serif;
+  flex-shrink: 0;
+}
 </style>
 </head>
 
 <body>
+
+<div class="sync-indicator" id="syncStatus">
+    <span class="sync-spinner"></span>
+    <span id="syncMessage">☁️ Готово</span>
+</div>
+
+<button class="sync-btn" id="syncBtn" title="Синхронизировать">💾</button>
+
 <div class="app">
   <div class="content-layer">
 
@@ -316,295 +399,565 @@ body {
       <table class="data-table"><tbody id="tableBody"></tbody></table>
     </div>
 
+    <div class="last-sync-time" id="syncTimeDisplay">Последняя синхронизация: никогда</div>
+
   </div>
 </div>
 
 <script>
-  (function(){
-  var STORAGE_KEY='dix_million_data',appData={},currentDateStr='',TOTAL_ROWS=50;
-  var GLOBAL_TOTAL_KEY='dix_global_total';
+// API ключи JSONBin
+const JSONBIN_BIN_ID = '6a86d952da38895dfefb0200';
+const JSONBIN_API_KEY = '$2a$10$bgx/41LALlo4aQIF8oVtjuKDHyJpQ4oMlPTT52KWT1rsBhaZv5I4K';
 
-  var audioCtx=null;
-  function getAudioContext(){ if(!audioCtx) audioCtx=new (window.AudioContext||window.webkitAudioContext)(); if(audioCtx.state==='suspended') audioCtx.resume(); return audioCtx; }
+let currentDateStr = '';
+let allData = {};
+let localChanges = false;
+let isSyncing = false;
+let dataVersion = 0;
+let lastSyncTime = null;
+let cloudSaveTimer = null;
+let audioContext = null;
 
-  function playClickSound(){
-    try{ var ctx=getAudioContext(),now=ctx.currentTime,osc=ctx.createOscillator(),gain=ctx.createGain();
-      osc.type='sine'; osc.frequency.setValueAtTime(800,now); osc.frequency.exponentialRampToValueAtTime(600,now+0.06);
-      gain.gain.setValueAtTime(0.15,now); gain.gain.exponentialRampToValueAtTime(0.001,now+0.08);
-      osc.connect(gain); gain.connect(ctx.destination); osc.start(now); osc.stop(now+0.08);
-      var osc2=ctx.createOscillator(), gain2=ctx.createGain();
-      osc2.type='sine'; osc2.frequency.setValueAtTime(1200,now+0.02); osc2.frequency.exponentialRampToValueAtTime(900,now+0.08);
-      gain2.gain.setValueAtTime(0.1,now+0.02); gain2.gain.exponentialRampToValueAtTime(0.001,now+0.1);
-      osc2.connect(gain2); gain2.connect(ctx.destination); osc2.start(now+0.02); osc2.stop(now+0.1);
-    }catch(e){}
+const STORAGE_KEY = 'dix_vegas_data';
+const GLOBAL_TOTAL_KEY = 'dix_vegas_global_total';
+const TOTAL_ROWS = 50;
+
+function getAudioContext() {
+  if (!audioContext) {
+    try {
+      audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    } catch(e) {
+      console.warn('Web Audio API не поддерживается');
+      return null;
+    }
   }
+  return audioContext;
+}
 
-  function bindSfx(){
-    document.querySelectorAll('.sfx-btn').forEach(function(btn){
-      btn.addEventListener('click', playClickSound);
+function playClickSound() {
+  try {
+    const ctx = getAudioContext();
+    if (!ctx) return;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(800, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(600, ctx.currentTime + 0.06);
+    gain.gain.setValueAtTime(0.15, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08);
+    osc.start(ctx.currentTime);
+    osc.stop(ctx.currentTime + 0.08);
+    const osc2 = ctx.createOscillator();
+    const gain2 = ctx.createGain();
+    osc2.connect(gain2);
+    gain2.connect(ctx.destination);
+    osc2.type = 'sine';
+    osc2.frequency.setValueAtTime(1200, ctx.currentTime + 0.02);
+    osc2.frequency.exponentialRampToValueAtTime(900, ctx.currentTime + 0.08);
+    gain2.gain.setValueAtTime(0.1, ctx.currentTime + 0.02);
+    gain2.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.1);
+    osc2.start(ctx.currentTime + 0.02);
+    osc2.stop(ctx.currentTime + 0.1);
+  } catch(e) {}
+}
+
+function playSyncSound() {
+  try {
+    const ctx = getAudioContext();
+    if (!ctx) return;
+    const now = ctx.currentTime;
+    const osc1 = ctx.createOscillator();
+    const gain1 = ctx.createGain();
+    osc1.connect(gain1);
+    gain1.connect(ctx.destination);
+    osc1.type = 'triangle';
+    osc1.frequency.setValueAtTime(600, now);
+    osc1.frequency.setValueAtTime(900, now + 0.04);
+    osc1.frequency.setValueAtTime(1200, now + 0.08);
+    gain1.gain.setValueAtTime(0.3, now);
+    gain1.gain.exponentialRampToValueAtTime(0.01, now + 0.12);
+    osc1.start(now);
+    osc1.stop(now + 0.12);
+  } catch(e) {}
+}
+
+function showSync(message, isError = false, isSyncingState = false) {
+  const el = document.getElementById('syncStatus');
+  const msgEl = document.getElementById('syncMessage');
+  if (!el || !msgEl) return;
+  msgEl.textContent = message;
+  el.className = 'sync-indicator';
+  if (isError) el.classList.add('error');
+  if (isSyncingState) el.classList.add('syncing');
+  el.classList.add('show');
+  if (!isSyncingState) {
+    setTimeout(() => {
+      el.classList.remove('show');
+      el.classList.remove('syncing');
+    }, 2000);
+  }
+}
+
+function updateLastSyncTime() {
+  lastSyncTime = new Date();
+  const timeStr = lastSyncTime.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+  const el = document.getElementById('syncTimeDisplay');
+  if (el) el.textContent = `Последняя синхронизация: ${timeStr}`;
+  localStorage.setItem('dix_vegas_last_sync', lastSyncTime.toISOString());
+}
+
+async function loadFromCloud() {
+  try {
+    const response = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}/latest`, {
+      headers: { 'X-Master-Key': JSONBIN_API_KEY }
     });
-  }
-
-  function formatDateToDisplay(d){return String(d.getDate()).padStart(2,'0')+'.'+String(d.getMonth()+1).padStart(2,'0')+'.'+String(d.getFullYear()).slice(-2);}
-  function formatDateToStorage(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
-  function parseDateFromInput(s){
-    s=s.trim(); if(!s) return null;
-    if(s.indexOf('.')!==-1){
-      var p=s.split('.');
-      if(p.length===3){
-        var d=parseInt(p[0]),m=parseInt(p[1]),y=parseInt(p[2]);
-        if(!isNaN(d)&&!isNaN(m)&&!isNaN(y)&&m>=1&&m<=12){
-          if(y<100) y+=2000;
-          var dt=new Date(y,m-1,d);
-          if(dt.getFullYear()===y&&dt.getMonth()===m-1&&dt.getDate()===d) return formatDateToStorage(dt);
-        }
-      }
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const result = await response.json();
+    const cloudData = result.record || {};
+    const cloudVersion = cloudData._version || 0;
+    const localVersion = parseInt(localStorage.getItem('dix_vegas_data_version') || '0');
+    if (cloudVersion >= localVersion) {
+      allData = cloudData;
+      dataVersion = cloudVersion;
+      localStorage.setItem('dix_vegas_data_version', cloudVersion.toString());
     }
-    if(/^\d{4}-\d{2}-\d{2}$/.test(s)){
-      var ip=s.split('-').map(Number),d2=new Date(ip[0],ip[1]-1,ip[2]);
-      if(d2.getFullYear()===ip[0]&&d2.getMonth()===ip[1]-1&&d2.getDate()===ip[2]) return s;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(allData));
+    updateLastSyncTime();
+    return allData;
+  } catch (e) {
+    console.warn('Ошибка загрузки из облака:', e.message);
+    const local = localStorage.getItem(STORAGE_KEY);
+    if (local) {
+      try { allData = JSON.parse(local); } catch(parseError) {}
     }
-    return null;
+    return allData;
   }
-  function getTodayString(){ return formatDateToStorage(new Date()); }
-  
-  function loadData(){
-    try{ appData=JSON.parse(localStorage.getItem(STORAGE_KEY))||{}; }catch(e){ appData={}; }
-    if(!appData[getTodayString()]) appData[getTodayString()]=createEmptyDayData();
-  }
-  
-  function createEmptyDayData(){ var r=[]; for(var i=0;i<TOTAL_ROWS;i++) r.push({text:'',number:''}); return {total:'0', rows:r}; }
-  function saveData(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(appData)); }
-  function getDayData(d){ if(!appData[d]){ appData[d]=createEmptyDayData(); saveData(); } return appData[d]; }
-  function storageToDisplay(s){ var p=s.split('-').map(Number); return formatDateToDisplay(new Date(p[0],p[1]-1,p[2])); }
-  function formatNumber(v){ var n=parseFloat(v); if(isNaN(n)) return '0'; return n===Math.floor(n)?n.toString():n.toFixed(2); }
+}
 
-  // Глобальная сумма (не обнуляется)
-  function getGlobalTotal(){
-    var val = localStorage.getItem(GLOBAL_TOTAL_KEY);
-    return val ? parseFloat(val) : 0;
-  }
-  
-  function setGlobalTotal(val){
-    localStorage.setItem(GLOBAL_TOTAL_KEY, val.toString());
-  }
-
-  function getSpentSumForDate(dateStr){
-    if(!appData[dateStr]) return 0;
-    var rows=appData[dateStr].rows, sum=0;
-    for(var i=0;i<TOTAL_ROWS;i++){
-      var val=rows[i]?rows[i].number:'';
-      if(val!==''&&val!==null&&val!==undefined){ var n=parseFloat(val); if(!isNaN(n)) sum+=n; }
-    }
-    return sum;
-  }
-  
-  function getMonthlySpent(dateStr){
-    var parts=dateStr.split('-'), prefix=parts[0]+'-'+parts[1]+'-', total=0;
-    for(var key in appData){ if(key.indexOf(prefix)===0) total+=getSpentSumForDate(key); }
-    return total;
-  }
-
-  var dateInput=document.getElementById('currentDateInput');
-  var prevBtn=document.getElementById('prevDayBtn');
-  var nextBtn=document.getElementById('nextDayBtn');
-  var searchBtn=document.getElementById('searchDateBtn');
-  var todayBtn=document.getElementById('todayBtn');
-  var ti=document.getElementById('totalSumInput');
-  var spi=document.getElementById('spentSumInput');
-  var tbody=document.getElementById('tableBody');
-  var monthlyInput=document.getElementById('monthlySpentInput');
-  var tableContainer=document.getElementById('tableContainer');
-  var sumsContainer=document.getElementById('sumsContainer');
-
-  function applyDateFromInput(){
-    var val=dateInput.value.trim();
-    if(val===''){ changeDate(getTodayString()); return; }
-    var parsed=parseDateFromInput(val);
-    if(parsed){ changeDate(parsed); }
-    else{ alert('ВВЕДИТЕ ДАТУ 09.08.26'); dateInput.value=storageToDisplay(currentDateStr); }
-  }
-
-  function renderCurrentDay(){
-    if(!currentDateStr) return;
-    var d=getDayData(currentDateStr);
-    dateInput.value=storageToDisplay(currentDateStr);
-    
-    // Показываем глобальную сумму
-    var globalTotal = getGlobalTotal();
-    ti.value = globalTotal > 0 ? formatNumber(globalTotal) : '';
-    
-    tbody.innerHTML='';
-
-    for(var i=0;i<TOTAL_ROWS;i++){
-      var rd=d.rows[i]||{text:'',number:''};
-      var tr=document.createElement('tr');
-      tr.style.animationDelay=(i*0.01)+'s';
-
-      var tn=document.createElement('td');
-      tn.className='row-number';
-      tn.textContent=(i+1)+'.';
-      tr.appendChild(tn);
-
-      var tt=document.createElement('td');
-      tt.className='text-cell';
-      var it=document.createElement('input');
-      it.type='text';
-      it.className='text-cell-input';
-      it.placeholder='ОПИСАНИЕ';
-      it.value=rd.text;
-      it.addEventListener('input', (function(idx){ return function(e){ updateRowText(idx, e.target.value); }; })(i));
-      tt.appendChild(it);
-      tr.appendChild(tt);
-
-      var tnum=document.createElement('td');
-      tnum.className='number-cell';
-      var inum=document.createElement('input');
-      inum.type='text';
-      inum.className='number-cell-input';
-      inum.placeholder='0';
-      inum.value=rd.number;
-      inum.addEventListener('input', (function(idx){ return function(e){ handleNumberInput(idx, e.target); }; })(i));
-      inum.addEventListener('blur', function(e){ formatNumberField(e.target); });
-      tnum.appendChild(inum);
-      tr.appendChild(tnum);
-
-      tbody.appendChild(tr);
-    }
-    updateSumsDisplay();
-  }
-
-  function updateRowText(i,v){ if(!currentDateStr) return; getDayData(currentDateStr).rows[i].text=v; saveData(); }
-
-  function handleNumberInput(i, el){
-    if(!currentDateStr) return;
-    var v=el.value;
-    if(v===''){ updateNumberInRow(i,''); return; }
-    v=v.replace(',','.');
-    if(!/^-?\d*\.?\d*$/.test(v)){ el.value=v.slice(0,-1); return; }
-    if(v.indexOf('.')!==-1){
-      var p=v.split('.');
-      if(p[1] && p[1].length>2){ p[1]=p[1].slice(0,2); v=p.join('.'); el.value=v; }
-    }
-    updateNumberInRow(i,v);
-  }
-
-  function formatNumberField(el){
-    var v=el.value;
-    if(v==='') return;
-    v=v.replace(',','.');
-    var n=parseFloat(v);
-    el.value=!isNaN(n) ? formatNumber(v) : '';
-    var tr=el.closest('tr');
-    if(tr){
-      var i=Array.from(tr.parentNode.children).indexOf(tr);
-      if(i>=0 && i<TOTAL_ROWS) updateNumberInRow(i, el.value);
-    }
-  }
-
-  function updateNumberInRow(i,v){
-    if(!currentDateStr) return;
-    getDayData(currentDateStr).rows[i].number=v;
-    saveData();
-    updateSumsDisplay();
-  }
-
-  function getSpentSum(){ return getSpentSumForDate(currentDateStr); }
-
-  function updateSumsDisplay(){
-    if(!currentDateStr) return;
-    
-    // Потрачено сегодня
-    var spent = getSpentSum();
-    spi.value = spent > 0 ? formatNumber(spent) : '';
-    
-    // Потрачено за месяц
-    var monthly = getMonthlySpent(currentDateStr);
-    monthlyInput.value = monthly > 0 ? formatNumber(monthly) : '';
-    
-    // Общая сумма = глобальная сумма - потрачено за месяц
-    var globalTotal = getGlobalTotal();
-    var remaining = globalTotal - monthly;
-    ti.value = globalTotal > 0 ? formatNumber(remaining) : '';
-  }
-
-  function playSwapAnim(){
-    tableContainer.classList.remove('fade-swap');
-    sumsContainer.classList.remove('fade-swap');
-    void tableContainer.offsetWidth;
-    tableContainer.classList.add('fade-swap');
-    sumsContainer.classList.add('fade-swap');
-  }
-
-  function changeDate(ns){
-    if(!ns || !/^\d{4}-\d{2}-\d{2}$/.test(ns)) return;
-    currentDateStr=ns;
-    renderCurrentDay();
-    playSwapAnim();
-  }
-
-  function shiftDate(days){
-    if(!currentDateStr) return;
-    var p=currentDateStr.split('-').map(Number), date=new Date(p[0],p[1]-1,p[2]);
-    date.setDate(date.getDate()+days);
-    changeDate(formatDateToStorage(date));
-  }
-
-  document.addEventListener('click', function(){
-    if(audioCtx && audioCtx.state==='suspended') audioCtx.resume();
-  }, {once:true});
-
-  function init(){
-    loadData();
-    currentDateStr=getTodayString();
-    if(!appData[currentDateStr]){ appData[currentDateStr]=createEmptyDayData(); saveData(); }
-    renderCurrentDay();
-
-    prevBtn.addEventListener('click', function(){ shiftDate(-1); });
-    nextBtn.addEventListener('click', function(){ shiftDate(1); });
-    dateInput.addEventListener('keypress', function(e){ if(e.key==='Enter'){ applyDateFromInput(); } });
-    dateInput.addEventListener('blur', function(){ applyDateFromInput(); });
-    searchBtn.addEventListener('click', function(){ applyDateFromInput(); });
-    todayBtn.addEventListener('click', function(){ changeDate(getTodayString()); });
-
-    // Обработка изменения общей суммы (глобальной)
-    ti.addEventListener('input', function(){
-      var v=ti.value.replace(',','.');
-      if(v===''){ 
-        // Не удаляем глобальную сумму при очистке
-        updateSumsDisplay();
-        return; 
-      }
-      if(v.indexOf('.')!==-1){
-        var p=v.split('.');
-        if(p[1] && p[1].length>2){ p[1]=p[1].slice(0,2); v=p.join('.'); ti.value=v; }
-      }
-      if(!/^-?\d*\.?\d*$/.test(v)){ ti.value=v.slice(0,-1); return; }
-      if(!isNaN(parseFloat(v))){ 
-        // Сохраняем новую глобальную сумму
-        setGlobalTotal(parseFloat(v));
-        updateSumsDisplay();
-      }
+async function saveToCloud() {
+  if (!localChanges) return true;
+  try {
+    dataVersion++;
+    allData._version = dataVersion;
+    const dataToSave = JSON.parse(JSON.stringify(allData));
+    const response = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Master-Key': JSONBIN_API_KEY
+      },
+      body: JSON.stringify(dataToSave)
     });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(allData));
+    localStorage.setItem('dix_vegas_data_version', dataVersion.toString());
+    localChanges = false;
+    updateLastSyncTime();
+    showSync('☁️ Синхронизировано');
+    return true;
+  } catch (e) {
+    console.error('Ошибка сохранения:', e);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(allData));
+    showSync('📱 Офлайн — сохранено локально', true);
+    throw e;
+  }
+}
 
-    ti.addEventListener('blur', function(){
-      var v=ti.value.replace(',','.');
-      if(v===''){ 
-        updateSumsDisplay();
-        return; 
+function scheduleCloudSave() {
+  clearTimeout(cloudSaveTimer);
+  cloudSaveTimer = setTimeout(async () => {
+    if (!localChanges || isSyncing) return;
+    try { await saveToCloud(); } catch (e) {}
+  }, 1500);
+}
+
+function formatDateToDisplay(d) {
+  return String(d.getDate()).padStart(2,'0') + '.' + String(d.getMonth()+1).padStart(2,'0') + '.' + String(d.getFullYear()).slice(-2);
+}
+
+function formatDateToStorage(d) {
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+}
+
+function parseDateFromInput(s) {
+  s = s.trim();
+  if (!s) return null;
+  if (s.indexOf('.') !== -1) {
+    const p = s.split('.');
+    if (p.length === 3) {
+      const d = parseInt(p[0]), m = parseInt(p[1]), y = parseInt(p[2]);
+      if (!isNaN(d) && !isNaN(m) && !isNaN(y) && m >= 1 && m <= 12) {
+        const year = y < 100 ? y + 2000 : y;
+        const dt = new Date(year, m-1, d);
+        if (dt.getFullYear() === year && dt.getMonth() === m-1 && dt.getDate() === d) return formatDateToStorage(dt);
       }
-      var num = parseFloat(v);
-      if(!isNaN(num)){
-        setGlobalTotal(num);
-      }
+    }
+  }
+  if (/^\d{4}-\d{2}-\d{2}$/.test(s)) {
+    const ip = s.split('-').map(Number);
+    const d2 = new Date(ip[0], ip[1]-1, ip[2]);
+    if (d2.getFullYear() === ip[0] && d2.getMonth() === ip[1]-1 && d2.getDate() === ip[2]) return s;
+  }
+  return null;
+}
+
+function getTodayString() { return formatDateToStorage(new Date()); }
+function storageToDisplay(s) { const p = s.split('-').map(Number); return formatDateToDisplay(new Date(p[0], p[1]-1, p[2])); }
+function formatNumber(v) { const n = parseFloat(v); if (isNaN(n)) return '0'; return n === Math.floor(n) ? n.toString() : n.toFixed(2); }
+
+function getGlobalTotal() {
+  const val = localStorage.getItem(GLOBAL_TOTAL_KEY);
+  return val ? parseFloat(val) : 0;
+}
+
+function setGlobalTotal(val) {
+  localStorage.setItem(GLOBAL_TOTAL_KEY, val.toString());
+}
+
+function getDayData(d) {
+  if (!allData[d]) allData[d] = createEmptyDayData();
+  return allData[d];
+}
+
+function createEmptyDayData() {
+  const r = [];
+  for (let i = 0; i < TOTAL_ROWS; i++) r.push({text:'', number:''});
+  return {rows: r};
+}
+
+function getSpentSumForDate(dateStr) {
+  if (!allData[dateStr]) return 0;
+  const rows = allData[dateStr].rows || [];
+  let sum = 0;
+  for (let i = 0; i < TOTAL_ROWS; i++) {
+    const val = rows[i] ? rows[i].number : '';
+    if (val !== '' && val !== null && val !== undefined) {
+      const n = parseFloat(val);
+      if (!isNaN(n)) sum += n;
+    }
+  }
+  return sum;
+}
+
+function getMonthlySpent(dateStr) {
+  const parts = dateStr.split('-');
+  const prefix = parts[0] + '-' + parts[1] + '-';
+  let total = 0;
+  for (const key in allData) {
+    if (key.startsWith('_')) continue;
+    if (key.indexOf(prefix) === 0) total += getSpentSumForDate(key);
+  }
+  return total;
+}
+
+function saveDataLocal() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(allData));
+  localChanges = true;
+}
+
+const dateInput = document.getElementById('currentDateInput');
+const prevBtn = document.getElementById('prevDayBtn');
+const nextBtn = document.getElementById('nextDayBtn');
+const searchBtn = document.getElementById('searchDateBtn');
+const todayBtn = document.getElementById('todayBtn');
+const ti = document.getElementById('totalSumInput');
+const spi = document.getElementById('spentSumInput');
+const tbody = document.getElementById('tableBody');
+const monthlyInput = document.getElementById('monthlySpentInput');
+const tableContainer = document.getElementById('tableContainer');
+const sumsContainer = document.getElementById('sumsContainer');
+const syncBtn = document.getElementById('syncBtn');
+
+function applyDateFromInput() {
+  const val = dateInput.value.trim();
+  if (val === '') { changeDate(getTodayString()); return; }
+  const parsed = parseDateFromInput(val);
+  if (parsed) { changeDate(parsed); }
+  else { alert('ВВЕДИТЕ ДАТУ 09.08.26'); dateInput.value = storageToDisplay(currentDateStr); }
+}
+
+function renderCurrentDay() {
+  if (!currentDateStr) return;
+  const d = getDayData(currentDateStr);
+  dateInput.value = storageToDisplay(currentDateStr);
+  
+  const globalTotal = getGlobalTotal();
+  ti.value = globalTotal > 0 ? formatNumber(globalTotal) : '';
+  
+  tbody.innerHTML = '';
+  
+  for (let i = 0; i < TOTAL_ROWS; i++) {
+    const rd = d.rows[i] || {text:'', number:''};
+    const tr = document.createElement('tr');
+    tr.style.animationDelay = (i * 0.01) + 's';
+    
+    const tn = document.createElement('td');
+    tn.className = 'row-number';
+    tn.textContent = (i + 1) + '.';
+    tr.appendChild(tn);
+    
+    const tt = document.createElement('td');
+    tt.className = 'text-cell';
+    const it = document.createElement('input');
+    it.type = 'text';
+    it.className = 'text-cell-input';
+    it.placeholder = 'ОПИСАНИЕ';
+    it.value = rd.text;
+    it.addEventListener('input', (function(idx) { return function(e) {
+      updateRowText(idx, e.target.value);
+    }; })(i));
+    tt.appendChild(it);
+    tr.appendChild(tt);
+    
+    const tnum = document.createElement('td');
+    tnum.className = 'number-cell';
+    const inum = document.createElement('input');
+    inum.type = 'text';
+    inum.className = 'number-cell-input';
+    inum.placeholder = '0';
+    inum.value = rd.number;
+    inum.addEventListener('input', (function(idx) { return function(e) {
+      handleNumberInput(idx, e.target);
+    }; })(i));
+    inum.addEventListener('blur', function(e) { formatNumberField(e.target); });
+    tnum.appendChild(inum);
+    tr.appendChild(tnum);
+    
+    tbody.appendChild(tr);
+  }
+  updateSumsDisplay();
+}
+
+function updateRowText(i, v) {
+  if (!currentDateStr) return;
+  getDayData(currentDateStr).rows[i].text = v;
+  saveDataLocal();
+  scheduleCloudSave();
+}
+
+function handleNumberInput(i, el) {
+  if (!currentDateStr) return;
+  let v = el.value;
+  if (v === '') { updateNumberInRow(i, ''); return; }
+  v = v.replace(',', '.');
+  if (!/^-?\d*\.?\d*$/.test(v)) { el.value = v.slice(0, -1); return; }
+  if (v.indexOf('.') !== -1) {
+    const p = v.split('.');
+    if (p[1] && p[1].length > 2) { p[1] = p[1].slice(0, 2); v = p.join('.'); el.value = v; }
+  }
+  updateNumberInRow(i, v);
+}
+
+function formatNumberField(el) {
+  const v = el.value;
+  if (v === '') return;
+  const n = parseFloat(v.replace(',', '.'));
+  el.value = !isNaN(n) ? formatNumber(v) : '';
+  const tr = el.closest('tr');
+  if (tr) {
+    const i = Array.from(tr.parentNode.children).indexOf(tr);
+    if (i >= 0 && i < TOTAL_ROWS) updateNumberInRow(i, el.value);
+  }
+}
+
+function updateNumberInRow(i, v) {
+  if (!currentDateStr) return;
+  getDayData(currentDateStr).rows[i].number = v;
+  saveDataLocal();
+  updateSumsDisplay();
+  scheduleCloudSave();
+}
+
+function getSpentSum() { return getSpentSumForDate(currentDateStr); }
+
+function updateSumsDisplay() {
+  if (!currentDateStr) return;
+  
+  const spent = getSpentSum();
+  spi.value = spent > 0 ? formatNumber(spent) : '';
+  
+  const monthly = getMonthlySpent(currentDateStr);
+  monthlyInput.value = monthly > 0 ? formatNumber(monthly) : '';
+  
+  const globalTotal = getGlobalTotal();
+  const remaining = globalTotal - monthly;
+  ti.value = globalTotal > 0 ? formatNumber(remaining) : '';
+}
+
+function playSwapAnim() {
+  tableContainer.classList.remove('fade-swap');
+  sumsContainer.classList.remove('fade-swap');
+  void tableContainer.offsetWidth;
+  tableContainer.classList.add('fade-swap');
+  sumsContainer.classList.add('fade-swap');
+}
+
+function changeDate(ns) {
+  if (!ns || !/^\d{4}-\d{2}-\d{2}$/.test(ns)) return;
+  currentDateStr = ns;
+  renderCurrentDay();
+  playSwapAnim();
+}
+
+function shiftDate(days) {
+  if (!currentDateStr) return;
+  const p = currentDateStr.split('-').map(Number);
+  const date = new Date(p[0], p[1] - 1, p[2]);
+  date.setDate(date.getDate() + days);
+  changeDate(formatDateToStorage(date));
+}
+
+async function syncNow() {
+  if (isSyncing) return;
+  isSyncing = true;
+  syncBtn.classList.add('syncing');
+  playSyncSound();
+  showSync('🔄 Синхронизация...', false, true);
+  
+  try {
+    if (localChanges) {
+      await saveToCloud();
+    }
+    
+    const response = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}/latest`, {
+      headers: { 'X-Master-Key': JSONBIN_API_KEY }
+    });
+    
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    
+    const result = await response.json();
+    const cloudData = result.record || {};
+    const cloudVersion = cloudData._version || 0;
+    
+    if (cloudVersion >= dataVersion) {
+      allData = cloudData;
+      dataVersion = cloudVersion;
+      localStorage.setItem('dix_vegas_data_version', dataVersion.toString());
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(allData));
+      localChanges = false;
+      renderCurrentDay();
+      showSync('☁️ Данные обновлены');
+    } else {
+      await saveToCloud();
+      showSync('☁️ Локальные данные сохранены');
+    }
+    
+    updateLastSyncTime();
+  } catch (e) {
+    console.error('Ошибка синхронизации:', e);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(allData));
+    showSync('📱 Сохранено локально', true);
+  } finally {
+    isSyncing = false;
+    syncBtn.classList.remove('syncing');
+  }
+}
+
+document.addEventListener('click', function() {
+  if (audioContext && audioContext.state === 'suspended') audioContext.resume();
+}, {once: true});
+
+function init() {
+  const savedSyncTime = localStorage.getItem('dix_vegas_last_sync');
+  if (savedSyncTime) {
+    lastSyncTime = new Date(savedSyncTime);
+    const timeStr = lastSyncTime.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+    document.getElementById('syncTimeDisplay').textContent = `Последняя синхронизация: ${timeStr}`;
+  }
+  
+  dataVersion = parseInt(localStorage.getItem('dix_vegas_data_version') || '0');
+  
+  const localData = localStorage.getItem(STORAGE_KEY);
+  if (localData) {
+    try { allData = JSON.parse(localData); } catch(e) {}
+  }
+  
+  currentDateStr = getTodayString();
+  if (!allData[currentDateStr]) {
+    allData[currentDateStr] = createEmptyDayData();
+    saveDataLocal();
+  }
+  
+  renderCurrentDay();
+  
+  prevBtn.addEventListener('click', function() { playClickSound(); shiftDate(-1); });
+  nextBtn.addEventListener('click', function() { playClickSound(); shiftDate(1); });
+  dateInput.addEventListener('keypress', function(e) { if (e.key === 'Enter') applyDateFromInput(); });
+  dateInput.addEventListener('blur', function() { applyDateFromInput(); });
+  searchBtn.addEventListener('click', function() { playClickSound(); applyDateFromInput(); });
+  todayBtn.addEventListener('click', function() { playClickSound(); changeDate(getTodayString()); });
+  syncBtn.addEventListener('click', syncNow);
+  
+  ti.addEventListener('input', function() {
+    let v = ti.value.replace(',', '.');
+    if (v === '') { updateSumsDisplay(); return; }
+    if (v.indexOf('.') !== -1) {
+      const p = v.split('.');
+      if (p[1] && p[1].length > 2) { p[1] = p[1].slice(0, 2); v = p.join('.'); ti.value = v; }
+    }
+    if (!/^-?\d*\.?\d*$/.test(v)) { ti.value = v.slice(0, -1); return; }
+    if (!isNaN(parseFloat(v))) {
+      setGlobalTotal(parseFloat(v));
+      saveDataLocal();
       updateSumsDisplay();
-    });
+      scheduleCloudSave();
+    }
+  });
+  
+  ti.addEventListener('blur', function() {
+    const v = ti.value.replace(',', '.');
+    if (v === '') { updateSumsDisplay(); return; }
+    const num = parseFloat(v);
+    if (!isNaN(num)) {
+      setGlobalTotal(num);
+      saveDataLocal();
+    }
+    updateSumsDisplay();
+  });
+}
 
-    bindSfx();
+(async function initApp() {
+  try {
+    showSync('🔄 Загрузка данных...', false, true);
+    
+    try {
+      await loadFromCloud();
+      showSync('☁️ Данные загружены');
+    } catch(e) {
+      showSync('📱 Офлайн-режим', true);
+    }
+    
+    init();
+    
+    setInterval(async () => {
+      if (isSyncing) return;
+      try { await syncNow(); } catch (e) {}
+    }, 18000000);
+  } catch(e) {
+    console.error('Ошибка инициализации:', e);
+    init();
   }
+})();
 
-  init();
-  })();
+window.addEventListener('beforeunload', () => {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(allData));
+    if (lastSyncTime) {
+      localStorage.setItem('dix_vegas_last_sync', lastSyncTime.toISOString());
+    }
+  } catch(e) {}
+});
+
+window.addEventListener('online', async () => {
+  showSync('🌐 Онлайн — синхронизируем...', false, true);
+  try { await syncNow(); } catch (e) {}
+});
+
+window.addEventListener('offline', () => {
+  showSync('📱 Офлайн-режим', true);
+});
 </script>
 </body>
 </html>
