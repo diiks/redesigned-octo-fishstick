@@ -692,11 +692,11 @@ button.hud-item {
     <div class="stats-popup" id="statsPopup">
       <div class="stats-item">
         <span class="stats-label">СЕГОДНЯ</span>
-        <span class="stats-value" id="statToday">0</span>
+        <span class="stats-value" id="statToday">—</span>
       </div>
       <div class="stats-item">
         <span class="stats-label">МЕС</span>
-        <span class="stats-value" id="statMonth">0</span>
+        <span class="stats-value" id="statMonth">—</span>
       </div>
     </div>
 
@@ -1001,8 +1001,8 @@ function updateStats() {
   const todaySpent = getSpentSumForDate(currentDateStr);
   const monthSpent = getMonthlySpent(currentDateStr);
   
-  document.getElementById('statToday').textContent = formatNumber(todaySpent);
-  document.getElementById('statMonth').textContent = formatNumber(monthSpent);
+  document.getElementById('statToday').textContent = todaySpent > 0 ? formatNumber(todaySpent) : '—';
+  document.getElementById('statMonth').textContent = monthSpent > 0 ? formatNumber(monthSpent) : '—';
 }
 
 function toggleStats() {
