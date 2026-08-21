@@ -108,6 +108,7 @@ body {
   overflow: hidden;
 }
 
+/* ТУМАН */
 .hero-header::after {
   content: '';
   position: absolute;
@@ -131,23 +132,131 @@ body {
   75% { transform: translateX(-15%); opacity: 0.4; }
 }
 
+/* МНОЖЕСТВО ДИНОЗАВРОВ В ХАОТИЧНОМ ПОРЯДКЕ */
 .dino-trail {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 6rem;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
   z-index: 0;
-  opacity: 0.12;
-  animation: dinoFloat 6s ease-in-out infinite;
+  opacity: 0.15;
 }
 
-@keyframes dinoFloat {
-  0%, 100% { transform: translate(-50%, -50%) scale(1) rotate(-3deg); }
-  25% { transform: translate(-48%, -55%) scale(1.05) rotate(0deg); }
-  50% { transform: translate(-50%, -50%) scale(1) rotate(3deg); }
-  75% { transform: translate(-52%, -45%) scale(0.95) rotate(0deg); }
+.dino-trail::before {
+  content: '🦕 🦖 🦕 🦖 🦕 🦖';
+  position: absolute;
+  top: 5%;
+  left: 2%;
+  font-size: 1.3rem;
+  letter-spacing: 2.5rem;
+  transform: rotate(-5deg);
+  animation: dinoChaos1 15s ease-in-out infinite;
+}
+
+.dino-trail::after {
+  content: '🦖 🦕 🦖 🦕 🦖 🦕';
+  position: absolute;
+  bottom: 5%;
+  right: 2%;
+  font-size: 1.1rem;
+  letter-spacing: 2rem;
+  transform: rotate(8deg);
+  animation: dinoChaos2 18s ease-in-out infinite;
+}
+
+@keyframes dinoChaos1 {
+  0%, 100% { transform: rotate(-5deg) translateX(0) translateY(0); }
+  25% { transform: rotate(3deg) translateX(10px) translateY(-5px); }
+  50% { transform: rotate(-8deg) translateX(-15px) translateY(5px); }
+  75% { transform: rotate(5deg) translateX(5px) translateY(-3px); }
+}
+
+@keyframes dinoChaos2 {
+  0%, 100% { transform: rotate(8deg) translateX(0) translateY(0); }
+  25% { transform: rotate(-4deg) translateX(-10px) translateY(5px); }
+  50% { transform: rotate(6deg) translateX(15px) translateY(-5px); }
+  75% { transform: rotate(-7deg) translateX(-5px) translateY(3px); }
+}
+
+.dino-extra {
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.15;
+  font-size: 1rem;
+}
+
+.dino-extra-1 {
+  top: 10%;
+  left: 15%;
+  font-size: 0.9rem;
+  animation: dinoFloat1 7s ease-in-out infinite;
+}
+
+.dino-extra-2 {
+  top: 35%;
+  left: 65%;
+  font-size: 1.2rem;
+  animation: dinoFloat2 9s ease-in-out infinite;
+}
+
+.dino-extra-3 {
+  bottom: 15%;
+  left: 25%;
+  font-size: 0.8rem;
+  animation: dinoFloat3 11s ease-in-out infinite;
+}
+
+.dino-extra-4 {
+  top: 25%;
+  left: 45%;
+  font-size: 1rem;
+  animation: dinoFloat1 8s ease-in-out infinite;
+}
+
+.dino-extra-5 {
+  bottom: 25%;
+  left: 75%;
+  font-size: 0.85rem;
+  animation: dinoFloat2 10s ease-in-out infinite;
+}
+
+.dino-extra-6 {
+  top: 45%;
+  left: 8%;
+  font-size: 0.7rem;
+  animation: dinoFloat3 12s ease-in-out infinite;
+}
+
+.dino-extra-7 {
+  top: 15%;
+  left: 55%;
+  font-size: 0.75rem;
+  animation: dinoFloat1 6s ease-in-out infinite;
+}
+
+.dino-extra-8 {
+  bottom: 10%;
+  left: 50%;
+  font-size: 1.1rem;
+  animation: dinoFloat2 13s ease-in-out infinite;
+}
+
+@keyframes dinoFloat1 {
+  0%, 100% { transform: translateY(0) rotate(-5deg); }
+  50% { transform: translateY(-8px) rotate(5deg); }
+}
+
+@keyframes dinoFloat2 {
+  0%, 100% { transform: translateY(0) rotate(3deg); }
+  50% { transform: translateY(6px) rotate(-3deg); }
+}
+
+@keyframes dinoFloat3 {
+  0%, 100% { transform: translateY(0) rotate(-8deg); }
+  50% { transform: translateY(-4px) rotate(8deg); }
 }
 
 .hero-header::before {
@@ -177,7 +286,9 @@ body {
 @media (max-width: 480px) {
   .hero-header::before { font-size: 0.6rem; top: 0.9rem; gap: 5px; }
   .hero-header { padding: 2rem 0.5rem 0.5rem; }
-  .dino-trail { font-size: 4rem; }
+  .dino-trail::before { font-size: 0.9rem; letter-spacing: 1.5rem; }
+  .dino-trail::after { font-size: 0.8rem; letter-spacing: 1.2rem; }
+  .dino-extra { font-size: 0.7rem; }
   body { padding: 0; }
   .app { border-radius: 0; border-left: 2px solid var(--jr-green); border-right: 2px solid var(--jr-green); }
 }
@@ -653,7 +764,15 @@ button.hud-item {
   <div class="content-layer">
 
     <div class="hero-header">
-      <span class="dino-trail">🦕</span>
+      <div class="dino-trail"></div>
+      <span class="dino-extra dino-extra-1">🦖</span>
+      <span class="dino-extra dino-extra-2">🦕</span>
+      <span class="dino-extra dino-extra-3">🦖</span>
+      <span class="dino-extra dino-extra-4">🦕</span>
+      <span class="dino-extra dino-extra-5">🦖</span>
+      <span class="dino-extra dino-extra-6">🦕</span>
+      <span class="dino-extra dino-extra-7">🦖</span>
+      <span class="dino-extra dino-extra-8">🦕</span>
 
       <div class="date-navigation">
         <button class="arrow-btn sfx-btn" id="prevDayBtn" aria-label="Предыдущий день">◀</button>
@@ -1087,6 +1206,8 @@ function renderCurrentDay() {
     inum.type = 'text';
     inum.className = 'number-cell-input';
     inum.placeholder = '💲';
+    inum.inputMode = 'decimal';
+    inum.setAttribute('pattern', '[0-9]*[.,]?[0-9]*');
     inum.value = rd.number;
     updateAmountColor(inum);
     inum.addEventListener('input', (function(idx) { return function(e) {
